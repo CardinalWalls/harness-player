@@ -1,0 +1,13 @@
+{
+  "name": "yetian/harness_player",
+  "version": "0.1.0",
+  "readme": "README.mbt.md",
+  "repository": "",
+  "license": "Apache-2.0",
+  "keywords": [
+    "moonbit",
+    "omx",
+    "github-actions"
+  ],
+  "description": "A rehearsal repository for OMX + MoonBit + GitHub workflows."
+}
