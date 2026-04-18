@@ -9,7 +9,6 @@ on:
 
 jobs:
   codex_review:
-    if: ${{ secrets.OPENAI_API_KEY != '' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -31,13 +30,21 @@ jobs:
 
       - name: Set up MoonBit
         uses: hustcer/setup-moonbit@v1.16
-        with:
-          version: 0.1.20260409
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Detect Codex secret availability
+        id: secret_check
+        run: |
+          if [ -n "${{ secrets.OPENAI_API_KEY }}" ]; then
+            echo "has_openai_key=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_openai_key=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Run Codex review
         id: run_codex
+        if: ${{ steps.secret_check.outputs.has_openai_key == 'true' }}
         uses: openai/codex-action@v1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
