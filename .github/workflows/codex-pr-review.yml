@@ -33,6 +33,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Bundle MoonBit core
+        run: |
+          pushd "$HOME/.moon/lib/core"
+          moon bundle --target all
+          popd
+
       - name: Detect Codex secret availability
         id: secret_check
         run: |
