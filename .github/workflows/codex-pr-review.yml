@@ -42,18 +42,19 @@ jobs:
       - name: Detect Codex secret availability
         id: secret_check
         run: |
-          if [ -n "${{ secrets.OPENAI_API_KEY }}" ]; then
-            echo "has_openai_key=true" >> "$GITHUB_OUTPUT"
+          if [ -n "${{ secrets.ROUTIN_API_KEY }}" ]; then
+            echo "has_routin_key=true" >> "$GITHUB_OUTPUT"
           else
-            echo "has_openai_key=false" >> "$GITHUB_OUTPUT"
+            echo "has_routin_key=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Run Codex review
         id: run_codex
-        if: ${{ steps.secret_check.outputs.has_openai_key == 'true' }}
+        if: ${{ steps.secret_check.outputs.has_routin_key == 'true' }}
         uses: openai/codex-action@v1
         with:
-          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          openai-api-key: ${{ secrets.ROUTIN_API_KEY }}
+          responses-api-endpoint: https://api.routin.ai/v1/responses
           prompt: |
             Review this pull request for a repository that combines OMX orchestration, MoonBit validation, and GitHub Actions.
             Focus on:
