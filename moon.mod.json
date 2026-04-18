@@ -1,0 +1,14 @@
+{
+  "name": "yetian/finall_start_100_commits",
+  "version": "0.1.0",
+  "readme": "README.mbt.md",
+  "repository": "",
+  "license": "Apache-2.0",
+  "preferred-target": "native",
+  "keywords": [
+    "omx",
+    "moonbit",
+    "github-actions"
+  ],
+  "description": "An OMX-managed MoonBit project with GitHub CI and PR review rehearsal surfaces."
+}

@@ -1,0 +1,51 @@
+name: MoonBit CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  moonbit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up MoonBit
+        uses: hustcer/setup-moonbit@v1.16
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bundle MoonBit core
+        run: |
+          pushd "$HOME/.moon/lib/core"
+          moon bundle --target all
+          popd
+
+      - name: Show MoonBit version
+        run: moon version --all
+
+      - name: Run moon check
+        run: moon check
+
+      - name: Run moon test
+        run: moon test
+
+      - name: Run moon fmt
+        run: moon fmt
+
+      - name: Run moon info
+        run: moon info
+
+      - name: Run moon coverage
+        run: moon coverage analyze -- -f html -o coverage.html
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: moonbit-coverage-html
+          path: coverage.html
