@@ -40,7 +40,7 @@ find .github/workflows -maxdepth 1 -type f | sort
 
 echo
 echo "== template files =="
-find .github -maxdepth 2 \( -name 'pull_request_template.md' -o -name 'rehearsal-task.md' \) | sort
+find .github -maxdepth 2 \( -name 'pull_request_template.md' -o -name 'development-task.md' \) | sort
 
 echo
 echo "== done =="

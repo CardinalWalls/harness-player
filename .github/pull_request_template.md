@@ -1,7 +1,7 @@
 ## Summary
 
 - What changed?
-- Why is this change part of the rehearsal?
+- Why is this change needed?
 
 ## Local Validation
 
@@ -20,5 +20,5 @@
 
 ## Notes
 
-- Any local-only rehearsal notes
+- Any local-only validation notes
 - Any known remote-only limits or assumptions

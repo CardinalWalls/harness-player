@@ -11,7 +11,7 @@ This file applies to `/Users/yetian/Desktop/finall-start-100-commits`.
 
 - This repository uses **OMX as the orchestration/runtime layer**.
 - This repository uses **MoonBit as the implementation toolchain**.
-- This repository also carries **GitHub PR/CI rehearsal surfaces** for local preflight and hosted validation.
+- This repository also carries **GitHub PR/CI workflow surfaces** for local preflight and hosted validation.
 - Treat them as complementary:
   - OMX decides workflow, planning, orchestration, persistence, and verification loops.
   - MoonBit commands are the source of truth for build/test/format/info status.
@@ -77,5 +77,5 @@ This file applies to `/Users/yetian/Desktop/finall-start-100-commits`.
 - Name the files changed.
 - Name the MoonBit commands actually run.
 - Name any OMX checks actually run.
-- Name any GitHub-side limits that were only rehearsed locally, not executed live.
+- Name any GitHub-side limits that were only validated locally, not executed live.
 - Call out any remaining blockers or intentional gaps.

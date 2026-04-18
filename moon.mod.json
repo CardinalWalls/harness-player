@@ -10,5 +10,5 @@
     "moonbit",
     "github-actions"
   ],
-  "description": "An OMX-managed MoonBit project with GitHub CI and PR review rehearsal surfaces."
+  "description": "An OMX-managed MoonBit project with GitHub CI and PR review workflow surfaces."
 }

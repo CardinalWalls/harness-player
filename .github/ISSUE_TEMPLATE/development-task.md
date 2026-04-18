@@ -1,14 +1,14 @@
 ---
-name: Rehearsal Task
-about: Rehearse an OMX + MoonBit + GitHub workflow change
-title: "[rehearsal] "
-labels: rehearsal
+name: Development Task
+about: Plan and implement an OMX + MoonBit + GitHub workflow change
+title: "[dev] "
+labels: enhancement
 assignees: ""
 ---
 
 ## Goal
 
-Describe the rehearsal objective.
+Describe the development objective.
 
 ## Scope
 

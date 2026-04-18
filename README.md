@@ -6,7 +6,7 @@ It combines three layers in one place:
 
 - **OMX** for planning, orchestration, and long-running execution modes
 - **MoonBit** for the real implementation and validation signal
-- **GitHub Actions** for PR-time CI and review automation rehearsal
+- **GitHub Actions** for PR-time CI and review automation
 
 ## What is already wired
 
@@ -17,7 +17,7 @@ It combines three layers in one place:
 - GitHub workflows for:
   - MoonBit CI
   - Codex PR review comments
-- PR and issue templates for repeatable rehearsal runs
+- PR and issue templates for repeatable implementation work
 
 ## Fastest local validation
 
@@ -52,7 +52,7 @@ ralph "carry the approved change to completion with MoonBit validation"
 
 For broader parallel work, use `team` instead of `ralph`.
 
-## GitHub rehearsal path
+## GitHub workflow path
 
 This repository includes two workflows:
 

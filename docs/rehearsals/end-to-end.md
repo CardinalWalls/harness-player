@@ -1,10 +1,10 @@
-# End-to-End Rehearsal
+# End-to-End Development Flow
 
-This document describes the canonical rehearsal path for this repository.
+This document describes the canonical development path for this repository.
 
 ## Goal
 
-Demonstrate that:
+Establish that:
 
 - OMX can orchestrate local work
 - MoonBit provides the real validation signal
@@ -12,11 +12,11 @@ Demonstrate that:
 
 ## Local steps
 
-1. Create or select a rehearsal issue using the issue template.
+1. Create or select a development issue using the issue template.
 2. Enter the repository root:
 
    ```bash
-   cd /Users/yetian/Desktop/harness-player
+   cd /Users/yetian/Desktop/finall-start-100-commits
    ```
 
 3. Run the local preflight:
@@ -31,12 +31,12 @@ Demonstrate that:
    omx --madmax --high
    ```
 
-5. In the OMX session, drive the rehearsal:
+5. In the OMX session, drive the implementation flow:
 
    ```text
-   deep-interview "clarify the rehearsal task"
+   deep-interview "clarify the task"
    ralplan "approve the implementation and verification path"
-   ralph "carry the approved rehearsal change to completion"
+   ralph "carry the approved change to completion"
    ```
 
 6. Make a small MoonBit change or workflow-aligned repository change.
