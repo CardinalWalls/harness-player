@@ -1,0 +1,67 @@
+name: Codex PR Review
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  codex_review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      final_message: ${{ steps.run_codex.outputs.final-message }}
+    steps:
+      - name: Check out PR merge commit
+        uses: actions/checkout@v5
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Pre-fetch PR refs
+        env:
+          PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          git fetch origin "${PR_BASE_REF}"
+          git fetch origin "pull/${PR_NUMBER}/head:pr-${PR_NUMBER}-head"
+
+      - name: Set up MoonBit via moonup
+        uses: chawyehsu/setup-moonup@v1
+
+      - name: Run Codex review
+        id: run_codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt: |
+            Review this pull request for a repository that combines OMX orchestration, MoonBit validation, and GitHub Actions.
+            Focus on:
+            - MoonBit correctness and validation gaps
+            - GitHub Actions safety and permission scope
+            - Workflow mismatches between OMX orchestration and actual repo commands
+            Keep the review concise and actionable.
+
+  post_feedback:
+    runs-on: ubuntu-latest
+    needs: codex_review
+    if: needs.codex_review.outputs.final_message != ''
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Post Codex feedback
+        uses: actions/github-script@v7
+        env:
+          CODEX_FINAL_MESSAGE: ${{ needs.codex_review.outputs.final_message }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: process.env.CODEX_FINAL_MESSAGE,
+            })
