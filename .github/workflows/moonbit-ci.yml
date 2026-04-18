@@ -15,8 +15,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v5
 
-      - name: Set up MoonBit via moonup
-        uses: chawyehsu/setup-moonup@v1
+      - name: Set up MoonBit
+        uses: hustcer/setup-moonbit@v1.16
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Show MoonBit version
         run: moon version --all
