@@ -9,6 +9,7 @@ on:
 
 jobs:
   codex_review:
+    if: ${{ secrets.OPENAI_API_KEY != '' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,6 +31,8 @@ jobs:
 
       - name: Set up MoonBit
         uses: hustcer/setup-moonbit@v1.16
+        with:
+          version: 0.1.20260409
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
