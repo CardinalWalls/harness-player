@@ -4,6 +4,7 @@
   "readme": "README.mbt.md",
   "repository": "",
   "license": "Apache-2.0",
+  "preferred-target": "native",
   "keywords": [
     "moonbit",
     "omx",
