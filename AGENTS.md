@@ -17,6 +17,14 @@ This file applies to `/Users/yetian/Desktop/finall-start-100-commits`.
   - MoonBit commands are the source of truth for build/test/format/info status.
   - GitHub Actions provide the platform-side CI and PR automation surface.
 
+## CLI-First Standard
+
+- Prefer repo-owned CLI surfaces and the `moon` toolchain for development, debugging, demos, and validation.
+- When a feature needs a runnable entrypoint, expose it under `cmd/` so it can be executed with `moon run`.
+- Use verification scripts under `scripts/` to make the default CLI path repeatable for both humans and automation.
+- Treat `omx` commands as orchestration wrappers, not as a replacement for product-facing CLI entrypoints or MoonBit validation.
+- If an OMX-run command and a repo CLI command disagree, debug the wrapper separately and treat the repo CLI plus MoonBit results as the implementation truth.
+
 ## First Read
 
 - For MoonBit work, read `./.codex/skills/moonbit-omx-workflow/SKILL.md` first.

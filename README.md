@@ -19,6 +19,15 @@ It combines three layers in one place:
   - Codex PR review comments
 - PR and issue templates for repeatable implementation work
 
+## CLI-first development standard
+
+Development in this repository is CLI-first.
+
+- Build runnable features behind repo-owned CLI entrypoints, preferably under `cmd/`, so they can be executed with `moon run`.
+- Use `moon` commands as the primary implementation and validation surface.
+- Use scripts in `scripts/` to package the default verification path for both local work and automation.
+- Use OMX to orchestrate planning, agent workflows, and long-running execution, but not to replace the repository's own CLI contract.
+
 ## Fastest local validation
 
 Run these from the repo root:
