@@ -1,12 +1,29 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "== omx doctor =="
-omx doctor
+run_optional_tool_check() {
+  local label="$1"
+  local command_name="$2"
+  shift 2
+
+  echo "== ${label} =="
+  if command -v "$command_name" >/dev/null 2>&1; then
+    "$@"
+  else
+    echo "skipped: ${command_name} is not installed locally"
+  fi
+}
+
+echo
+run_optional_tool_check "omx doctor" omx omx doctor
 
 echo
 echo "== repo-local codex auth =="
-CODEX_HOME="$PWD/.codex" codex login status
+if command -v codex >/dev/null 2>&1; then
+  CODEX_HOME="$PWD/.codex" codex login status
+else
+  echo "skipped: codex is not installed locally"
+fi
 
 echo
 echo "== moon version =="

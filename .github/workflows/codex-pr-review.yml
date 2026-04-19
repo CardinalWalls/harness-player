@@ -19,14 +19,16 @@ jobs:
         uses: actions/checkout@v5
         with:
           ref: refs/pull/${{ github.event.pull_request.number }}/merge
+          fetch-depth: 0
 
       - name: Pre-fetch PR refs
         env:
           PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          git fetch origin "${PR_BASE_REF}"
-          git fetch origin "pull/${PR_NUMBER}/head:pr-${PR_NUMBER}-head"
+          git fetch --no-tags origin "${PR_BASE_REF}:refs/remotes/origin/${PR_BASE_REF}"
+          git fetch --no-tags origin "pull/${PR_NUMBER}/head:refs/remotes/origin/pr-${PR_NUMBER}-head"
+          git diff --stat "origin/${PR_BASE_REF}...HEAD" >/dev/null
 
       - name: Set up MoonBit
         uses: hustcer/setup-moonbit@v1.16
@@ -57,6 +59,8 @@ jobs:
           responses-api-endpoint: https://api.routin.ai/v1/responses
           prompt: |
             Review this pull request for a repository that combines OMX orchestration, MoonBit validation, and GitHub Actions.
+            Scope the review to the PR diff from `origin/${{ github.event.pull_request.base.ref }}` to `HEAD`.
+            Use `git diff origin/${{ github.event.pull_request.base.ref }}...HEAD` as the authoritative review scope.
             Focus on:
             - MoonBit correctness and validation gaps
             - GitHub Actions safety and permission scope
@@ -69,7 +73,6 @@ jobs:
     if: needs.codex_review.outputs.final_message != ''
     permissions:
       issues: write
-      pull-requests: write
     steps:
       - name: Post Codex feedback
         uses: actions/github-script@v7

@@ -35,8 +35,8 @@ jobs:
       - name: Run moon test
         run: moon test
 
-      - name: Run moon fmt
-        run: moon fmt
+      - name: Run moon fmt --check
+        run: moon fmt --check
 
       - name: Run moon info
         run: moon info
