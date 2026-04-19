@@ -17,3 +17,13 @@ Current notes:
 - `2026-04-19-phase-ordering-for-all-four-centers.md`
 - `2026-04-19-synthesis-method-from-test-assets.md`
 - `2026-04-19-test-assets-and-mock-boundaries.md`
+- `2026-04-19-extraction-rules-and-quality-grading.md`
+- `2026-04-19-first-extraction-batch-plan.md`
+- `2026-04-19-first-wave-concrete-asset-sources.md`
+- `2026-04-19-interview-handoff-note.md`
+- `2026-04-19-interview-stage-work-plan.md`
+- `2026-04-19-per-source-extraction-notes.md`
+- `2026-04-19-research-coverage-manifest.md`
+- `2026-04-19-seed-asset-corpus-candidates.md`
+- `2026-04-19-seed-mock-boundaries.md`
+- `2026-04-19-seed-rules-reference.md`

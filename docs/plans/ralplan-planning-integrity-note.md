@@ -1,6 +1,6 @@
 # RALPLAN Planning Integrity Note
 
-- Status: `draft-for-review`
+- Status: `ratified-execution-authority`
 - Source: repository audit on `2026-04-19`
 - Scope: planning-process correction before any `ralph` or `team` execution handoff
 
@@ -22,10 +22,12 @@ Current status is:
 
 - `deep-interview` outputs exist and remain valid planning input
 - research outputs under `docs/discussions/` exist and remain valid planning input
-- synthesis-oriented plan drafts exist under `docs/plans/`
-- execution is still gated
+- a named canonical execution package now exists under `docs/plans/`
+- `CEP-1` is ratified as execution authority
+- execution still remains governed by blocker gates and freeze policy
 
-Execution is gated because the current branch does **not** yet have a preserved, auditable consensus package for this synthesis-driven plan set.
+Execution is no longer blocked on planning authority.
+Execution is now governed by `CEP-1` plus the blocker gates and freeze policy defined inside it.
 
 ## Evidence
 
@@ -49,7 +51,7 @@ But the session directory only contains:
 
 There is no preserved architect-review artifact in that session directory, and there is no preserved critic-review artifact in that session directory that can be audited independently.
 
-### 3. The current synthesis branch is still draft-shaped
+### 3. The current synthesis branch required ratification work
 
 The current synthesis branch is represented mainly by:
 
@@ -57,7 +59,8 @@ The current synthesis branch is represented mainly by:
 - [ralplan-synthesis-execution-plan.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-synthesis-execution-plan.md:1)
 - [ralplan-task-breakdown-synthesis-from-assets.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-task-breakdown-synthesis-from-assets.md:1)
 
-These documents are useful and materially grounded, but they do not yet include the preserved review trail that would justify calling them a completed consensus package.
+These documents were useful and materially grounded, but originally lacked the preserved review trail needed for a completed consensus package.
+That gap is now addressed by the preserved ratification reviews listed below.
 
 ### 4. `.omx/plans/` is not currently the rich source
 
@@ -117,42 +120,133 @@ However, they are not sufficient by themselves as the sole authority for the cur
 - [docs/plans/ralplan-synthesis-execution-plan.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-synthesis-execution-plan.md:1)
 - [docs/plans/ralplan-task-breakdown-synthesis-from-assets.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-task-breakdown-synthesis-from-assets.md:1)
 
-This is the branch that should go through the next real consensus pass.
+This is the branch that went through the real consensus pass and now owns `CEP-1`.
 
-## Temporary authority model
+## Authority model
 
-Until the new consensus pass completes, the safest authority model is:
+The governing authority model is:
 
 1. `docs/discussions/` is the preserved research substrate.
 2. `docs/specs/asset-centric-control-plane.md` is the stable architectural constraint reference.
 3. `docs/plans/ralplan-input-synthesis-from-assets.md` is the current planner intake for the synthesis branch.
 4. `docs/plans/ralplan-synthesis-execution-plan.md` is the current lane-oriented execution draft.
 5. `docs/plans/ralplan-task-breakdown-synthesis-from-assets.md` is the current task-graph draft.
-6. This note is the safety gate and authority map until review completes.
+6. This note is the authority map and safety gate for execution.
+
+## Canonical execution package
+
+The active package is now explicitly named:
+
+- `CEP-1` = Canonical Execution Package 1
+
+`CEP-1` consists of:
+
+1. this note
+2. [docs/specs/asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/specs/asset-centric-control-plane.md:1)
+3. [docs/plans/ralplan-input-synthesis-from-assets.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-input-synthesis-from-assets.md:1)
+4. [docs/plans/ralplan-synthesis-execution-plan.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-synthesis-execution-plan.md:1)
+5. [docs/plans/ralplan-task-breakdown-synthesis-from-assets.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-task-breakdown-synthesis-from-assets.md:1)
+6. preserved named research inputs from `docs/discussions/`
+
+`CEP-1` is the ratified execution authority package for this branch.
+
+## Historical preservation map
+
+The following remain historical-but-preserved and are not execution authority for `CEP-1`:
+
+- [docs/plans/ralplan-input-test-asset-first.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-input-test-asset-first.md:1)
+- [docs/plans/prd-asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/prd-asset-centric-control-plane.md:1)
+- [docs/plans/test-spec-asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/test-spec-asset-centric-control-plane.md:1)
+
+These may inform verification language and comparison, but they may not silently override `CEP-1`.
+
+## Preserved review artifacts
+
+- [docs/plans/reviews/2026-04-19-architect-review-planning-integrity.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/reviews/2026-04-19-architect-review-planning-integrity.md:1)
+- [docs/plans/reviews/2026-04-19-critic-review-planning-integrity.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/reviews/2026-04-19-critic-review-planning-integrity.md:1)
+- [docs/plans/reviews/2026-04-19-architect-review-cep1-ratification.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/reviews/2026-04-19-architect-review-cep1-ratification.md:1)
+- [docs/plans/reviews/2026-04-19-critic-review-cep1-ratification.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/reviews/2026-04-19-critic-review-cep1-ratification.md:1)
+
+Current review state:
+
+- architect review exists and returned `ITERATE`
+- critic review attempt exists but returned procedural `REJECT`
+- a substantive critic pass returned `ITERATE`
+- a fresh architect ratification pass returned `APPROVE`
+- a fresh critic ratification pass returned `APPROVE`
+
+## Lane freeze policy
+
+The package is execution-safe only if the following freezes are explicit and enforced:
+
+- Freeze A: planning inputs freeze
+  - scope:
+    - rules manifest
+    - corpus manifest
+    - mock contract manifest
+  - must hold before:
+    - tasks `1.1` through `2.4`
+  - reopen authority:
+    - user
+    - planner with architect/critic follow-up
+  - required evidence to reopen:
+    - a concrete contradiction, missing invariant, or missing fixture class tied to named research input
+
+- Freeze B: contract freeze
+  - scope:
+    - package manifest type
+    - package validation boundaries
+    - provenance metadata model
+  - must hold before:
+    - tasks `3.1` through `4.2`
+  - reopen authority:
+    - user
+    - planner with architect approval
+  - required evidence to reopen:
+    - failing fixture class, broken first-proof criterion, or kernel-boundary violation
+
+- Freeze C: integration freeze
+  - scope:
+    - minimum real Hermes-facing path
+    - thin local surface obligations
+    - closed-loop readiness criteria
+  - must hold before:
+    - any `ralph` or `team` execution handoff
+  - reopen authority:
+    - user
+    - planner with critic approval
+  - required evidence to reopen:
+    - inability to satisfy Gate 4, or a contradiction with the stable spec first-proof loop
+
+## Unresolved-question register
+
+| ID | Question | Status | Blocker level | Owner | Closure condition |
+|---|---|---|---|---|---|
+| U1 | Should the final execution package remain a small document bundle or later collapse into one index doc? | open | non-blocking | planner | one canonical package name exists now; future merge only happens after execution proves stable |
+| U2 | What structured format should the first rules/corpus/mock manifests use? | open | blocking-before-Task-1.1 | planner + implementation lane A | manifest format chosen and written into Phase 0 outputs |
+| U3 | How much hosted/local surface is required beyond inspection plus one export/share trigger? | open | blocking-before-Task-4.2 | planner + surface lane E | thin-surface acceptance is frozen and reflected in Task 4.2 verification |
 
 ## Execution gate
 
-Do **not** enter `ralph`, `team`, or large-scale implementation until all of the following are true:
+`CEP-1` is now the governing execution authority.
 
-- a preserved planner artifact names the canonical synthesis branch inputs explicitly
-- a preserved architect review challenges boundaries, dependencies, and execution shape
-- a preserved critic review evaluates plan quality against those artifacts
-- the resulting package states clearly:
-  - what is canonical
-  - what remains historical but preserved
-  - what unresolved questions remain intentionally open
-  - which lane inputs are frozen enough for parallel work
+Do **not** bypass the blocker gates inside `CEP-1`:
+
+- `U2` must close before Task `1.1`
+- `U3` must close before Task `4.2`
+- Freeze A/B/C reopen rules remain mandatory during execution
 
 ## Immediate next step
 
-The next safe `ralplan` action is:
+The current `ralplan` action is complete:
 
-1. treat this note plus the three synthesis planning docs as the planner draft package
-2. run a real sequential `architect` review on that package
-3. revise if needed
-4. run a real sequential `critic` review on the revised package
-5. only then decide whether the branch is ready to become a canonical execution package
+1. planner package preserved
+2. architect and critic review artifacts preserved
+3. `CEP-1` ratified as execution authority
+4. future execution must respect blocker gates and freeze policy
 
 ## Changelog
 
 - Initial planning-integrity note created to restore auditability and preserve all prior work before any execution handoff.
+- Revised to define `CEP-1`, explicit lane freezes, and an execution-safe unresolved-question register.
+- Ratified `CEP-1` after fresh architect and critic approval.

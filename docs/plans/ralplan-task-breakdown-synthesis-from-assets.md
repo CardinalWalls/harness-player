@@ -1,8 +1,43 @@
 # RALPLAN Task Breakdown - Synthesis From Assets
 
-- Status: `approved-draft`
+- Status: `ratified-execution-authority`
 - Source: [ralplan-synthesis-execution-plan.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-synthesis-execution-plan.md:1)
 - Last-Mirrored-From: `2026-04-19`
+
+## Authority chain
+
+This task graph is only valid as part of the ratified canonical package:
+
+- [docs/plans/ralplan-planning-integrity-note.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-planning-integrity-note.md:1)
+- [docs/specs/asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/specs/asset-centric-control-plane.md:1)
+- [docs/plans/ralplan-input-synthesis-from-assets.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-input-synthesis-from-assets.md:1)
+- [docs/plans/ralplan-synthesis-execution-plan.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-synthesis-execution-plan.md:1)
+
+Do not treat this file alone as the full execution authority.
+
+## Canonical bundle declaration
+
+This task graph belongs to:
+
+- `CEP-1` = Canonical Execution Package 1
+
+`CEP-1` contains the integrity note, stable spec, synthesis planner intake, execution plan, this task graph, and the named research inputs consumed by those documents.
+
+## Historical but preserved branch
+
+The older `test-asset-first` branch remains preserved and available for cross-checking:
+
+- [docs/plans/ralplan-input-test-asset-first.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-input-test-asset-first.md:1)
+- [docs/plans/prd-asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/prd-asset-centric-control-plane.md:1)
+- [docs/plans/test-spec-asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/test-spec-asset-centric-control-plane.md:1)
+
+## Unresolved-question register
+
+| ID | Question | Status | Blocker level | Owner | Closure condition |
+|---|---|---|---|---|---|
+| U4 | Which manifest files remain prose-first versus structured data | open | blocking-before-Task-0.3-complete | lane A + planner | Phase 0 outputs define the file forms explicitly |
+| U5 | Whether the first user-facing surface is under `cmd/`, local web, or both | open | blocking-before-Task-4.2 | lane E + planner | surface choice is frozen before Task 4.2 starts |
+| U6 | How much real Hermes coupling is needed in Phase 4 beyond one event or loading path | open | blocking-before-Task-4.1-complete | lane D/lane E + planner | the minimum real path is frozen and reflected in Task 4.1 verification |
 
 ## Why this exists
 
@@ -241,8 +276,11 @@ Verification:
 
 - at least one fixture package yields:
   - agent list
+  - visible session summary
+  - visible channel summary
   - channel/interaction entrypoints
   - topology graph summary
+  - at least one derived projection summary
 
 ## Phase 3 - Real substrate code
 
@@ -314,8 +352,12 @@ Verification:
 
 - user can inspect at least:
   - package summary
+  - session summary
+  - channel summary
   - topology summary
+  - projection summary
   - lineage summary
+- user can route at least one control input through the thin surface
 
 ## Execution ordering
 
@@ -415,6 +457,17 @@ Pass when:
 - at least one mock path works end-to-end
 - at least one real Hermes-facing path works end-to-end
 - the result is inspectable through a thin local surface
+- at least one execution channel and one derived projection are visible
+- at least one human control input can be routed without reopening architecture scope
+
+## Lane freeze enforcement
+
+- Freeze A enters after Gate 1 passes.
+  - no lane may alter rules/corpus/mock manifest shape without planner review
+- Freeze B enters after Gate 2 passes.
+  - no lane may alter package/provenance contracts without planner review
+- Freeze C enters after Gate 4 design is frozen.
+  - no lane may redefine the minimum real Hermes path or thin-surface obligations without planner review
 
 ## Main planning judgment
 
@@ -428,3 +481,10 @@ And yes, the test assets are central to execution:
 - they should drive mock interfaces
 
 Without this task breakdown, the execution plan would be too high-level to safely feed `ralph` or `team`.
+
+## Changelog
+
+- Marked the task graph as `ratified-execution-authority` after the fresh ratification pass.
+- Embedded the authority chain and historical-preservation map directly in the task graph.
+- Added first-proof-loop verification requirements for session/channel/projection visibility and human control routing.
+- Added unresolved-question register and lane-freeze enforcement for `CEP-1`.

@@ -1,8 +1,81 @@
 # RALPLAN - Synthesis Execution Plan
 
-- Status: `approved-draft`
+- Status: `ratified-execution-authority`
 - Source: [ralplan-input-synthesis-from-assets.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-input-synthesis-from-assets.md:1)
 - Last-Mirrored-From: `2026-04-19`
+
+## Authority chain
+
+This document is part of the ratified execution authority only when read together with:
+
+- [docs/plans/ralplan-planning-integrity-note.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-planning-integrity-note.md:1)
+- [docs/specs/asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/specs/asset-centric-control-plane.md:1)
+- [docs/plans/ralplan-input-synthesis-from-assets.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-input-synthesis-from-assets.md:1)
+
+Do not treat this file alone as the full execution authority.
+
+## Canonical bundle declaration
+
+The current canonical execution package is:
+
+- `CEP-1` = Canonical Execution Package 1
+
+`CEP-1` contains:
+
+1. [docs/plans/ralplan-planning-integrity-note.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-planning-integrity-note.md:1)
+2. [docs/specs/asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/specs/asset-centric-control-plane.md:1)
+3. [docs/plans/ralplan-input-synthesis-from-assets.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-input-synthesis-from-assets.md:1)
+4. this execution plan
+5. [docs/plans/ralplan-task-breakdown-synthesis-from-assets.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-task-breakdown-synthesis-from-assets.md:1)
+6. the named research inputs listed by the planner intake
+
+## Historical but preserved branch
+
+The older `test-asset-first` planning branch remains available for comparison and constraint language, but it is not the sole authority for this execution path:
+
+- [docs/plans/ralplan-input-test-asset-first.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-input-test-asset-first.md:1)
+- [docs/plans/prd-asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/prd-asset-centric-control-plane.md:1)
+- [docs/plans/test-spec-asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/test-spec-asset-centric-control-plane.md:1)
+
+## Unresolved-question register
+
+| ID | Question | Status | Blocker level | Owner | Closure condition |
+|---|---|---|---|---|---|
+| U2 | Whether the first proof uses a dedicated `src/package/` module or keeps package semantics in `src/asset/` | open | blocking-before-Phase-1 | lane A + planner | package boundary is frozen before Task 1.1 implementation |
+| U4 | Precise file layout for first corpus and mock manifests inside the repo | open | blocking-before-Phase-0-complete | lane A/lane B + planner | file layout is committed in Phase 0 outputs |
+| U5 | Whether the first thin surface is CLI-first, local web-first, or a small dual surface | open | blocking-before-Phase-4 | lane E + planner | one surface choice is frozen before Task 4.2 starts |
+
+## Lane freeze schedule
+
+- Freeze A: planning inputs freeze after Phase 0
+  - freezes:
+    - rules manifest
+    - corpus manifest
+    - mock contract manifest
+  - required before:
+    - Phase 1 and Phase 2 implementation begins
+  - reopen only with:
+    - named contradiction against research inputs or missing invariant class
+
+- Freeze B: contract freeze after Phase 1
+  - freezes:
+    - package manifest shape
+    - provenance metadata model
+    - validation boundaries
+  - required before:
+    - Phase 3 and Phase 4 implementation begins
+  - reopen only with:
+    - failing fixture class, first-proof contradiction, or boundary violation
+
+- Freeze C: integration freeze after Task 4.1 / before execution handoff
+  - freezes:
+    - minimum real Hermes path
+    - thin local surface obligations
+    - Gate 4 closed-loop criteria
+  - required before:
+    - `ralph` or `team` handoff
+  - reopen only with:
+    - inability to satisfy Gate 4 or contradiction with stable spec first-proof loop
 
 ## Problem
 
@@ -253,8 +326,11 @@ Goal:
 Deliverables:
 
 - inspect package
+- inspect session and channel state
 - inspect topology
+- inspect projection visibility
 - inspect lineage
+- route one human control input
 - trigger export/share-like action
 
 Acceptance:
@@ -321,6 +397,8 @@ Plan but do not overbuild yet:
 
 - package, provenance, and capture boundaries do not collapse into Hermes internals
 - default external package remains free of raw runtime state
+- the first-proof loop still includes visible sessions, channels, and projections
+- the thin control surface still supports one human routing action without encoding Hermes-specific roles
 
 ### Code verification
 
@@ -335,6 +413,8 @@ When code changes begin, validate with:
 
 - at least one real Hermes-connected path exists
 - at least one mocked boundary exists for each heavy external interface
+- at least one execution channel and one derived projection are visible through the control-plane surface
+- at least one human control input can be routed without losing inspectability
 
 ## Risks and mitigations
 
@@ -365,3 +445,6 @@ When code changes begin, validate with:
   - what to implement in MoonBit
 - The plan preserves the current product identity from the interview outputs.
 - The next execution mode can start from this plan without reopening the same research questions.
+- The canonical bundle and historical-preservation map are explicit.
+- `CEP-1` is ratified as the execution authority, with blocker gates and freeze policy preserved.
+- The first-proof loop still proves session/channel/projection visibility and one human routing path, not only package/provenance inspection.

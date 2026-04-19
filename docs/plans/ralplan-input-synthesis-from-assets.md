@@ -1,8 +1,54 @@
 # RALPLAN Input - Synthesis From Assets
 
-- Status: `approved-draft`
+- Status: `ratified-execution-authority`
 - Source: `docs/discussions/2026-04-19-*`
 - Last-Mirrored-From: `2026-04-19`
+
+## Authority chain
+
+This document is part of the active synthesis planning package.
+Until a full `planner -> architect -> critic` pass completes, it must be read together with:
+
+- [docs/plans/ralplan-planning-integrity-note.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-planning-integrity-note.md:1)
+- [docs/specs/asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/specs/asset-centric-control-plane.md:1)
+- the named research inputs under `docs/discussions/`
+
+It is not yet a standalone execution authority.
+
+## Canonical bundle declaration
+
+The current canonical execution package is:
+
+- `CEP-1` = Canonical Execution Package 1
+
+`CEP-1` contains:
+
+1. [docs/plans/ralplan-planning-integrity-note.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-planning-integrity-note.md:1)
+2. [docs/specs/asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/specs/asset-centric-control-plane.md:1)
+3. this document
+4. [docs/plans/ralplan-synthesis-execution-plan.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-synthesis-execution-plan.md:1)
+5. [docs/plans/ralplan-task-breakdown-synthesis-from-assets.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-task-breakdown-synthesis-from-assets.md:1)
+6. preserved named research inputs from `docs/discussions/`
+
+`CEP-1` is ratified for execution handoff, subject to its blocker gates and freeze policy.
+
+## Historical but preserved branch
+
+The earlier `test-asset-first` branch remains preserved for constraints, PRD framing, and verification language:
+
+- [docs/plans/ralplan-input-test-asset-first.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/ralplan-input-test-asset-first.md:1)
+- [docs/plans/prd-asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/prd-asset-centric-control-plane.md:1)
+- [docs/plans/test-spec-asset-centric-control-plane.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/test-spec-asset-centric-control-plane.md:1)
+
+They are historical-but-preserved, not deleted and not the sole authority for the active synthesis branch.
+
+## Unresolved-question register
+
+| ID | Question | Status | Blocker level | Owner | Closure condition |
+|---|---|---|---|---|---|
+| U1 | Whether `CEP-1` should later collapse into one canonical index doc | open | non-blocking | planner | keep `CEP-1` bundle stable through first execution loop before reconsidering |
+| U2 | Exact structured format for the first `rules manifest`, `corpus manifest`, and `mock contract manifest` | open | blocking-before-Task-1.1 | lane A + planner | format chosen and recorded in Phase 0 outputs |
+| U3 | Required thin-surface scope beyond inspection and one export/share trigger | open | blocking-before-Task-4.2 | lane E + planner | Task 4.2 verification is frozen and ratified |
 
 ## Requirements Summary
 
@@ -221,3 +267,4 @@ Move from interview into planning using a synthesis-loop-first approach, grounde
   - what to wrap
   - what must be MoonBit-native
 - It identifies first execution lanes that are grounded in the seed rules, seed asset corpus, and seed mock boundaries.
+- It names `CEP-1`, the historical-but-preserved branch, and the unresolved questions that remain intentionally open.
