@@ -6,6 +6,12 @@ on:
       - opened
       - synchronize
       - reopened
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Pull request number to review
+        required: true
+        type: string
 
 jobs:
   codex_review:
@@ -14,16 +20,39 @@ jobs:
       contents: read
     outputs:
       final_message: ${{ steps.run_codex.outputs.final-message }}
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
     steps:
+      - name: Resolve PR metadata
+        id: pr_meta
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const prNumber = Number(process.env.PR_NUMBER)
+            if (!Number.isInteger(prNumber) || prNumber <= 0) {
+              core.setFailed(`Invalid PR number: ${process.env.PR_NUMBER}`)
+              return
+            }
+
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            })
+
+            core.setOutput('head_ref', pr.head.ref)
+            core.setOutput('base_ref', pr.base.ref)
+
       - name: Check out PR head commit
         uses: actions/checkout@v5
         with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/head
+          ref: refs/pull/${{ env.PR_NUMBER }}/head
           fetch-depth: 0
 
       - name: Fetch base ref for review scope
         env:
-          PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+          PR_BASE_REF: ${{ steps.pr_meta.outputs.base_ref }}
         run: |
           git fetch --no-tags origin "${PR_BASE_REF}:refs/remotes/origin/${PR_BASE_REF}"
           git diff --stat "origin/${PR_BASE_REF}...HEAD" >/dev/null
@@ -57,8 +86,8 @@ jobs:
           responses-api-endpoint: https://api.routin.ai/v1/responses
           prompt: |
             Review this pull request for a repository that combines OMX orchestration, MoonBit validation, and GitHub Actions.
-            Scope the review to the PR diff from `origin/${{ github.event.pull_request.base.ref }}` to `HEAD`.
-            Use `git diff origin/${{ github.event.pull_request.base.ref }}...HEAD` as the authoritative review scope.
+            Scope the review to the PR diff from `origin/${{ steps.pr_meta.outputs.base_ref }}` to `HEAD`.
+            Use `git diff origin/${{ steps.pr_meta.outputs.base_ref }}...HEAD` as the authoritative review scope.
             Focus on:
             - MoonBit correctness and validation gaps
             - GitHub Actions safety and permission scope
@@ -83,7 +112,7 @@ jobs:
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: context.issue.number,
+                issue_number: Number(process.env.PR_NUMBER || context.issue.number),
                 body: process.env.CODEX_FINAL_MESSAGE,
               })
             } catch (error) {
