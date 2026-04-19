@@ -38,8 +38,8 @@ echo "== moon test =="
 moon test
 
 echo
-echo "== moon fmt =="
-moon fmt
+echo "== moon fmt --check =="
+moon fmt --check
 
 echo
 echo "== moon info =="

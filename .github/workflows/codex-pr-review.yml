@@ -15,19 +15,17 @@ jobs:
     outputs:
       final_message: ${{ steps.run_codex.outputs.final-message }}
     steps:
-      - name: Check out PR merge commit
+      - name: Check out PR head commit
         uses: actions/checkout@v5
         with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+          ref: refs/pull/${{ github.event.pull_request.number }}/head
           fetch-depth: 0
 
-      - name: Pre-fetch PR refs
+      - name: Fetch base ref for review scope
         env:
           PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           git fetch --no-tags origin "${PR_BASE_REF}:refs/remotes/origin/${PR_BASE_REF}"
-          git fetch --no-tags origin "pull/${PR_NUMBER}/head:refs/remotes/origin/pr-${PR_NUMBER}-head"
           git diff --stat "origin/${PR_BASE_REF}...HEAD" >/dev/null
 
       - name: Set up MoonBit
@@ -81,9 +79,13 @@ jobs:
         with:
           github-token: ${{ github.token }}
           script: |
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: process.env.CODEX_FINAL_MESSAGE,
-            })
+            try {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: process.env.CODEX_FINAL_MESSAGE,
+              })
+            } catch (error) {
+              core.warning(`Unable to post Codex feedback: ${error.message}`)
+            }
