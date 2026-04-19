@@ -4,6 +4,7 @@ import {
   "yetian/finall_start_100_commits/src/asset" @asset,
   "yetian/finall_start_100_commits/src/capture" @capture,
   "yetian/finall_start_100_commits/src/control" @control,
+  "yetian/finall_start_100_commits/src/mock" @mock,
   "yetian/finall_start_100_commits/src/package" @pkg,
   "yetian/finall_start_100_commits/src/provenance" @provenance,
   "yetian/finall_start_100_commits/src/topology" @topology,

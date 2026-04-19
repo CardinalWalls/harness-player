@@ -1,5 +1,6 @@
 import {
   "moonbitlang/core/env",
+  "moonbitlang/x/fs" @fs,
   "yetian/finall_start_100_commits" @lib,
 }
 

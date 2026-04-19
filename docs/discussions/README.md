@@ -22,6 +22,8 @@ Current notes:
 - `2026-04-19-first-wave-concrete-asset-sources.md`
 - `2026-04-19-interview-handoff-note.md`
 - `2026-04-19-interview-stage-work-plan.md`
+- `2026-04-19-omx-automation-friction-summary.md`
+- `2026-04-19-omx-autopilot-trigger-investigation.md`
 - `2026-04-19-per-source-extraction-notes.md`
 - `2026-04-19-research-coverage-manifest.md`
 - `2026-04-19-seed-asset-corpus-candidates.md`

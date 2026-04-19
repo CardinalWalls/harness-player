@@ -43,7 +43,7 @@ The older `test-asset-first` planning branch remains available for comparison an
 |---|---|---|---|---|---|
 | U2 | Exact structured format for the first `rules manifest`, `corpus manifest`, and `mock contract manifest` | closed | resolved-in-Phase-0 | lane A + planner | closed by the structured YAML manifests committed under `docs/manifests/phase-0/` |
 | U4 | Precise file layout for first corpus and mock manifests inside the repo | closed | resolved-in-Phase-0 | lane A/lane B + planner | closed by the committed `docs/manifests/phase-0/` layout and its README |
-| U5 | Whether the first thin surface is CLI-first, local web-first, or a small dual surface | open | blocking-before-Phase-4 | lane E + planner | one surface choice is frozen before Task 4.2 starts |
+| U5 | Whether the first thin surface is CLI-first, local web-first, or a small dual surface | closed | resolved-in-Phase-4 | lane E + planner | closed by the CLI-first surface under `cmd/main/` and the Freeze C handoff note before Task 4.2 execution handoff |
 | U6 | Whether the first proof uses a dedicated `src/package/` module or keeps package semantics in `src/asset/` | closed | resolved-in-Phase-1 | lane A + planner | closed by the dedicated `src/package/` module and its package/validation tests |
 
 ## Lane freeze schedule

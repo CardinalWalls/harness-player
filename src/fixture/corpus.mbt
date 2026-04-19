@@ -339,9 +339,9 @@ pub fn first_wave_corpus() -> FirstWaveCorpus {
       "pkg-custom-hybrid-composition", "v1", "topology/custom-hybrid-composition",
       "docs/discussions/2026-04-19-topology-defaults-and-test-asset-priority.md",
       "docs/discussions/2026-04-19-test-assets-and-mock-boundaries.md", "mixed edge vocabulary",
-      "template-plus-custom coexistence", "topology extensibility without schema breakage",
+      "curated hybrid coexistence", "structural coverage beyond single-family samples",
       "custom runtime wiring details stay outside topology", "one-off run context stays outside topology",
-      "Captures the explicit requirement that users may go beyond the built-in pattern families.",
+      "Preserves one curated hybrid sample so the first-wave corpus covers more than single-family topologies.",
     ),
   }
 }

@@ -97,7 +97,14 @@ process_rows="$(mktemp)"
 duplicate_rows="$(mktemp)"
 trap 'rm -f "$process_rows" "$duplicate_rows"' EXIT
 
-list_mcp_processes >"$process_rows"
+if ! list_mcp_processes >"$process_rows"; then
+  if [ "$WARN_ONLY" -eq 1 ]; then
+    echo "Warning only: unable to inspect OMX MCP server processes in this environment."
+    echo "Proceeding without duplicate sibling detection."
+    exit 0
+  fi
+  exit 2
+fi
 
 if [ ! -s "$process_rows" ]; then
   echo "No OMX MCP server processes found."

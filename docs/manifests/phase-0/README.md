@@ -31,18 +31,25 @@ This layout closes the Phase 0 file-placement question for the first execution l
 
 ## Topology note
 
-`topology-manifest.yaml` is intentionally marked `working-default` rather than `frozen`.
+`topology-manifest.yaml` is now frozen for Phase 0 as a bounded six-fixture
+test-asset lane.
 
 Reason:
 
-- Phase 0 already froze skill/provenance corpus, rule, and mock-boundary outputs.
-- Topology was still the weakest and least grounded shareable object.
-- The topology manifest is therefore a structured collection slate derived from the latest interview conclusion, not a claim that the final topology schema is settled.
+- the repository already materializes the six first-wave topology fixtures locally
+- existing tests already prove the package and graph seams for this lane
+- freezing the lane keeps topology in the content-and-fixture domain instead of reopening protocol design
+
+What this freeze means:
+
+- the six current topology items are the authoritative first-wave corpus
+- the corpus is intentionally structural and keeps runtime/provider state outside topology objects
+- the curated `custom-hybrid-composition` sample exists for coverage, not as a promise of live topology authoring in Phase 0
 
 Use it to drive:
 
-- first-wave topology asset harvesting
-- fixture generation planning
+- first-wave topology fixture validation
+- fixture generation and regression planning
 - package-vs-profile-vs-runtime boundary review
 
 ## Phase 2 conformance anchors

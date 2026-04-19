@@ -2,12 +2,12 @@
 
 ## Status
 
-- `working-default`
-- intended as a practical interview conclusion for later planning
+- `frozen`
+- phase-0 authority note for the six-fixture topology corpus
 
 ## Purpose
 
-This note records a default decision that reduces interview uncertainty without pretending every topology question is fully settled.
+This note records the frozen phase-0 decision for topology as a bounded test-asset lane.
 
 It exists because the project already has stronger concrete material for:
 
@@ -19,14 +19,14 @@ but still has a weaker and more ambiguous story for:
 - `topology`
 - profile-like runtime binding assets
 
-The goal is to give later planning and test-asset collection a usable default.
+The goal is to give later planning and test-asset validation one explicit authority source.
 
 ## Input that motivated this note
 
 Recent clarification established two important constraints:
 
-- the project should not force one fixed topology for all users
-- the system should allow built-in coordination patterns, parameterized variants, and fully custom or hybrid graphs
+- the project should treat topology as structural content first
+- the current phase should stop at a bounded fixture corpus rather than reopen topology authoring or protocol design
 
 Anthropic's `2026-04-10` article `Multi-agent coordination patterns: Five approaches and when to use them` is useful here as a pattern vocabulary rather than a product law.
 
@@ -44,9 +44,9 @@ The article's practical guidance also fits this repo well:
 - treat patterns as composable building blocks
 - evolve only when the simpler shape becomes a real bottleneck
 
-## Working default
+## Frozen phase-0 position
 
-For this repository, `topology` should default to a structural coordination object.
+For this repository, `topology` is frozen in Phase 0 as a structural coordination object expressed through six curated fixtures.
 
 That means:
 
@@ -55,35 +55,7 @@ That means:
 - it describes how a run begins and ends
 - it does **not** default to carrying host-runtime, session, or provider details
 
-This default preserves user flexibility without collapsing all concerns into one file or type.
-
-## Three supported topology sources
-
-The project should assume all three are legitimate:
-
-### 1. Built-in pattern templates
-
-Examples:
-
-- a stock `generator-verifier` layout
-- a stock `orchestrator-subagent` layout
-- a stock `shared-state` layout
-
-### 2. Parameterized pattern instances
-
-Examples:
-
-- a verifier loop with custom acceptance criteria
-- an orchestrator pattern with user-defined specialist roles
-- a message-bus pattern with custom topics and trigger rules
-
-### 3. Custom or hybrid topologies
-
-Examples:
-
-- `orchestrator-subagent` plus a shared scratchpad
-- `message bus` for event routing plus `generator-verifier` for quality gates
-- a graph that does not fit any single named pattern cleanly
+This freeze preserves the structural split without reopening user-customizable topology sources for Phase 0.
 
 ## Layer split
 
@@ -193,13 +165,11 @@ These belong more naturally to:
 
 ## Consequence for test-asset collection
 
-The next test-asset gap is not generic "more assets."
+The current Phase-0 topology corpus is now fixed:
 
-The next gap is:
-
-- a topology corpus with enough range to stress the structure layer
-
-That corpus should treat Anthropic's five coordination patterns as the first mother set, then add one explicit custom/hybrid class.
+- Anthropic's five coordination pattern families provide the first mother set
+- one curated `custom-hybrid` sample provides structural coverage beyond single-family cases
+- this freeze does not imply parameterized or user-authored topology support in the current phase
 
 ## First-wave topology corpus classes
 
@@ -240,8 +210,8 @@ Why collect:
 
 Why collect:
 
-- prevents the product from assuming the five named patterns are exhaustive
-- captures the user-customization requirement directly
+- prevents the corpus from assuming the five named patterns are exhaustive
+- preserves one curated hybrid sample without turning Phase 0 into a customization lane
 
 ## What to record for each topology asset
 
@@ -257,6 +227,15 @@ Each first-wave topology sample should record:
 - shared surface assumptions
 - what was intentionally left to `profile`
 - what was intentionally left to runtime state
+
+## Non-goals for this phase
+
+This note does not authorize:
+
+- user-configurable topology authoring
+- parameterized topology variants
+- topology protocol or DSL expansion
+- live runtime import/export of topology graphs
 
 ## Collection priority
 
@@ -300,11 +279,11 @@ Those are still planning questions.
 
 ## Main judgment
 
-The most useful interview conclusion is not "decide one topology."
+The most useful phase-0 conclusion is not "design the final topology system."
 
 It is:
 
 - treat topology as the structure layer
-- allow template, parameterized, and custom/hybrid forms
-- use the five Anthropic coordination patterns as the first topology corpus baseline
+- freeze the six-item first-wave corpus as the current topology authority
+- use the five Anthropic coordination patterns plus one curated hybrid sample as the baseline
 - continue keeping runtime binding and ephemeral execution state outside topology by default

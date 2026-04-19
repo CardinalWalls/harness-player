@@ -7,11 +7,11 @@
 
 - [ ] `omx doctor`
 - [ ] `CODEX_HOME=.codex codex login status`
-- [ ] `moon check`
-- [ ] `moon test`
-- [ ] `moon fmt`
-- [ ] `moon info`
-- [ ] `moon coverage analyze -- -f html -o coverage.html`
+- [ ] If MoonBit-owned product surfaces changed: `moon check`
+- [ ] If MoonBit-owned product surfaces changed: `moon test`
+- [ ] If MoonBit-owned product surfaces changed: `moon fmt`
+- [ ] If MoonBit-owned product surfaces changed: `moon info`
+- [ ] If release/preflight proof was requested: `moon coverage analyze -- -f html -o coverage.html`
 
 ## GitHub Expectations
 
@@ -21,4 +21,5 @@
 ## Notes
 
 - Any local-only validation notes
+- Say explicitly whether MoonBit-owned product surfaces changed
 - Any known remote-only limits or assumptions

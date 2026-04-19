@@ -1,6 +1,6 @@
 ---
 name: moonbit-omx-github-workflow
-description: Guide for repositories that combine MoonBit development, OMX orchestration, and GitHub PR/CI workflows. Use when implementing MoonBit code, validating with `moon check` or `moon test`, wiring MoonBit work into OMX workflows like deep-interview, ralplan, team, or ralph, or maintaining GitHub Actions for MoonBit CI and Codex PR review.
+description: Guide for repositories that combine MoonBit development, OMX orchestration, and GitHub PR/CI workflows when MoonBit-owned product surfaces are actually in scope. Do not force this skill for pure OMX/runtime or thin workflow-wrapper work that leaves MoonBit-owned product code unchanged.
 ---
 
 # MoonBit + OMX + GitHub Workflow
@@ -10,9 +10,11 @@ Use this skill whenever the task spans any two or more of:
 - OMX workflows and runtime setup
 - GitHub Actions, PR automation, or CI work
 
+If the task is only about OMX/runtime routing or only about a thin workflow wrapper, and MoonBit-owned product surfaces are unchanged, use the narrower lane instead.
+
 ## Layer Model
 
-- MoonBit is the implementation and validation layer.
+- MoonBit is the implementation and validation layer for the structured product substrate and MoonBit-backed CLI/product behavior, not every runtime boundary.
 - OMX is the orchestration layer.
 - GitHub Actions is the platform automation layer.
 
@@ -20,7 +22,7 @@ Do not collapse these layers into one another.
 
 ## Required Validation
 
-For code changes, run and read:
+For MoonBit-scoped code changes, or when the task explicitly asks for release/preflight proof, run and read:
 
 ```bash
 moon check
@@ -38,13 +40,15 @@ For GitHub workflows, validate locally as far as practical by:
 - ensuring referenced tools/actions exist and are spelled correctly
 - confirming the local repo actually contains the files and commands the workflow expects
 
+For pure workflow-wrapper changes that do not alter MoonBit-owned product surfaces, this local workflow validation may be sufficient without rerunning the full MoonBit lane.
+
 ## GitHub Workflow Expectations
 
 This repo uses two workflow surfaces:
 
 - `moonbit-ci.yml`
   - installs MoonBit
-  - runs MoonBit validation commands
+  - runs MoonBit validation commands for MoonBit-owned product surfaces and release/preflight readiness
 
 - `codex-pr-review.yml`
   - runs Codex from GitHub Actions on PR events
@@ -68,13 +72,15 @@ Use OMX for:
 - parallel execution
 - persistence and verification loops
 
-Do not use OMX success alone as a completion signal. Always return to MoonBit validation.
+Do not use OMX success alone as a completion signal when MoonBit-owned product surfaces are in scope.
+
+Do not use MoonBit validation as the reflexive completion signal for pure OMX/runtime/hook/tmux/auth/wrapper issues that never touched MoonBit-owned product surfaces.
 
 ## Completion Standard
 
 A task is ready for PR validation when:
 - OMX project readiness is green
-- MoonBit commands pass locally
+- MoonBit commands pass locally when MoonBit-owned product surfaces are in scope
 - coverage report generation succeeds locally
 - GitHub workflow files are present and internally coherent
 - any non-local portion is clearly labeled as locally validated rather than executed live

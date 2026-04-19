@@ -1,6 +1,6 @@
 ---
 name: Development Task
-about: Plan and implement an OMX + MoonBit + GitHub workflow change
+about: Plan and implement a repository change across OMX, MoonBit-owned product code, and/or GitHub workflow surfaces
 title: "[dev] "
 labels: enhancement
 assignees: ""
@@ -18,7 +18,7 @@ Describe the development objective.
 ## Expected Commands
 
 - OMX:
-- MoonBit:
+- MoonBit (only if MoonBit-owned product surfaces are in scope):
 - GitHub workflows:
 
 ## Success Criteria

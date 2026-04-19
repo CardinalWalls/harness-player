@@ -48,7 +48,7 @@ They are historical-but-preserved, not deleted and not the sole authority for th
 |---|---|---|---|---|---|
 | U1 | Whether `CEP-1` should later collapse into one canonical index doc | open | non-blocking | planner | keep `CEP-1` bundle stable through first execution loop before reconsidering |
 | U2 | Exact structured format for the first `rules manifest`, `corpus manifest`, and `mock contract manifest` | closed | resolved-in-Phase-0 | lane A + planner | closed by structured YAML manifests under `docs/manifests/phase-0/` plus the layout note in `docs/manifests/phase-0/README.md` |
-| U3 | Required thin-surface scope beyond inspection and one export/share trigger | open | blocking-before-Task-4.2 | lane E + planner | Task 4.2 verification is frozen and ratified |
+| U3 | Required thin-surface scope beyond inspection and one export/share trigger | closed | resolved-in-Phase-4 | lane E + planner | closed by the CLI-first Freeze C handoff, the persisted materialized-export path, and Task 4.2 verification being frozen and ratified |
 
 ## Phase 0 outputs
 

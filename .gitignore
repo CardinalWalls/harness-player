@@ -1,5 +1,9 @@
 .omx/
 .codex/
+.mooncakes/
+artifacts/materialized-exports/
+ralph
+team
 _build/
 coverage.html/
 pkg.generated.mbti

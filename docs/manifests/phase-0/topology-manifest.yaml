@@ -1,7 +1,7 @@
 manifest_kind: topology-manifest
 schema_version: 1
 phase: 0
-status: working-default
+status: frozen
 derived_from:
   - docs/discussions/2026-04-19-topology-defaults-and-test-asset-priority.md
   - docs/discussions/2026-04-19-seed-asset-corpus-candidates.md
@@ -9,8 +9,9 @@ derived_from:
 decision_record:
   structured_format: yaml
   rationale:
-    - Freeze a practical first-wave topology collection slate without pretending the final package manifest is complete.
+    - Freeze the phase-0 topology lane as a bounded six-fixture test corpus for validation and fixture materialization.
     - Keep topology structural by default and leave runtime/provider state to profile or execution surfaces.
+    - Treat the hybrid example as a curated coverage sample, not as a live customization promise for this phase.
   required_item_fields:
     - id
     - pattern_family
@@ -125,12 +126,12 @@ topology_items:
       - docs/discussions/2026-04-19-test-assets-and-mock-boundaries.md
     validation_targets:
       - mixed edge vocabulary
-      - template-plus-custom coexistence
+      - curated hybrid coexistence
       - non-canonical pattern labeling
-      - topology extensibility without schema breakage
+      - structural coverage beyond single-family samples
     profile_boundary:
       - custom runtime wiring details stay outside topology
     runtime_state_boundary:
       - one-off run context stays outside topology
-    inclusion_reason: Captures the explicit requirement that users may go beyond the built-in pattern families.
+    inclusion_reason: Preserves one curated hybrid sample so the first-wave corpus covers more than single-family topologies.
     status: approved-first-wave

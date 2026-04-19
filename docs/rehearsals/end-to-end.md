@@ -25,18 +25,23 @@ Establish that:
    bash ./scripts/verify-preflight.sh
    ```
 
-4. Start an OMX session:
+4. Start the repository automation lane:
 
    ```bash
-   omx --madmax --high
+   bash ./scripts/omx-takeover.sh --auto
    ```
 
-5. In the OMX session, drive the implementation flow:
+   If duplicate OMX MCP siblings or transport residue have been repeating,
+   use the clean-start variant from an external terminal instead:
+
+   ```bash
+   bash ./scripts/omx-takeover.sh --restart --auto
+   ```
+
+5. If you need the highest-end official workflow, drive the implementation flow with:
 
    ```text
-   deep-interview "clarify the task"
-   ralplan "approve the implementation and verification path"
-   ralph "carry the approved change to completion"
+   $ralplan -> $team -> $ralph
    ```
 
 6. Make a small MoonBit change or workflow-aligned repository change.

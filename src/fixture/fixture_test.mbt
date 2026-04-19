@@ -125,7 +125,7 @@ test "topology fixtures preserve first-wave structural defaults locally" {
     @fixture.topology_fixture_materialization_key(
       corpus.custom_hybrid_composition,
     ),
-    content="custom-hybrid-composition|custom-hybrid|synthesize-from-primitives|approved-first-wave|topology/custom-hybrid-composition|mixed edge vocabulary|template-plus-custom coexistence|topology extensibility without schema breakage",
+    content="custom-hybrid-composition|custom-hybrid|synthesize-from-primitives|approved-first-wave|topology/custom-hybrid-composition|mixed edge vocabulary|curated hybrid coexistence|structural coverage beyond single-family samples",
   )
 }
 
@@ -141,6 +141,8 @@ test "topology fixtures remain compatible with topology package subjects" {
     @package.package_manifest_key(manifest),
     content="pkg-message-bus-event-routing@v1|topology|topology/message-bus-event-routing|||fixture/message-bus-event-routing",
   )
+  inspect(manifest.profile_ref, content="")
+  inspect(manifest.topology_ref, content="")
   inspect(@package.manifest_is_valid(manifest), content="true")
 }
 
@@ -155,5 +157,23 @@ test "topology fixtures derive graph keys without runtime-owned state" {
   inspect(
     @fixture.topology_fixture_graph_key(corpus.shared_state_research_slate),
     content="sessions=1;channels=1;projections=1;subscriptions=1;root=shared-state-research-slate/channel://topology/shared-state-research-slate",
+  )
+  inspect(
+    @fixture.topology_fixture_graph_key(corpus.agent_teams_partitioned_work).contains(
+      "profile",
+    ),
+    content="false",
+  )
+  inspect(
+    @fixture.topology_fixture_graph_key(corpus.agent_teams_partitioned_work).contains(
+      "runtime",
+    ),
+    content="false",
+  )
+  inspect(
+    @fixture.topology_fixture_graph_key(corpus.agent_teams_partitioned_work).contains(
+      "provider",
+    ),
+    content="false",
   )
 }
