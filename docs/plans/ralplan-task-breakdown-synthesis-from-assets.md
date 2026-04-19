@@ -36,8 +36,8 @@ The older `test-asset-first` branch remains preserved and available for cross-ch
 | ID | Question | Status | Blocker level | Owner | Closure condition |
 |---|---|---|---|---|---|
 | U4 | Which manifest files remain prose-first versus structured data | closed | resolved-in-Phase-0 | lane A + planner | all three Phase 0 manifests are frozen as structured YAML under `docs/manifests/phase-0/` |
-| U5 | Whether the first user-facing surface is under `cmd/`, local web, or both | open | blocking-before-Task-4.2 | lane E + planner | surface choice is frozen before Task 4.2 starts |
-| U6 | How much real Hermes coupling is needed in Phase 4 beyond one event or loading path | open | blocking-before-Task-4.1-complete | lane D/lane E + planner | the minimum real path is frozen and reflected in Task 4.1 verification |
+| U5 | Whether the first user-facing surface is under `cmd/`, local web, or both | closed | resolved-in-Phase-4 | lane E + planner | closed by the CLI-first surface under `cmd/main/` and the Freeze C handoff note |
+| U6 | How much real Hermes coupling is needed in Phase 4 beyond one event or loading path | closed | resolved-in-Phase-4 | lane D/lane E + planner | closed by freezing the `emit_runtime_event -> normalize_runtime_event` path in the Freeze C handoff note |
 
 ## Why this exists
 
@@ -388,6 +388,20 @@ Minimum acceptable real path:
 
 - one skill/profile/topology-related event or loading path from Hermes-side reality
 
+Status:
+
+- completed on `2026-04-19`
+
+Implemented in:
+
+- [src/adapter/hermes/event.mbt](/Users/yetian/Desktop/finall-start-100-commits/src/adapter/hermes/event.mbt:1)
+- [src/capture/record.mbt](/Users/yetian/Desktop/finall-start-100-commits/src/capture/record.mbt:1)
+- [src/adapter/hermes/adapter_hermes_test.mbt](/Users/yetian/Desktop/finall-start-100-commits/src/adapter/hermes/adapter_hermes_test.mbt:1)
+
+Frozen by:
+
+- [docs/plans/phase-4-freeze-c-handoff.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/phase-4-freeze-c-handoff.md:1)
+
 Verification:
 
 - the event reaches our normalized capture or package layer
@@ -397,6 +411,20 @@ Verification:
 Goal:
 
 - inspect package, topology, and lineage through a real user-facing surface
+
+Status:
+
+- completed on `2026-04-19`
+
+Implemented in:
+
+- [cmd/main/main.mbt](/Users/yetian/Desktop/finall-start-100-commits/cmd/main/main.mbt:1)
+- [finall_start_100_commits.mbt](/Users/yetian/Desktop/finall-start-100-commits/finall_start_100_commits.mbt:1)
+- [finall_start_100_commits_test.mbt](/Users/yetian/Desktop/finall-start-100-commits/finall_start_100_commits_test.mbt:1)
+
+Frozen by:
+
+- [docs/plans/phase-4-freeze-c-handoff.md](/Users/yetian/Desktop/finall-start-100-commits/docs/plans/phase-4-freeze-c-handoff.md:1)
 
 Verification:
 

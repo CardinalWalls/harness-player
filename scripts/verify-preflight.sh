@@ -26,6 +26,22 @@ else
 fi
 
 echo
+echo "== repo-local omx exec smoke =="
+if command -v omx >/dev/null 2>&1; then
+  # Current desktop/runtime path needs these disabled to avoid chatgpt.com plugin
+  # marketplace and analytics 403s during non-interactive smoke checks.
+  omx exec \
+    --disable plugins \
+    --disable apps \
+    --disable general_analytics \
+    --skip-git-repo-check \
+    -C . \
+    "Reply with exactly OMX-EXEC-OK"
+else
+  echo "skipped: omx is not installed locally"
+fi
+
+echo
 echo "== moon version =="
 moon version
 
