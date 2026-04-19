@@ -11,7 +11,8 @@ It combines three layers in one place:
 ## What is already wired
 
 - Project planning artifacts under `docs/`
-- Project-local OMX setup under `.codex/` and `.omx/`
+- Project-local OMX state under `.omx/`
+- Repo-tracked skill source under `skills/`
 - Repo-local workflow skills under `skills/`
 - A minimal MoonBit package that supports real validation
 - GitHub workflows for:

@@ -66,5 +66,5 @@ These usually **do** count as completion:
 ## Repo-local Notes
 
 - Treat `skills/` as the source-of-truth for local custom skills.
-- Treat `.codex/skills/` as the runtime skill surface.
+- Treat any `.codex/skills/` mirror as local runtime setup, not tracked source.
 - Do not modify `1 raw discussion about the scope/` unless the user explicitly asks.

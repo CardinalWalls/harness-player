@@ -5,7 +5,7 @@ This file applies to `/Users/yetian/Desktop/finall-start-100-commits/skills`.
 ## Purpose
 
 - Keep repo-local skills here as source-of-truth.
-- Runtime-facing copies or links live under `.codex/skills/`.
+- Runtime-facing copies or links may be created locally under `.codex/skills/`, but `skills/` remains the only tracked source-of-truth.
 
 ## Rules
 

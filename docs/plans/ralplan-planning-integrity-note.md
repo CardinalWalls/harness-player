@@ -33,7 +33,7 @@ Execution is now governed by `CEP-1` plus the blocker gates and freeze policy de
 
 ### 1. Ralplan requires a real consensus loop
 
-The repo-local runtime skill [`.codex/skills/ralplan/SKILL.md`](/Users/yetian/Desktop/finall-start-100-commits/.codex/skills/ralplan/SKILL.md:1) requires:
+The repo-local skill [skills/moonbit-omx-github-workflow/SKILL.md](/Users/yetian/Desktop/finall-start-100-commits/skills/moonbit-omx-github-workflow/SKILL.md:1) and the installed OMX `ralplan` workflow contract together require:
 
 - Planner draft first
 - Architect review second
