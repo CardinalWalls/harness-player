@@ -1,0 +1,7 @@
+import {
+  "yetian/finall_start_100_commits" @lib,
+}
+
+options(
+  "is-main": true,
+)
