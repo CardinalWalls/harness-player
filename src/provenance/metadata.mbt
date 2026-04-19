@@ -46,6 +46,18 @@ pub fn checkpoint_metadata_key(metadata : CheckpointMetadata) -> String {
 }
 
 ///|
+/// Return the stable checkpoint identifier for boundary crossing code.
+pub fn checkpoint_id_of(metadata : CheckpointMetadata) -> String {
+  metadata.checkpoint_id
+}
+
+///|
+/// Return the durable lineage reference attached to checkpoint metadata.
+pub fn checkpoint_durable_ref(metadata : CheckpointMetadata) -> LineageRef {
+  metadata.durable_ref
+}
+
+///|
 /// Whether the checkpoint metadata has an explicit parent link.
 pub fn checkpoint_has_parent(metadata : CheckpointMetadata) -> Bool {
   metadata.parent_checkpoint_id != ""

@@ -107,3 +107,59 @@ test "validation boundaries fail cleanly for malformed manifests" {
   )
   inspect(@package.manifest_is_valid(manifest), content="false")
 }
+
+///|
+test "shareable package objects carry export metadata without runtime payload state" {
+  let manifest = @package.package_manifest(
+    "pkg-coach-survival",
+    "v2",
+    @package.skill_subject("coach-survival@v2"),
+    "profile/default",
+    "topology/story-loop",
+    "commit-9",
+  )
+  let bundle = @package.shareable_package(
+    manifest,
+    "Coach Survival",
+    "export://packages/pkg-coach-survival/v2",
+    "checkpoint-9",
+    @provenance.commit_ref("commit-9"),
+  )
+
+  inspect(
+    @package.shareable_package_key(bundle),
+    content="pkg-coach-survival@v2|skill|coach-survival@v2|profile/default|topology/story-loop|commit-9|Coach Survival|export://packages/pkg-coach-survival/v2|checkpoint-9|commit-9",
+  )
+  inspect(@package.shareable_package_subject_kind(bundle), content="skill")
+  inspect(@package.shareable_package_durable_ref(bundle), content="commit-9")
+  inspect(@package.shareable_package_is_valid(bundle), content="true")
+
+  match @package.imported_manifest(bundle) {
+    Some(imported) =>
+      inspect(
+        @package.package_manifest_key(imported),
+        content="pkg-coach-survival@v2|skill|coach-survival@v2|profile/default|topology/story-loop|commit-9",
+      )
+    None => fail("expected shareable package import to succeed")
+  }
+}
+
+///|
+test "shareable package validation rejects missing export linkage" {
+  let bundle = @package.shareable_package(
+    @package.package_manifest(
+      "pkg-default-profile",
+      "v1",
+      @package.profile_subject("profile/default"),
+      "",
+      "topology/story-loop",
+      "commit-1",
+    ),
+    "",
+    "",
+    "",
+    @provenance.commit_ref(""),
+  )
+
+  inspect(@package.shareable_package_is_valid(bundle), content="false")
+}

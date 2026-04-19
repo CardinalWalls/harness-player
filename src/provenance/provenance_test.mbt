@@ -59,3 +59,50 @@ test "checkpoint metadata links capture surfaces to durable lineage refs" {
   )
   inspect(@provenance.checkpoint_has_parent(metadata), content="true")
 }
+
+///|
+test "checkpoint materialization keeps provenance on the MoonBit-native Git path" {
+  let commit = @asset.asset_commit(
+    "commit-9",
+    @asset.checkpoint_commit_kind(),
+    "coach-survival@v1",
+    "saved a durable checkpoint",
+  )
+  let lineage = @provenance.child_lineage_node("commit-9", "main", "commit-8")
+  let metadata = @provenance.checkpoint_metadata(
+    "checkpoint-9",
+    "coach-survival@v1",
+    "main",
+    "session-9",
+    "channel-9",
+    "projection-9",
+    @provenance.snapshot_ref("snapshot-9"),
+    @provenance.commit_ref("commit-9"),
+    "checkpoint-8",
+  )
+  let materialized = @provenance.materialize_checkpoint(
+    commit, lineage, metadata,
+  )
+
+  inspect(
+    @provenance.materialized_checkpoint_key(materialized),
+    content="coach-survival@v1|commit-9|main|commit-8|checkpoint-9|coach-survival@v1|main|session-9|channel-9|projection-9|snapshot-9|commit-9|checkpoint-8|metadata-branch-write|moonbit-native|commit-9",
+  )
+}
+
+///|
+test "host bridge sync routes to compatibility fallback explicitly" {
+  let route = @provenance.route_materialization(
+    @provenance.host_bridge_sync_operation(),
+  )
+
+  inspect(
+    @provenance.materialization_operation_name(route.operation),
+    content="host-bridge-sync",
+  )
+  inspect(
+    @provenance.git_backend_name(route.backend),
+    content="compatibility-fallback",
+  )
+  inspect(@provenance.route_uses_fallback(route), content="true")
+}
