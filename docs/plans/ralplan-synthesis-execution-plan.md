@@ -41,9 +41,10 @@ The older `test-asset-first` planning branch remains available for comparison an
 
 | ID | Question | Status | Blocker level | Owner | Closure condition |
 |---|---|---|---|---|---|
-| U2 | Whether the first proof uses a dedicated `src/package/` module or keeps package semantics in `src/asset/` | open | blocking-before-Phase-1 | lane A + planner | package boundary is frozen before Task 1.1 implementation |
-| U4 | Precise file layout for first corpus and mock manifests inside the repo | open | blocking-before-Phase-0-complete | lane A/lane B + planner | file layout is committed in Phase 0 outputs |
+| U2 | Exact structured format for the first `rules manifest`, `corpus manifest`, and `mock contract manifest` | closed | resolved-in-Phase-0 | lane A + planner | closed by the structured YAML manifests committed under `docs/manifests/phase-0/` |
+| U4 | Precise file layout for first corpus and mock manifests inside the repo | closed | resolved-in-Phase-0 | lane A/lane B + planner | closed by the committed `docs/manifests/phase-0/` layout and its README |
 | U5 | Whether the first thin surface is CLI-first, local web-first, or a small dual surface | open | blocking-before-Phase-4 | lane E + planner | one surface choice is frozen before Task 4.2 starts |
+| U6 | Whether the first proof uses a dedicated `src/package/` module or keeps package semantics in `src/asset/` | closed | resolved-in-Phase-1 | lane A + planner | closed by the dedicated `src/package/` module and its package/validation tests |
 
 ## Lane freeze schedule
 
@@ -344,9 +345,14 @@ Acceptance:
 
 Complete:
 
-- corpus manifest
-- rules manifest
-- mock boundary manifest
+- [docs/manifests/phase-0/corpus-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/corpus-manifest.yaml:1)
+- [docs/manifests/phase-0/rules-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/rules-manifest.yaml:1)
+- [docs/manifests/phase-0/mock-contract-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/mock-contract-manifest.yaml:1)
+
+Status:
+
+- completed on `2026-04-19`
+- Freeze A can now treat the Phase 0 manifests as canonical execution inputs
 
 ### Phase 1 - Provenance and package contracts
 
@@ -356,20 +362,33 @@ Implement:
 - package manifest types
 - validation boundaries
 
+Status:
+
+- package boundary frozen to dedicated `src/package/`
+- first package manifest, validation boundary, and checkpoint metadata models implemented on `2026-04-19`
+
 ### Phase 2 - Git-native materialization path
 
 Implement:
 
-- first MoonBit-native provenance write/materialize flow
-- fallback Git path boundaries where needed
+- first-wave fixture corpus
+- mock share registry
+- mock checkpoint/blob backend
+- mock topology activation interface
 
-### Phase 3 - Capture bridge
+Why now:
+
+- Freeze B should be exercised in controlled conditions before deeper substrate work
+- fixture and mock lanes prove the contracts can actually carry representative corpus pressure
+
+### Phase 3 - Real substrate implementation
 
 Implement:
 
-- one real or replayable Hermes-linked event path
-- normalized capture record
-- provenance attachment
+- package/export core in MoonBit
+- deeper provenance/materialization path
+- capture normalization core
+- Git backend split
 
 ### Phase 4 - Thin local surface
 

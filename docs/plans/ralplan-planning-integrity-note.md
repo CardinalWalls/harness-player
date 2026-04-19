@@ -223,7 +223,7 @@ The package is execution-safe only if the following freezes are explicit and enf
 | ID | Question | Status | Blocker level | Owner | Closure condition |
 |---|---|---|---|---|---|
 | U1 | Should the final execution package remain a small document bundle or later collapse into one index doc? | open | non-blocking | planner | one canonical package name exists now; future merge only happens after execution proves stable |
-| U2 | What structured format should the first rules/corpus/mock manifests use? | open | blocking-before-Task-1.1 | planner + implementation lane A | manifest format chosen and written into Phase 0 outputs |
+| U2 | What structured format should the first rules/corpus/mock manifests use? | closed | resolved-in-Phase-0 | planner + implementation lane A | closed by the YAML manifests and file-layout record under `docs/manifests/phase-0/` |
 | U3 | How much hosted/local surface is required beyond inspection plus one export/share trigger? | open | blocking-before-Task-4.2 | planner + surface lane E | thin-surface acceptance is frozen and reflected in Task 4.2 verification |
 
 ## Execution gate
@@ -232,9 +232,19 @@ The package is execution-safe only if the following freezes are explicit and enf
 
 Do **not** bypass the blocker gates inside `CEP-1`:
 
-- `U2` must close before Task `1.1`
 - `U3` must close before Task `4.2`
 - Freeze A/B/C reopen rules remain mandatory during execution
+
+## Phase 0 status
+
+Phase 0 is now complete.
+
+Canonical outputs:
+
+- [docs/manifests/phase-0/README.md](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/README.md:1)
+- [docs/manifests/phase-0/rules-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/rules-manifest.yaml:1)
+- [docs/manifests/phase-0/corpus-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/corpus-manifest.yaml:1)
+- [docs/manifests/phase-0/mock-contract-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/mock-contract-manifest.yaml:1)
 
 ## Immediate next step
 

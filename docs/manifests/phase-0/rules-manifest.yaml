@@ -1,0 +1,112 @@
+manifest_kind: rules-manifest
+schema_version: 1
+phase: 0
+status: frozen
+derived_from:
+  - docs/discussions/2026-04-19-seed-rules-reference.md
+decision_record:
+  structured_format: yaml
+  rationale:
+    - Normalize research conclusions into typed entries before Phase 1 contracts begin.
+    - Preserve human readability while making later fixture generation deterministic.
+rules:
+  - id: skill-format-invariants
+    title: Skill format invariants
+    source_confidence: A
+    evidence:
+      - /tmp/omx-research/agentskills/docs/specification.mdx
+      - /tmp/omx-research/skills/README.md
+      - /tmp/omx-research/skills/spec/agent-skills-spec.md
+    invariants:
+      - A skill is a directory with at least SKILL.md.
+      - Optional directories include scripts, references, and assets.
+      - SKILL.md uses YAML frontmatter plus a Markdown body.
+      - Required fields are name and description.
+      - Parent directory name should match the skill name.
+      - Progressive disclosure is standard: metadata first, body on activation, extra resources on demand.
+    synthesis_implications:
+      - Treat skill as a standards-aligned public object.
+      - Keep originality in packaging, lineage, topology, capture, and hosting.
+  - id: real-world-skill-packaging
+    title: Real-world skill packaging patterns
+    source_confidence: A-
+    evidence:
+      - /tmp/omx-research/skills/skills/algorithmic-art/SKILL.md
+      - /tmp/omx-research/skills/skills/pdf/SKILL.md
+      - /tmp/omx-research/skills/skills/pdf/forms.md
+      - /tmp/omx-research/skills/skills/pdf/reference.md
+      - /tmp/omx-research/skills/skills/slack-gif-creator/requirements.txt
+      - /tmp/omx-research/skills/skills/theme-factory/theme-showcase.pdf
+      - /tmp/omx-research/skills/template/SKILL.md
+    invariants:
+      - Public skills range from minimal single-file layouts to multi-file folders with assets and dependency hints.
+      - Package validation cannot assume a text-only folder.
+    synthesis_implications:
+      - The first corpus must include both canonical and heavy examples.
+      - Validation rules must distinguish standard-conforming minimums from richer real-world packaging.
+  - id: skill-engineering-workflow
+    title: Skill engineering workflow rules
+    source_confidence: A-
+    evidence:
+      - /tmp/omx-research/skill-forge/README.md
+      - /tmp/omx-research/skill-forge/references/skill-format.md
+    invariants:
+      - Skills should be treated as engineered, publishable artifacts.
+      - Validation, security review, installation honesty, and publish workflow matter after authoring.
+      - Internal workflow structure can extend beyond the public skill standard.
+    synthesis_implications:
+      - Separate public standard requirements from internal packaging and provenance rules.
+      - Borrow engineering discipline without copying every upstream convention.
+  - id: capture-checkpoint-lineage
+    title: Capture and checkpoint lineage rules
+    source_confidence: A
+    evidence:
+      - /tmp/omx-research/cli/docs/architecture/sessions-and-checkpoints.md
+      - /tmp/omx-research/cli/e2e/tests/checkpoint_metadata_test.go
+    invariants:
+      - Session and checkpoint are separate concepts.
+      - Temporary checkpoints and durable checkpoints must be distinguished.
+      - Durable metadata can live separately from large payload state.
+      - Real end-to-end tests can validate lineage semantics.
+    synthesis_implications:
+      - Separate internal capture state, durable lineage metadata, and external shareable package objects.
+      - Keep raw runtime state out of default exported packages.
+  - id: runtime-host-boundary
+    title: Runtime host boundary rules
+    source_confidence: A
+    evidence:
+      - /tmp/omx-research/hermes-agent/gateway/
+      - /tmp/omx-research/hermes-agent/agent/skill_commands.py
+      - /tmp/omx-research/hermes-agent/cli-config.yaml.example
+      - /tmp/omx-research/hermes-agent/docs/
+    invariants:
+      - Hermes already owns substantial runtime concerns such as skills, profiles, gateway, sessions, and server surfaces.
+      - A Hermes-facing integration should stay thin and should not pretend to own the runtime.
+    synthesis_implications:
+      - Focus this project on capture, provenance, package semantics, and the hosted/local product layer.
+      - Keep the runtime adapter explicit and narrow.
+  - id: hosted-local-product-shape
+    title: Hosted and local product-shape rules
+    source_confidence: A-
+    evidence:
+      - /tmp/omx-research/gitea/custom/conf/app.example.ini
+      - /tmp/omx-research/gitea/cmd/
+      - /tmp/omx-research/gitea/docs/
+    invariants:
+      - Hosted Git products have serious operational boundaries.
+      - The management layer is first-class software, not a cosmetic wrapper.
+    synthesis_implications:
+      - Preserve hosted/local management as part of product identity.
+      - Avoid rebuilding a general-purpose Git host in the first execution loop.
+  - id: moonbit-implementation-rules
+    title: MoonBit implementation rules
+    source_confidence: A
+    evidence:
+      - MoonBit docs and Git package research already summarized in the discussion corpus.
+    invariants:
+      - Packages and virtual packages are viable architectural tools.
+      - MoonBit should own the structured substrate.
+      - Backend substitution should be explicit and principled.
+    synthesis_implications:
+      - Phase 1 and later code should live in MoonBit-native contract layers.
+      - Host/runtime-specific shells can remain thin.

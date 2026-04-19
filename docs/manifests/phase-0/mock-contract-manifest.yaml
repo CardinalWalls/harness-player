@@ -1,0 +1,156 @@
+manifest_kind: mock-contract-manifest
+schema_version: 1
+phase: 0
+status: frozen
+derived_from:
+  - docs/discussions/2026-04-19-seed-mock-boundaries.md
+  - docs/discussions/2026-04-19-test-assets-and-mock-boundaries.md
+decision_record:
+  structured_format: yaml
+  boundary_split_rule:
+    - Keep standards real.
+    - Keep one host path real.
+    - Mock unstable service and integration boundaries.
+contracts:
+  - id: share-registry
+    boundary_kind: mock-service
+    keep_real_early: false
+    moonbit_target_layer: src/asset
+    real_source_influence:
+      - GitHub skill distribution patterns
+      - skill-forge publish/install flow
+      - GitHub Docs agent-skill client expectations
+    operations:
+      - name: discover_packages
+        request_shape:
+          query: string
+          kinds:
+            - skill
+            - profile
+            - topology
+        response_shape:
+          packages:
+            - package_id: string
+              latest_version: string
+              summary: string
+      - name: fetch_manifest
+        request_shape:
+          package_id: string
+          version: string
+        response_shape:
+          manifest_ref: string
+          integrity_hash: string
+    rationale: Package/share logic should stabilize before final GitHub or Gitea integration.
+  - id: runtime-event-stream
+    boundary_kind: mock-adapter-stream
+    keep_real_early: false
+    moonbit_target_layer: src/control
+    real_source_influence:
+      - Hermes gateway, session, and profile surfaces
+    operations:
+      - name: emit_runtime_event
+        request_shape:
+          event_type: string
+          session_id: string
+          channel_id: string
+          payload_ref: string
+        response_shape:
+          accepted: boolean
+          normalized_event_id: string
+      - name: list_candidate_checkpoint_triggers
+        request_shape:
+          session_id: string
+        response_shape:
+          triggers:
+            - trigger_id: string
+              reason: string
+    rationale: Capture normalization should not be blocked on a noisy live runtime coupling.
+  - id: checkpoint-blob-backend
+    boundary_kind: mock-storage-contract
+    keep_real_early: false
+    moonbit_target_layer: src/provenance
+    real_source_influence:
+      - Entire checkpoint branch and session/checkpoint split
+    operations:
+      - name: resolve_payload_ref
+        request_shape:
+          payload_ref: string
+        response_shape:
+          blob_id: string
+          availability: string
+      - name: attach_lineage_metadata
+        request_shape:
+          checkpoint_id: string
+          lineage_ref: string
+        response_shape:
+          attached: boolean
+          durable_ref: string
+    rationale: Metadata semantics should stabilize separately from final blob storage implementation.
+  - id: hosted-management-api
+    boundary_kind: mock-management-surface
+    keep_real_early: false
+    moonbit_target_layer: src/control
+    real_source_influence:
+      - Gitea product shape
+      - GitHub client-facing skill distribution assumptions
+    operations:
+      - name: list_assets
+        request_shape:
+          asset_kind: string
+          page: int
+        response_shape:
+          assets:
+            - asset_id: string
+              asset_kind: string
+              summary: string
+      - name: request_export
+        request_shape:
+          asset_id: string
+          export_kind: string
+        response_shape:
+          accepted: boolean
+          job_id: string
+    rationale: The management layer matters early, but the final hosted architecture is still open.
+  - id: topology-activation
+    boundary_kind: mock-topology-contract
+    keep_real_early: false
+    moonbit_target_layer: src/topology
+    real_source_influence:
+      - multi-agent workflow proxies
+      - Hermes runtime semantics
+    operations:
+      - name: load_bundle
+        request_shape:
+          skill_ref: string
+          profile_ref: string
+          topology_ref: string
+        response_shape:
+          activation_id: string
+          channel_graph_ref: string
+      - name: inspect_visible_surfaces
+        request_shape:
+          activation_id: string
+        response_shape:
+          channels:
+            - channel_id: string
+              projection_count: int
+          control_entries:
+            - entry_id: string
+              action: string
+    rationale: Topology remains the least standardized object and needs a stable contract before implementation.
+  - id: real-early-boundaries
+    boundary_kind: preserve-real-path
+    keep_real_early: true
+    moonbit_target_layer: src/adapter/hermes
+    real_source_influence:
+      - Agent Skills format invariants
+      - Git semantics
+      - one Hermes integration path
+    operations:
+      - name: preserve_real_semantics
+        request_shape:
+          boundary: string
+        response_shape:
+          preserved: boolean
+          evidence_ref: string
+    rationale: Phase 0 must preserve honest semantics while mocking only unstable integration surfaces.

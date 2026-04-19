@@ -1,0 +1,123 @@
+manifest_kind: corpus-manifest
+schema_version: 1
+phase: 0
+status: frozen
+derived_from:
+  - docs/discussions/2026-04-19-seed-asset-corpus-candidates.md
+  - docs/discussions/2026-04-19-extraction-rules-and-quality-grading.md
+decision_record:
+  structured_format: yaml
+  inclusion_policy:
+    - Each entry must be concrete, structurally representative, and useful for validation pressure.
+    - The first wave prefers curated mirrors and derived metadata fixtures over whole-repository imports.
+  required_item_fields:
+    - id
+    - asset_class
+    - capture_mode
+    - source_paths
+    - validation_targets
+    - inclusion_reason
+    - status
+corpus_items:
+  - id: skill-template-minimal
+    asset_class: canonical-skill
+    capture_mode: mirror-selected-file
+    source_paths:
+      - /tmp/omx-research/skills/template/SKILL.md
+    validation_targets:
+      - minimum accepted shape
+      - frontmatter parsing
+      - name and description validation
+    inclusion_reason: Clean baseline for the public standard.
+    status: approved-first-wave
+  - id: algorithmic-art-minimal-real
+    asset_class: lightweight-public-skill
+    capture_mode: mirror-selected-file
+    source_paths:
+      - /tmp/omx-research/skills/skills/algorithmic-art/SKILL.md
+    validation_targets:
+      - realistic lightweight skill body
+      - standard-compatible packaging
+    inclusion_reason: Real public example with low structural complexity.
+    status: approved-first-wave
+  - id: pdf-reference-rich
+    asset_class: reference-rich-skill
+    capture_mode: mirror-folder-subset
+    source_paths:
+      - /tmp/omx-research/skills/skills/pdf/SKILL.md
+      - /tmp/omx-research/skills/skills/pdf/forms.md
+      - /tmp/omx-research/skills/skills/pdf/reference.md
+    validation_targets:
+      - progressive disclosure
+      - multi-file integrity
+      - reference handling
+    inclusion_reason: Strong example of a structured skill that is still standards-shaped.
+    status: approved-first-wave
+  - id: slack-gif-creator-dependency
+    asset_class: dependency-bearing-skill
+    capture_mode: mirror-folder-subset
+    source_paths:
+      - /tmp/omx-research/skills/skills/slack-gif-creator/SKILL.md
+      - /tmp/omx-research/skills/skills/slack-gif-creator/requirements.txt
+    validation_targets:
+      - dependency metadata interpretation
+      - nontrivial folder validation
+    inclusion_reason: Captures skills that imply runtime dependencies outside SKILL.md.
+    status: approved-first-wave
+  - id: theme-factory-static-asset
+    asset_class: static-asset-skill
+    capture_mode: mirror-folder-subset
+    source_paths:
+      - /tmp/omx-research/skills/skills/theme-factory/SKILL.md
+      - /tmp/omx-research/skills/skills/theme-factory/theme-showcase.pdf
+    validation_targets:
+      - asset packaging
+      - asset reference integrity
+      - package size assumptions
+    inclusion_reason: Ensures the package model handles bundled binary or large side assets.
+    status: approved-first-wave
+  - id: entire-checkpoint-metadata
+    asset_class: provenance-metadata-sample
+    capture_mode: derive-metadata-fixture
+    source_paths:
+      - /tmp/omx-research/cli/docs/architecture/sessions-and-checkpoints.md
+      - /tmp/omx-research/cli/e2e/tests/checkpoint_metadata_test.go
+      - /tmp/omx-research/cli/e2e/testutil/metadata.go
+    validation_targets:
+      - checkpoint summary structure
+      - lineage rules
+      - local-vs-durable split
+    inclusion_reason: Strongest current open reference for durable metadata tied to commits.
+    status: approved-first-wave
+  - id: anthropic-cybersecurity-skills-sample
+    asset_class: large-corpus-stress-sample
+    capture_mode: sample-driven-harvest
+    source_paths:
+      - mukul975/Anthropic-Cybersecurity-Skills
+    validation_targets:
+      - scale assumptions
+      - corpus indexing
+      - large-batch validation
+    inclusion_reason: Representative large-skill collection for later scale pressure.
+    status: deferred-after-first-wave
+  - id: hermes-profile-export
+    asset_class: profile-like-asset
+    capture_mode: pending-harvest
+    source_paths:
+      - Hermes profile export examples to be captured later
+    validation_targets:
+      - host-linked profile assumptions
+      - package-vs-host responsibility split
+    inclusion_reason: Required because profile is part of the planned external shareable object.
+    status: pending-source-capture
+  - id: topology-proxy-assets
+    asset_class: topology-like-asset
+    capture_mode: pending-harvest
+    source_paths:
+      - multi-agent workflow and role-graph examples to be curated later
+    validation_targets:
+      - relationship modeling
+      - static structure representation
+      - activation entrypoints
+    inclusion_reason: Topology remains the least standardized shareable object and needs explicit later grounding.
+    status: pending-source-capture

@@ -47,8 +47,18 @@ They are historical-but-preserved, not deleted and not the sole authority for th
 | ID | Question | Status | Blocker level | Owner | Closure condition |
 |---|---|---|---|---|---|
 | U1 | Whether `CEP-1` should later collapse into one canonical index doc | open | non-blocking | planner | keep `CEP-1` bundle stable through first execution loop before reconsidering |
-| U2 | Exact structured format for the first `rules manifest`, `corpus manifest`, and `mock contract manifest` | open | blocking-before-Task-1.1 | lane A + planner | format chosen and recorded in Phase 0 outputs |
+| U2 | Exact structured format for the first `rules manifest`, `corpus manifest`, and `mock contract manifest` | closed | resolved-in-Phase-0 | lane A + planner | closed by structured YAML manifests under `docs/manifests/phase-0/` plus the layout note in `docs/manifests/phase-0/README.md` |
 | U3 | Required thin-surface scope beyond inspection and one export/share trigger | open | blocking-before-Task-4.2 | lane E + planner | Task 4.2 verification is frozen and ratified |
+
+## Phase 0 outputs
+
+- [docs/manifests/phase-0/README.md](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/README.md:1)
+- [docs/manifests/phase-0/rules-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/rules-manifest.yaml:1)
+- [docs/manifests/phase-0/corpus-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/corpus-manifest.yaml:1)
+- [docs/manifests/phase-0/mock-contract-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/mock-contract-manifest.yaml:1)
+
+Phase 0 is complete for `CEP-1`.
+Freeze A may now use these files as the canonical planning-input artifacts for later contract and implementation work.
 
 ## Requirements Summary
 

@@ -35,7 +35,7 @@ The older `test-asset-first` branch remains preserved and available for cross-ch
 
 | ID | Question | Status | Blocker level | Owner | Closure condition |
 |---|---|---|---|---|---|
-| U4 | Which manifest files remain prose-first versus structured data | open | blocking-before-Task-0.3-complete | lane A + planner | Phase 0 outputs define the file forms explicitly |
+| U4 | Which manifest files remain prose-first versus structured data | closed | resolved-in-Phase-0 | lane A + planner | all three Phase 0 manifests are frozen as structured YAML under `docs/manifests/phase-0/` |
 | U5 | Whether the first user-facing surface is under `cmd/`, local web, or both | open | blocking-before-Task-4.2 | lane E + planner | surface choice is frozen before Task 4.2 starts |
 | U6 | How much real Hermes coupling is needed in Phase 4 beyond one event or loading path | open | blocking-before-Task-4.1-complete | lane D/lane E + planner | the minimum real path is frozen and reflected in Task 4.1 verification |
 
@@ -126,7 +126,11 @@ Input:
 
 Output:
 
-- one normalized `rules manifest` document or structured file
+- [docs/manifests/phase-0/rules-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/rules-manifest.yaml:1)
+
+Status:
+
+- completed on `2026-04-19`
 
 Why:
 
@@ -140,13 +144,20 @@ Input:
 
 Output:
 
-- one manifest of first-wave corpus items:
-  - canonical skill example
-  - heavy skill example
-  - reference-rich skill example
-  - dependency-bearing skill example
-  - static-asset skill example
-  - provenance metadata sample
+- [docs/manifests/phase-0/corpus-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/corpus-manifest.yaml:1)
+
+Coverage:
+
+- canonical skill example
+- heavy skill example
+- reference-rich skill example
+- dependency-bearing skill example
+- static-asset skill example
+- provenance metadata sample
+
+Status:
+
+- completed on `2026-04-19`
 
 Why:
 
@@ -160,12 +171,23 @@ Input:
 
 Output:
 
-- one document defining the first interface contracts for:
-  - share registry
-  - runtime event stream
-  - checkpoint/blob backend
-  - hosted management API
-  - topology activation
+- [docs/manifests/phase-0/mock-contract-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/mock-contract-manifest.yaml:1)
+
+Coverage:
+
+- share registry
+- runtime event stream
+- checkpoint/blob backend
+- hosted management API
+- topology activation
+
+Status:
+
+- completed on `2026-04-19`
+
+## Phase 0 status
+
+Phase 0 is complete and Gate 1 may now pass against the committed manifest set under [docs/manifests/phase-0/README.md](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/README.md:1).
 
 Why:
 
@@ -187,6 +209,16 @@ Likely code area:
 - `src/asset/`
 - possible new package such as `src/package/`
 
+Status:
+
+- completed on `2026-04-19`
+- boundary decision: dedicated `src/package/`
+
+Implemented in:
+
+- [src/package/manifest.mbt](/Users/yetian/Desktop/finall-start-100-commits/src/package/manifest.mbt:1)
+- [src/package/package_test.mbt](/Users/yetian/Desktop/finall-start-100-commits/src/package/package_test.mbt:1)
+
 Verification:
 
 - can represent at least the first-wave skill corpus examples
@@ -204,6 +236,15 @@ Input from test assets:
 - dependency-bearing skill
 - static-asset skill
 
+Status:
+
+- completed on `2026-04-19`
+
+Implemented in:
+
+- [src/package/validation.mbt](/Users/yetian/Desktop/finall-start-100-commits/src/package/validation.mbt:1)
+- [src/package/package_test.mbt](/Users/yetian/Desktop/finall-start-100-commits/src/package/package_test.mbt:1)
+
 Verification:
 
 - valid examples pass
@@ -219,6 +260,15 @@ Likely code area:
 
 - `src/provenance/`
 - new checkpoint metadata module(s)
+
+Status:
+
+- completed on `2026-04-19`
+
+Implemented in:
+
+- [src/provenance/metadata.mbt](/Users/yetian/Desktop/finall-start-100-commits/src/provenance/metadata.mbt:1)
+- [src/provenance/provenance_test.mbt](/Users/yetian/Desktop/finall-start-100-commits/src/provenance/provenance_test.mbt:1)
 
 Verification:
 

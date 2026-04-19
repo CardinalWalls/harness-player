@@ -38,3 +38,24 @@ test "provenance records link asset commits to lineage nodes" {
     content="story-distiller@v1|commit-1|main|seed",
   )
 }
+
+///|
+test "checkpoint metadata links capture surfaces to durable lineage refs" {
+  let metadata = @provenance.checkpoint_metadata(
+    "checkpoint-1",
+    "coach-survival@v1",
+    "main",
+    "session-1",
+    "channel-1",
+    "projection-1",
+    @provenance.snapshot_ref("snapshot-1"),
+    @provenance.commit_ref("commit-9"),
+    "checkpoint-0",
+  )
+
+  inspect(
+    @provenance.checkpoint_metadata_key(metadata),
+    content="checkpoint-1|coach-survival@v1|main|session-1|channel-1|projection-1|snapshot-1|commit-9|checkpoint-0",
+  )
+  inspect(@provenance.checkpoint_has_parent(metadata), content="true")
+}
