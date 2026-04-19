@@ -8,11 +8,23 @@ test "first-wave corpus preserves the six approved fixture ids locally" {
     content="skill-template-minimal|algorithmic-art-minimal-real|pdf-reference-rich|slack-gif-creator-dependency|theme-factory-static-asset|entire-checkpoint-metadata",
   )
   inspect(corpus.skill_template_minimal.status, content="approved-first-wave")
-  inspect(corpus.algorithmic_art_minimal_real.status, content="approved-first-wave")
+  inspect(
+    corpus.algorithmic_art_minimal_real.status,
+    content="approved-first-wave",
+  )
   inspect(corpus.pdf_reference_rich.status, content="approved-first-wave")
-  inspect(corpus.slack_gif_creator_dependency.status, content="approved-first-wave")
-  inspect(corpus.theme_factory_static_asset.status, content="approved-first-wave")
-  inspect(corpus.entire_checkpoint_metadata.status, content="approved-first-wave")
+  inspect(
+    corpus.slack_gif_creator_dependency.status,
+    content="approved-first-wave",
+  )
+  inspect(
+    corpus.theme_factory_static_asset.status,
+    content="approved-first-wave",
+  )
+  inspect(
+    corpus.entire_checkpoint_metadata.status,
+    content="approved-first-wave",
+  )
 }
 
 ///|
