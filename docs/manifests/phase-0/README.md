@@ -25,8 +25,25 @@ Why this format:
 - [rules-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/rules-manifest.yaml:1)
 - [corpus-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/corpus-manifest.yaml:1)
 - [mock-contract-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/mock-contract-manifest.yaml:1)
+- [topology-manifest.yaml](/Users/yetian/Desktop/finall-start-100-commits/docs/manifests/phase-0/topology-manifest.yaml:1)
 
 This layout closes the Phase 0 file-placement question for the first execution loop.
+
+## Topology note
+
+`topology-manifest.yaml` is intentionally marked `working-default` rather than `frozen`.
+
+Reason:
+
+- Phase 0 already froze skill/provenance corpus, rule, and mock-boundary outputs.
+- Topology was still the weakest and least grounded shareable object.
+- The topology manifest is therefore a structured collection slate derived from the latest interview conclusion, not a claim that the final topology schema is settled.
+
+Use it to drive:
+
+- first-wave topology asset harvesting
+- fixture generation planning
+- package-vs-profile-vs-runtime boundary review
 
 ## Phase 2 conformance anchors
 

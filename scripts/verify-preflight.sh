@@ -18,7 +18,13 @@ echo
 run_optional_tool_check "omx doctor" omx omx doctor
 
 echo
-run_optional_tool_check "omx_state transport" omx bash ./scripts/check-omx-state-mcp.sh
+echo "== omx_state transport =="
+check_args=()
+if [ -n "${CODEX_THREAD_ID:-}" ]; then
+  echo "active Codex thread detected; duplicate sibling checks run in warning-only mode"
+  check_args+=(--warn-only)
+fi
+bash ./scripts/check-omx-state-mcp.sh "${check_args[@]}"
 
 echo
 echo "== repo-local codex auth =="
@@ -27,6 +33,10 @@ if command -v codex >/dev/null 2>&1; then
 else
   echo "skipped: codex is not installed locally"
 fi
+
+echo
+echo "== repo-local codex runtime =="
+bash ./scripts/check-repo-codex-runtime.sh
 
 echo
 echo "== repo-local omx exec smoke =="
@@ -72,11 +82,23 @@ test -f coverage.html/index.html
 
 echo
 echo "== workflow files =="
-find .github/workflows -maxdepth 1 -type f | sort
+for workflow_file in \
+  .github/workflows/moonbit-ci.yml \
+  .github/workflows/codex-pr-review.yml
+do
+  test -f "$workflow_file"
+  echo "$workflow_file"
+done
 
 echo
 echo "== template files =="
-find .github -maxdepth 2 \( -name 'pull_request_template.md' -o -name 'development-task.md' \) | sort
+for template_file in \
+  .github/pull_request_template.md \
+  .github/ISSUE_TEMPLATE/development-task.md
+do
+  test -f "$template_file"
+  echo "$template_file"
+done
 
 echo
 echo "== done =="

@@ -27,3 +27,4 @@ Current notes:
 - `2026-04-19-seed-asset-corpus-candidates.md`
 - `2026-04-19-seed-mock-boundaries.md`
 - `2026-04-19-seed-rules-reference.md`
+- `2026-04-19-topology-defaults-and-test-asset-priority.md`

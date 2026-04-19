@@ -1,0 +1,136 @@
+manifest_kind: topology-manifest
+schema_version: 1
+phase: 0
+status: working-default
+derived_from:
+  - docs/discussions/2026-04-19-topology-defaults-and-test-asset-priority.md
+  - docs/discussions/2026-04-19-seed-asset-corpus-candidates.md
+  - docs/discussions/2026-04-19-seed-mock-boundaries.md
+decision_record:
+  structured_format: yaml
+  rationale:
+    - Freeze a practical first-wave topology collection slate without pretending the final package manifest is complete.
+    - Keep topology structural by default and leave runtime/provider state to profile or execution surfaces.
+  required_item_fields:
+    - id
+    - pattern_family
+    - source_kind
+    - collection_mode
+    - validation_targets
+    - profile_boundary
+    - runtime_state_boundary
+    - inclusion_reason
+    - status
+topology_items:
+  - id: orchestrator-subagent-baseline
+    pattern_family: orchestrator-subagent
+    source_kind: pattern-extraction
+    collection_mode: derive-structural-fixture
+    source_refs:
+      - https://claude.com/blog/multi-agent-coordination-patterns
+      - docs/discussions/2026-04-19-topology-defaults-and-test-asset-priority.md
+    validation_targets:
+      - bounded subtask decomposition
+      - coordinator-to-worker handoff modeling
+      - final synthesis ownership
+      - explicit completion signaling
+    profile_boundary:
+      - model/provider choice stays outside topology
+      - tool installation stays outside topology
+    runtime_state_boundary:
+      - worker session ids stay outside topology
+      - transient task queue state stays outside topology
+    inclusion_reason: Best reusable baseline and likely first practical coordination shape for this repo.
+    status: approved-first-wave
+  - id: generator-verifier-loop
+    pattern_family: generator-verifier
+    source_kind: pattern-extraction
+    collection_mode: derive-structural-fixture
+    source_refs:
+      - https://claude.com/blog/multi-agent-coordination-patterns
+      - docs/discussions/2026-04-19-topology-defaults-and-test-asset-priority.md
+    validation_targets:
+      - reviewer loop semantics
+      - retry and rejection termination
+      - explicit acceptance criteria attachment
+      - human-escalation fallback shape
+    profile_boundary:
+      - evaluator model tuning stays outside topology
+    runtime_state_boundary:
+      - iteration counters and intermediate drafts stay outside topology
+    inclusion_reason: Smallest crisp topology sample for testing evaluation loops and termination rules.
+    status: approved-first-wave
+  - id: shared-state-research-slate
+    pattern_family: shared-state
+    source_kind: pattern-extraction
+    collection_mode: derive-structural-fixture
+    source_refs:
+      - https://claude.com/blog/multi-agent-coordination-patterns
+      - docs/discussions/2026-04-19-synthesis-method-from-test-assets.md
+    validation_targets:
+      - shared surface declaration
+      - agent read/write semantics
+      - convergence and stop conditions
+      - duplication-risk controls
+    profile_boundary:
+      - storage backend implementation stays outside topology
+      - host runtime attachment stays outside topology
+    runtime_state_boundary:
+      - live shared document contents stay outside topology
+      - reactive loop traces stay outside topology
+    inclusion_reason: Most directly stresses collaborative synthesis behavior and the hardest termination questions.
+    status: approved-first-wave
+  - id: message-bus-event-routing
+    pattern_family: message-bus
+    source_kind: pattern-extraction
+    collection_mode: derive-structural-fixture
+    source_refs:
+      - https://claude.com/blog/multi-agent-coordination-patterns
+      - docs/manifests/phase-0/mock-contract-manifest.yaml
+    validation_targets:
+      - topic routing semantics
+      - publish/subscribe edge types
+      - event-driven activation entrypoints
+      - router dependency visibility
+    profile_boundary:
+      - event transport implementation stays outside topology
+    runtime_state_boundary:
+      - live event payloads and router buffers stay outside topology
+    inclusion_reason: Aligns with the runtime-event-stream and topology-activation mock boundaries.
+    status: approved-first-wave
+  - id: agent-teams-partitioned-work
+    pattern_family: agent-teams
+    source_kind: pattern-extraction
+    collection_mode: derive-structural-fixture
+    source_refs:
+      - https://claude.com/blog/multi-agent-coordination-patterns
+      - docs/official-omx-usage.md
+    validation_targets:
+      - persistent worker identity
+      - partition ownership boundaries
+      - completion aggregation
+      - conflict and shared-resource risk marking
+    profile_boundary:
+      - per-worker runtime tuning stays outside topology
+    runtime_state_boundary:
+      - worktree/session assignments stay outside topology
+    inclusion_reason: Necessary to represent durable parallel execution rather than only bounded subagents.
+    status: approved-first-wave
+  - id: custom-hybrid-composition
+    pattern_family: custom-hybrid
+    source_kind: synthetic-topology
+    collection_mode: synthesize-from-primitives
+    source_refs:
+      - docs/discussions/2026-04-19-topology-defaults-and-test-asset-priority.md
+      - docs/discussions/2026-04-19-test-assets-and-mock-boundaries.md
+    validation_targets:
+      - mixed edge vocabulary
+      - template-plus-custom coexistence
+      - non-canonical pattern labeling
+      - topology extensibility without schema breakage
+    profile_boundary:
+      - custom runtime wiring details stay outside topology
+    runtime_state_boundary:
+      - one-off run context stays outside topology
+    inclusion_reason: Captures the explicit requirement that users may go beyond the built-in pattern families.
+    status: approved-first-wave

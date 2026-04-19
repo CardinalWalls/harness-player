@@ -2,8 +2,53 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+FORCE=0
+
+if [ "${1:-}" = "--force" ]; then
+  FORCE=1
+  shift
+fi
+
+if [ "$#" -ne 0 ]; then
+  echo "usage: $0 [--force]" >&2
+  exit 2
+fi
+
+running_in_active_codex_thread() {
+  [ -n "${CODEX_THREAD_ID:-}" ] || return 1
+
+  parent_command="$(ps -o command= -p "${PPID:-0}" 2>/dev/null || true)"
+  case "$parent_command" in
+    *"codex app-server"*) return 0 ;;
+  esac
+
+  case "${CODEX_INTERNAL_ORIGINATOR_OVERRIDE:-}" in
+    "Codex Desktop") return 0 ;;
+  esac
+
+  return 1
+}
+
+if [ "$FORCE" -ne 1 ] && running_in_active_codex_thread; then
+  echo "Refusing to run inside an active Codex Desktop thread." >&2
+  echo >&2
+  echo "This repair kills duplicate MCP sibling processes and can close the transport" >&2
+  echo "for the current conversation. Open an external terminal at the repo root and" >&2
+  echo "run: bash ./scripts/repair-omx-state-mcp.sh" >&2
+  echo >&2
+  echo "If you intentionally want to reset the current thread transport, rerun with --force." >&2
+  exit 2
+fi
 
 list_mcp_processes() {
+  local ps_output
+
+  if ! ps_output="$(ps axww -o pid=,ppid=,command= 2>/dev/null)"; then
+    echo "Unable to inspect OMX MCP server processes via ps." >&2
+    echo "Run this repair from a terminal that permits process inspection." >&2
+    return 2
+  fi
+
   while IFS= read -r line; do
     line="${line#"${line%%[![:space:]]*}"}"
     [ -z "$line" ] && continue
@@ -25,7 +70,7 @@ list_mcp_processes() {
     esac
 
     printf "%s\t%s\t%s\t%s\n" "$ppid" "$server" "$pid" "$cmd"
-  done < <(ps axww -o pid=,ppid=,command=) | sort -t "$(printf '\t')" -k1,1n -k2,2 -k3,3n
+  done <<<"$ps_output" | sort -t "$(printf '\t')" -k1,1n -k2,2 -k3,3n
 }
 
 find_duplicate_rows() {

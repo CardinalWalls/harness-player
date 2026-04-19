@@ -52,6 +52,27 @@ pub struct ProvenanceFixture {
 }
 
 ///|
+/// Materialized local fixture for a first-wave topology asset entry.
+pub struct TopologyFixture {
+  id : String
+  pattern_family : String
+  source_kind : String
+  collection_mode : String
+  status : String
+  package_id : String
+  version : String
+  topology_ref : String
+  source_ref_1 : String
+  source_ref_2 : String
+  validation_target_1 : String
+  validation_target_2 : String
+  validation_target_3 : String
+  profile_boundary : String
+  runtime_state_boundary : String
+  inclusion_reason : String
+}
+
+///|
 /// The locally materialized first-wave fixture set from the frozen corpus manifest.
 pub struct FirstWaveCorpus {
   skill_template_minimal : SkillFixture
@@ -60,6 +81,12 @@ pub struct FirstWaveCorpus {
   slack_gif_creator_dependency : SkillFixture
   theme_factory_static_asset : SkillFixture
   entire_checkpoint_metadata : ProvenanceFixture
+  orchestrator_subagent_baseline : TopologyFixture
+  generator_verifier_loop : TopologyFixture
+  shared_state_research_slate : TopologyFixture
+  message_bus_event_routing : TopologyFixture
+  agent_teams_partitioned_work : TopologyFixture
+  custom_hybrid_composition : TopologyFixture
 }
 
 ///|
@@ -161,15 +188,53 @@ fn provenance_fixture(
 }
 
 ///|
+fn topology_fixture(
+  id : String,
+  pattern_family : String,
+  source_kind : String,
+  collection_mode : String,
+  package_id : String,
+  version : String,
+  topology_ref : String,
+  source_ref_1 : String,
+  source_ref_2 : String,
+  validation_target_1 : String,
+  validation_target_2 : String,
+  validation_target_3 : String,
+  profile_boundary : String,
+  runtime_state_boundary : String,
+  inclusion_reason : String,
+) -> TopologyFixture {
+  {
+    id,
+    pattern_family,
+    source_kind,
+    collection_mode,
+    status: "approved-first-wave",
+    package_id,
+    version,
+    topology_ref,
+    source_ref_1,
+    source_ref_2,
+    validation_target_1,
+    validation_target_2,
+    validation_target_3,
+    profile_boundary,
+    runtime_state_boundary,
+    inclusion_reason,
+  }
+}
+
+///|
 /// Stable summary of the approved first-wave ids preserved in local fixtures.
 pub fn first_wave_fixture_ids() -> String {
-  "skill-template-minimal|algorithmic-art-minimal-real|pdf-reference-rich|slack-gif-creator-dependency|theme-factory-static-asset|entire-checkpoint-metadata"
+  "skill-template-minimal|algorithmic-art-minimal-real|pdf-reference-rich|slack-gif-creator-dependency|theme-factory-static-asset|entire-checkpoint-metadata|orchestrator-subagent-baseline|generator-verifier-loop|shared-state-research-slate|message-bus-event-routing|agent-teams-partitioned-work|custom-hybrid-composition"
 }
 
 ///|
 /// The frozen first-wave fixture count.
 pub fn first_wave_fixture_count() -> Int {
-  6
+  12
 }
 
 ///|
@@ -229,6 +294,55 @@ pub fn first_wave_corpus() -> FirstWaveCorpus {
       "checkpoint-entire-0", "checkpoint summary structure", "lineage rules", "local-vs-durable split",
       "Strongest current open reference for durable metadata tied to commits.",
     ),
+    orchestrator_subagent_baseline: topology_fixture(
+      "orchestrator-subagent-baseline", "orchestrator-subagent", "pattern-extraction",
+      "derive-structural-fixture", "pkg-orchestrator-subagent-baseline", "v1", "topology/orchestrator-subagent-baseline",
+      "https://claude.com/blog/multi-agent-coordination-patterns", "docs/discussions/2026-04-19-topology-defaults-and-test-asset-priority.md",
+      "bounded subtask decomposition", "coordinator-to-worker handoff modeling",
+      "final synthesis ownership", "model/provider choice stays outside topology",
+      "worker session ids stay outside topology", "Best reusable baseline and likely first practical coordination shape for this repo.",
+    ),
+    generator_verifier_loop: topology_fixture(
+      "generator-verifier-loop", "generator-verifier", "pattern-extraction", "derive-structural-fixture",
+      "pkg-generator-verifier-loop", "v1", "topology/generator-verifier-loop", "https://claude.com/blog/multi-agent-coordination-patterns",
+      "docs/discussions/2026-04-19-topology-defaults-and-test-asset-priority.md",
+      "reviewer loop semantics", "retry and rejection termination", "explicit acceptance criteria attachment",
+      "evaluator model tuning stays outside topology", "iteration counters and intermediate drafts stay outside topology",
+      "Smallest crisp topology sample for evaluation loops and termination rules.",
+    ),
+    shared_state_research_slate: topology_fixture(
+      "shared-state-research-slate", "shared-state", "pattern-extraction", "derive-structural-fixture",
+      "pkg-shared-state-research-slate", "v1", "topology/shared-state-research-slate",
+      "https://claude.com/blog/multi-agent-coordination-patterns", "docs/discussions/2026-04-19-synthesis-method-from-test-assets.md",
+      "shared surface declaration", "agent read/write semantics", "convergence and stop conditions",
+      "storage backend implementation stays outside topology", "live shared document contents stay outside topology",
+      "Most directly stresses collaborative synthesis behavior and termination questions.",
+    ),
+    message_bus_event_routing: topology_fixture(
+      "message-bus-event-routing", "message-bus", "pattern-extraction", "derive-structural-fixture",
+      "pkg-message-bus-event-routing", "v1", "topology/message-bus-event-routing",
+      "https://claude.com/blog/multi-agent-coordination-patterns", "docs/manifests/phase-0/mock-contract-manifest.yaml",
+      "topic routing semantics", "publish/subscribe edge types", "event-driven activation entrypoints",
+      "event transport implementation stays outside topology", "live event payloads and router buffers stay outside topology",
+      "Aligns with runtime-event-stream and topology-activation mock boundaries.",
+    ),
+    agent_teams_partitioned_work: topology_fixture(
+      "agent-teams-partitioned-work", "agent-teams", "pattern-extraction", "derive-structural-fixture",
+      "pkg-agent-teams-partitioned-work", "v1", "topology/agent-teams-partitioned-work",
+      "https://claude.com/blog/multi-agent-coordination-patterns", "docs/official-omx-usage.md",
+      "persistent worker identity", "partition ownership boundaries", "completion aggregation",
+      "per-worker runtime tuning stays outside topology", "worktree/session assignments stay outside topology",
+      "Necessary to represent durable parallel execution rather than only bounded subagents.",
+    ),
+    custom_hybrid_composition: topology_fixture(
+      "custom-hybrid-composition", "custom-hybrid", "synthetic-topology", "synthesize-from-primitives",
+      "pkg-custom-hybrid-composition", "v1", "topology/custom-hybrid-composition",
+      "docs/discussions/2026-04-19-topology-defaults-and-test-asset-priority.md",
+      "docs/discussions/2026-04-19-test-assets-and-mock-boundaries.md", "mixed edge vocabulary",
+      "template-plus-custom coexistence", "topology extensibility without schema breakage",
+      "custom runtime wiring details stay outside topology", "one-off run context stays outside topology",
+      "Captures the explicit requirement that users may go beyond the built-in pattern families.",
+    ),
   }
 }
 
@@ -247,6 +361,14 @@ pub fn provenance_fixture_materialization_key(
 }
 
 ///|
+/// Stable key for topology-fixture assertions in local tests.
+pub fn topology_fixture_materialization_key(
+  fixture : TopologyFixture,
+) -> String {
+  "\{fixture.id}|\{fixture.pattern_family}|\{fixture.collection_mode}|\{fixture.status}|\{fixture.topology_ref}|\{fixture.validation_target_1}|\{fixture.validation_target_2}|\{fixture.validation_target_3}"
+}
+
+///|
 /// Build a package manifest from a materialized skill fixture without changing the
 /// existing package contract shapes.
 pub fn fixture_package_manifest(
@@ -262,6 +384,49 @@ pub fn fixture_package_manifest(
     profile_ref,
     topology_ref,
     provenance_ref,
+  )
+}
+
+///|
+/// Build a package manifest from a materialized topology fixture while keeping
+/// runtime/provider concerns outside the topology package object.
+pub fn topology_fixture_package_manifest(
+  fixture : TopologyFixture,
+  provenance_ref : String,
+) -> @package.PackageManifest {
+  @package.package_manifest(
+    fixture.package_id,
+    fixture.version,
+    @package.topology_subject(fixture.topology_ref),
+    "",
+    "",
+    provenance_ref,
+  )
+}
+
+///|
+/// Build one small topology-graph sample from a topology fixture so later work
+/// can pressure-test topology assets without introducing runtime-owned state.
+pub fn topology_fixture_graph_key(fixture : TopologyFixture) -> String {
+  let session = @topology.session(fixture.id, "default", fixture.pattern_family)
+  let channel = @topology.channel(
+    "channel://\{fixture.topology_ref}",
+    @topology.session_id_of(session),
+    @topology.execution_channel_kind(),
+  )
+  let projection = @topology.projection(
+    "projection://\{fixture.id}",
+    @topology.channel_id_of(channel),
+    fixture.validation_target_1,
+  )
+  let subscription = @topology.subscription(
+    "observer://\{fixture.id}",
+    @topology.channel_id_of(channel),
+    fixture.validation_target_2,
+    @topology.targeted_delivery(),
+  )
+  @topology.topology_graph_key(
+    @topology.topology_graph(session, channel, projection, subscription),
   )
 }
 
