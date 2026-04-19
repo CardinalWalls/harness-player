@@ -19,7 +19,7 @@ This skill keeps the two layers separate and compatible:
 
 - The task mentions MoonBit or `moon`
 - The task mentions OMX plus MoonBit together **and** MoonBit-owned product code is actually in scope
-- The task needs `moon check`, `moon test`, `moon fmt`, or `moon info`
+- The task needs `moon check`, `moon test`, `moon fmt --check`, or `moon info`
 - The task changes MoonBit packages, MoonBit-backed CLI behavior, or MoonBit-owned substrate modules
 
 Do **not** use this skill for:
@@ -41,7 +41,7 @@ Run and read this sequence when MoonBit-owned product surfaces changed or the ta
 ```bash
 moon check
 moon test
-moon fmt
+moon fmt --check
 moon info
 ```
 
@@ -75,7 +75,7 @@ These may complete without rerunning MoonBit:
 These usually **do** count as completion:
 - `moon check` passes
 - `moon test` passes
-- `moon fmt` executed cleanly
+- `moon fmt --check` passes
 - `moon info` executed
 - the result matches the user-requested scope
 

@@ -156,7 +156,7 @@ The scripts validate:
 - `moon version`
 - `moon check`
 - `moon test`
-- `moon fmt`
+- `moon fmt --check`
 - `moon info`
 - `moon coverage analyze -- -f html -o coverage.html`
 - workflow and template file presence
@@ -254,7 +254,7 @@ It installs MoonBit and runs:
 
 - `moon check`
 - `moon test`
-- `moon fmt`
+- `moon fmt --check`
 - `moon info`
 - `moon coverage analyze -- -f html -o coverage.html`
 

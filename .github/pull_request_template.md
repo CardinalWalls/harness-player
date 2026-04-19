@@ -9,7 +9,7 @@
 - [ ] `CODEX_HOME=.codex codex login status`
 - [ ] If MoonBit-owned product surfaces changed: `moon check`
 - [ ] If MoonBit-owned product surfaces changed: `moon test`
-- [ ] If MoonBit-owned product surfaces changed: `moon fmt`
+- [ ] If MoonBit-owned product surfaces changed: `moon fmt --check`
 - [ ] If MoonBit-owned product surfaces changed: `moon info`
 - [ ] If release/preflight proof was requested: `moon coverage analyze -- -f html -o coverage.html`
 

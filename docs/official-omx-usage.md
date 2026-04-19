@@ -356,7 +356,7 @@ omx team N:role "task"
 ```bash
 moon check
 moon test
-moon fmt
+moon fmt --check
 moon info
 ```
 

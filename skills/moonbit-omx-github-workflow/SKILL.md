@@ -27,7 +27,7 @@ For MoonBit-scoped code changes, or when the task explicitly asks for release/pr
 ```bash
 moon check
 moon test
-moon fmt
+moon fmt --check
 moon info
 ```
 
