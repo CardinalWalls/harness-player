@@ -34,12 +34,19 @@ Development in this repository is CLI-first.
 Run these from the repo root:
 
 ```bash
+bash ./scripts/check-omx-state-mcp.sh --repair
 bash ./scripts/verify-moon-omx.sh
 bash ./scripts/verify-preflight.sh
 ```
 
+If you use `--repair`, prefer running it from an external terminal instead of
+inside the currently active Codex desktop thread, because it may kill duplicate
+MCP siblings that are still attached to the active thread.
+
 The scripts validate:
 
+- live `omx_state` MCP transport health
+- duplicate OMX MCP sibling process cleanup
 - `moon version`
 - `moon check`
 - `moon test`

@@ -18,6 +18,9 @@ echo
 run_optional_tool_check "omx doctor" omx omx doctor
 
 echo
+run_optional_tool_check "omx_state transport" omx bash ./scripts/check-omx-state-mcp.sh
+
+echo
 echo "== repo-local codex auth =="
 if command -v codex >/dev/null 2>&1; then
   CODEX_HOME="$PWD/.codex" codex login status
