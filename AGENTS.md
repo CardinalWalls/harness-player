@@ -27,9 +27,9 @@ This file applies to `/Users/yetian/Desktop/finall-start-100-commits`.
 
 ## First Read
 
-- For MoonBit work, read `./.codex/skills/moonbit-omx-workflow/SKILL.md` first.
+- For MoonBit work, read `./skills/moonbit-omx-workflow/SKILL.md` first.
 - For tasks that touch MoonBit, OMX, GitHub Actions, PR review, or CI, also read `./skills/moonbit-omx-github-workflow/SKILL.md`.
-- For general OMX workflow behavior, use the installed OMX skills already present under `.codex/skills/`.
+- Treat repo-tracked `skills/` as the source of truth; any `.codex/` runtime copies are local setup artifacts and should not be required for repository correctness.
 
 ## Default Workflow
 
@@ -70,7 +70,7 @@ This file applies to `/Users/yetian/Desktop/finall-start-100-commits`.
 ## Project Layout
 
 - `skills/` is the source-of-truth area for repo-local custom skills.
-- `.codex/skills/` is the runtime-facing skill surface used by Codex/OMX.
+- `.codex/` is local runtime state/setup and should not be relied on as tracked product source.
 - `scripts/` contains deterministic helper scripts.
 - `1 raw discussion about the scope/` is input/reference material; do not rewrite it unless the user explicitly asks.
 
