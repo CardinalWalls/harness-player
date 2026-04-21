@@ -1,0 +1,52 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yetian/cdda_native_contract"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn action_decision_from_scene(String, String, String, SignedEnvelope, String, String, String) -> Result[SignedEnvelope, ContractError]
+
+pub fn action_effect_from_decision(String, String, String, SignedEnvelope, String, String, String) -> Result[SignedEnvelope, ContractError]
+
+pub fn audit_chain(Array[SignedEnvelope]) -> Result[Array[AuditProjection], ContractError]
+
+pub fn next_scene_observation_from_effect(String, String, String, SignedEnvelope, String, String, Bool) -> Result[SignedEnvelope, ContractError]
+
+pub fn scene_observation_from_raw(String, String, String, String, String, Bool, Array[String]) -> Result[SignedEnvelope, ContractError]
+
+pub fn signed_envelope(String, String, String, String, String, Array[String], String, String, String) -> SignedEnvelope
+
+// Errors
+
+// Types and methods
+pub(all) struct AuditProjection {
+  envelope_id : String
+  channel : String
+  signer_actor_id : String
+  signer_role : String
+  causation_ids : Array[String]
+  valid : Bool
+} derive(Eq, @debug.Debug)
+
+pub(all) enum ContractError {
+  InvalidUpstream(String)
+} derive(Eq, @debug.Debug)
+
+pub(all) struct SignedEnvelope {
+  id : String
+  channel : String
+  created_at : String
+  signer_actor_id : String
+  signer_role : String
+  causation_ids : Array[String]
+  correlation_id : String
+  payload : String
+  signature : String
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits
+
