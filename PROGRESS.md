@@ -1,7 +1,7 @@
 # Project Progress: `bootstrap-scene-reader` — S001 complete
 
 **Last Updated**: 2026-04-21  
-**Current Phase**: S001 complete
+**Current Phase**: S002 Story frozen
 
 > Intent re-confirmed by user on 2026-04-21: continue as the CDDA/Hermes scene-reader signed-message test bench; MoonBit remains the domain-contract language; `_mynot/1-intent/PRD.md`, `_mynot/2-architecture/ARCHITECTURE.md`, completed `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md` and completed `_mynot/3-plan/stories/S001-human-input-signed-message.md` are current authoritative inputs. Archive material remains reference/evidence only.
 
@@ -9,7 +9,32 @@
 
 ## Current Work
 
-None.
+### S002-browser-audit-surface — browser-checkable signed-message audit page
+
+**Started**: 2026-04-21  
+**Status**: Current Work  
+**Story file**: `_mynot/3-plan/stories/S002-browser-audit-surface.md`  
+**Scope**: make a first local browser page that renders accepted signed-message provenance and lets a human compose a local `human_input` preview without `/api/*` progress paths.
+
+#### Phase Progress
+
+- [x] Design — reuse frozen `_mynot/1-intent/PRD.md` and `_mynot/1-intent/MOCK-EXPECTED-RESULT.md`; user requested that inspection wait until a web/browser surface exists.
+- [x] Architecture — reuse frozen `_mynot/2-architecture/ARCHITECTURE.md` browser/display and `human_input` channel rules.
+- [x] Story — `_mynot/3-plan/stories/S002-browser-audit-surface.md` created with expected-result mock, AC, Layer 2 refs, failure modes, exact files, and explicit tester/coder/qc contracts.
+- [x] Setup / Ralplan — generated `.omx/plans/prd-S002-browser-audit-surface.md`, `.omx/plans/test-spec-S002-browser-audit-surface.md`, `.omx/plans/ralplan-S002-browser-audit-surface.md`, and `.omx/plans/team-tasks-S002-browser-audit-surface.md`.
+- [x] Testing — tester-agent contract complete; red static verification added in `scripts/verify_browser_audit_surface.py`, with red log `.omx/evidence/S002-red-tests.log`.
+- [x] Tester QC — `auto_qc/qc` equivalent passed in `.omx/evidence/S002-tester-qc.md`; implementation may start next.
+- [x] Implementation — coder-agent contract complete; implemented static local browser audit surface in `web/index.html`, with green log `.omx/evidence/S002-green-tests.log`.
+- [x] Coder QC — `auto_qc/qc` equivalent passed in `.omx/evidence/S002-coder-qc.md`; static browser verifier and MoonBit regression are green.
+- [x] Dev Testing — local static browser page can be opened directly from `web/index.html`; no dev server required for this slice.
+- [ ] CI/CD
+
+#### Notes
+
+- 2026-04-21: Started after S001 completed/merged. S002 is the first web-checkable slice; it is intentionally static/local to avoid reintroducing server authority.
+- 2026-04-21: Setup/Ralplan artifacts generated from the S002 story only; next phase is tester-agent contract red verification.
+- 2026-04-21: S002 red verification locked. `python3 scripts/verify_browser_audit_surface.py` fails on missing `web/index.html` as expected; tester QC passed.
+- 2026-04-21: S002 implementation green. Static browser verifier passed and `moon info && moon fmt --check && moon test` passed 22/22; the page is local/static and does not yet subscribe to a live runtime.
 
 
 ---

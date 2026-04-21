@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CDDA Signed-Message Audit Surface</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101418;
+      --panel: #17202a;
+      --panel-2: #1f2b36;
+      --text: #edf5ff;
+      --muted: #a9b9c9;
+      --accent: #83d6ff;
+      --good: #89e894;
+      --bad: #ff8f8f;
+      --border: #344657;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body { margin: 0; background: var(--bg); color: var(--text); }
+    main { max-width: 1120px; margin: 0 auto; padding: 32px 20px 48px; }
+    h1, h2 { margin: 0 0 12px; }
+    p { color: var(--muted); line-height: 1.55; }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin: 16px 0; box-shadow: 0 12px 32px rgba(0,0,0,.22); }
+    .guardrail { border-color: #2f7f5f; background: linear-gradient(135deg, #173124, #17202a); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .card { background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
+    .meta { display: grid; grid-template-columns: 130px 1fr; gap: 6px 12px; font-size: 14px; }
+    .label { color: var(--accent); font-weight: 700; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #0b1117; border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+    input, textarea, button { width: 100%; box-sizing: border-box; border-radius: 10px; border: 1px solid var(--border); padding: 10px; background: #0c1218; color: var(--text); font: inherit; }
+    textarea { min-height: 90px; resize: vertical; }
+    button { cursor: pointer; background: #175a7a; border-color: #237ba6; font-weight: 700; margin-top: 10px; }
+    .valid { color: var(--good); font-weight: 700; }
+    .error { color: var(--bad); font-weight: 700; min-height: 1.4em; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>CDDA signed-message audit surface</h1>
+    <p>This local page makes the current S000/S001 signed-message proof browser-checkable.</p>
+
+    <section class="panel guardrail" data-test="guardrail">
+      <h2>Browser boundary guardrail</h2>
+      <p>
+        This browser is <strong>render/input only</strong>: it renders accepted signed envelopes and can preview a
+        human-authored input envelope. It has no <code>/api/*</code> progress path, no <code>MCP</code> command path,
+        no <code>server-authored</code> substitute messages, and no <code>scripted-screen</code> success path.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Accepted envelope provenance</h2>
+      <p>Every accepted card exposes channel, signer_actor_id, signer_role, causation_ids, correlation_id, payload, and valid status.</p>
+      <div id="envelope-list" class="grid" data-test="envelope-list" aria-live="polite"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Local human_input composer</h2>
+      <p>The browser may carry typed human text, but the preview signer remains the human. Empty text and privileged command text are rejected before a success envelope is created.</p>
+      <form id="human-input-form" data-test="human-input-form">
+        <label>
+          Human text
+          <textarea id="human-text" name="human-text">Check the door before moving.</textarea>
+        </label>
+        <label>
+          visible_context_ref
+          <input id="visible-context-ref" name="visible-context-ref" value="visible-context:obs-001">
+        </label>
+        <button type="submit">Create local human_input preview</button>
+      </form>
+      <p id="human-input-error" class="error" data-test="human-input-error"></p>
+      <pre id="human-input-preview" data-test="human-input-preview">Preview will appear here.</pre>
+    </section>
+  </main>
+
+  <script id="demo-envelopes" type="application/json">
+  [
+    {
+      "id": "obs-001",
+      "channel": "scene_observation",
+      "created_at": "2026-04-21T10:00:00Z",
+      "signer_actor_id": "scene-reader",
+      "signer_role": "scene-reader",
+      "causation_ids": ["raw-capture-001"],
+      "correlation_id": "bootstrap-001",
+      "payload": {"screen_ref": "raw-screen-001", "summary": "Shelter start visible to scene reader."},
+      "signature": "sig:scene-reader:scene_observation:obs-001",
+      "valid": true
+    },
+    {
+      "id": "decision-001",
+      "channel": "action_decision",
+      "created_at": "2026-04-21T10:00:01Z",
+      "signer_actor_id": "actor",
+      "signer_role": "actor",
+      "causation_ids": ["obs-001"],
+      "correlation_id": "bootstrap-001",
+      "payload": {"decision_text": "Open the shelter door.", "intended_action": "press=o"},
+      "signature": "sig:actor:action_decision:decision-001",
+      "valid": true
+    },
+    {
+      "id": "effect-001",
+      "channel": "action_effect",
+      "created_at": "2026-04-21T10:00:02Z",
+      "signer_actor_id": "action-bridge",
+      "signer_role": "action-bridge",
+      "causation_ids": ["decision-001"],
+      "correlation_id": "bootstrap-001",
+      "payload": {"applied_action": "press=o", "effect_summary": "The shelter door opens."},
+      "signature": "sig:action-bridge:action_effect:effect-001",
+      "valid": true
+    },
+    {
+      "id": "obs-002",
+      "channel": "scene_observation",
+      "created_at": "2026-04-21T10:00:03Z",
+      "signer_actor_id": "scene-reader",
+      "signer_role": "scene-reader",
+      "causation_ids": ["effect-001"],
+      "correlation_id": "bootstrap-001",
+      "payload": {"screen_ref": "raw-screen-002", "summary": "Open shelter door observed by scene reader."},
+      "signature": "sig:scene-reader:scene_observation:obs-002",
+      "valid": true
+    },
+    {
+      "id": "human-001",
+      "channel": "human_input",
+      "created_at": "2026-04-21T10:01:00Z",
+      "signer_actor_id": "human",
+      "signer_role": "human",
+      "causation_ids": ["visible-context:obs-001"],
+      "correlation_id": "human-input-001",
+      "payload": {"text": "Check the door before moving.", "visible_context_ref": "visible-context:obs-001"},
+      "signature": "sig:human:human_input:human-001",
+      "valid": true
+    },
+    {
+      "id": "decision-human-001",
+      "channel": "action_decision",
+      "created_at": "2026-04-21T10:01:01Z",
+      "signer_actor_id": "actor",
+      "signer_role": "actor",
+      "causation_ids": ["human-001"],
+      "correlation_id": "human-input-001",
+      "payload": {"decision_text": "Acknowledge the human instruction and inspect the door.", "intended_action": "inspect=door"},
+      "signature": "sig:actor:action_decision:decision-human-001",
+      "valid": true
+    }
+  ]
+  </script>
+
+  <script>
+    const demoEnvelopes = JSON.parse(document.getElementById('demo-envelopes').textContent);
+
+    function signatureFor(signerActorId, channel, id) {
+      return `sig:${signerActorId}:${channel}:${id}`;
+    }
+
+    function summarizePayload(payload) {
+      return Object.entries(payload).map(([key, value]) => `${key}: ${value}`).join(' · ');
+    }
+
+    function renderEnvelopes(envelopes) {
+      const list = document.getElementById('envelope-list');
+      list.innerHTML = '';
+      for (const envelope of envelopes) {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <h3>${envelope.channel}</h3>
+          <div class="meta">
+            <span class="label">channel</span><span>${envelope.channel}</span>
+            <span class="label">signer_actor_id</span><span>${envelope.signer_actor_id}</span>
+            <span class="label">signer_role</span><span>${envelope.signer_role}</span>
+            <span class="label">causation_ids</span><span>${envelope.causation_ids.join(', ')}</span>
+            <span class="label">correlation_id</span><span>${envelope.correlation_id}</span>
+            <span class="label">payload</span><span>${summarizePayload(envelope.payload)}</span>
+            <span class="label">valid</span><span class="valid">${String(envelope.valid)}</span>
+          </div>`;
+        list.appendChild(card);
+      }
+    }
+
+    function validateHumanInput(text, visibleContextRef) {
+      if (text.trim().length === 0) {
+        return 'Human text is required.';
+      }
+      if (visibleContextRef.trim().length === 0) {
+        return 'visible_context_ref is required.';
+      }
+      if (text.includes('/api/') || visibleContextRef.includes('/api/')) {
+        return 'Privileged /api/ command paths cannot become human_input success envelopes.';
+      }
+      return '';
+    }
+
+    function createHumanInputPreview(text, visibleContextRef) {
+      const id = `human-preview-${Date.now()}`;
+      return {
+        id,
+        channel: "human_input",
+        created_at: new Date().toISOString(),
+        signer_actor_id: "human",
+        signer_role: "human",
+        causation_ids: [visibleContextRef],
+        correlation_id: `browser-local-${id}`,
+        payload: {
+          text,
+          visible_context_ref: visibleContextRef
+        },
+        signature: signatureFor('human', 'human_input', id),
+        valid: true
+      };
+    }
+
+    function wireComposer() {
+      const form = document.getElementById('human-input-form');
+      const text = document.getElementById('human-text');
+      const context = document.getElementById('visible-context-ref');
+      const error = document.getElementById('human-input-error');
+      const preview = document.getElementById('human-input-preview');
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const validationError = validateHumanInput(text.value, context.value);
+        if (validationError) {
+          error.textContent = validationError;
+          preview.textContent = 'No success envelope created.';
+          return;
+        }
+        error.textContent = '';
+        preview.textContent = JSON.stringify(createHumanInputPreview(text.value.trim(), context.value.trim()), null, 2);
+      });
+    }
+
+    renderEnvelopes(demoEnvelopes);
+    wireComposer();
+  </script>
+</body>
+</html>
