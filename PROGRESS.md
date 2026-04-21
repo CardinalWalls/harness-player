@@ -1,53 +1,72 @@
-# Project Progress: `bootstrap-scene-reader` — independent reset
+# Project Progress: `bootstrap-scene-reader` — S000 active lane
 
-**Last Updated**: 2026-04-21
-**Current Phase**: reset / re-orientation
+**Last Updated**: 2026-04-21  
+**Current Phase**: S000 ready for team execution
 
-> This is now the root progress file for the independent project checkout.
-> `_mynot/` is preserved, but historical material inside it is not automatically current intent.
+> Intent re-confirmed by user on 2026-04-21: continue as the CDDA/Hermes scene-reader signed-message test bench; MoonBit remains the domain-contract language; `_mynot/1-intent/PRD.md`, `_mynot/2-architecture/ARCHITECTURE.md`, and `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md` are current authoritative inputs. Archive material remains reference/evidence only.
 
 ---
 
 ## Current Work
 
-### RESET-000 — independent project cleanup
+### S000-bootstrap-scene-reader — signed bootstrap causal chain
 
 **Started**: 2026-04-21  
 **Status**: In progress  
-**Scope**: detach from broken worktree history, archive stale implementation surfaces, and prepare a clean standalone repository.
+**Story file**: `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md`  
+**Scope**: implement one signed causal chain: `scene_observation` → `action_decision` → `action_effect` → next `scene_observation`; prove browser/server shortcuts are not valid success paths.
+
+#### Phase Progress
+
+- [x] Design — `_mynot/1-intent/PRD.md` and `_mynot/1-intent/MOCK-EXPECTED-RESULT.md` are authoritative for this lane.
+- [x] Architecture — `_mynot/2-architecture/ARCHITECTURE.md` is authoritative for this lane.
+- [x] Story — `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md` is the single active story.
+- [x] Setup / Ralplan — produced `.omx/plans/prd-S000-bootstrap-scene-reader.md`, `.omx/plans/test-spec-S000-bootstrap-scene-reader.md`, `.omx/plans/team-tasks-S000-bootstrap-scene-reader.md`, and `.omx/plans/ralplan-S000-bootstrap-scene-reader.md`.
+- [ ] Team Execution — run `$team` from approved ralplan artifacts.
+- [ ] Quality Check — verify every AC/failure-mode and no forbidden shortcut path.
+- [ ] Dev Testing — n/a unless runtime demo surfaces are restored.
+- [ ] CI/CD — open PR only after QC pass.
+
+#### Notes
+
+- 2026-04-21: User answered yes to all reset questions; S000 is now active. Next step is ralplan artifacts, then team execution.
+- 2026-04-21: Archive at `_archive/legacy-S000-bootstrap-scene-reader/` may be used as implementation reference/substrate, but not as authoritative intent.
+- 2026-04-21: `$ralplan` completed consensus after Architect/Critic iterations; next phase is `$team` execution from `.omx/plans/team-tasks-S000-bootstrap-scene-reader.md`.
+
+---
+
+## Completed
+
+### RESET-000 — independent project cleanup
+
+**Completed**: 2026-04-21  
+**Scope**: detached from broken worktree history, archived stale implementation surfaces, and prepared a clean standalone repository.
 
 **Completed during reset**:
 - [x] Verified old MoonBit baseline before archival: `moon info && moon fmt --check && moon test` passed, 13/13.
 - [x] Archived broken `.git` worktree pointer.
 - [x] Archived stale root docs and old implementation/runtime surfaces under `_archive/legacy-S000-bootstrap-scene-reader/`.
 - [x] Preserved `_mynot/` in place.
-
-**Remaining**:
-- [x] Initialize standalone Git repository.
-- [x] Commit reset baseline with Lore-style commit message.
-- [ ] Decide the next fresh intent/architecture lane before rebuilding implementation.
+- [x] Initialized standalone Git repository.
+- [x] Committed reset baseline with Lore-style commit message.
+- [x] Decided the fresh intent/architecture lane: continue S000 from `_mynot` authority.
 
 ---
 
-## Archived / Historical
+## Blocked
 
-The previous `S000-bootstrap-scene-reader` lane is archived, not deleted:
-
-- Archive root: `_archive/legacy-S000-bootstrap-scene-reader/`
-- Previous MoonBit implementation: `_archive/legacy-S000-bootstrap-scene-reader/moonbit/`
-- Previous root docs: `_archive/legacy-S000-bootstrap-scene-reader/root-docs/`
-- Previous OMX plans/context: `_archive/legacy-S000-bootstrap-scene-reader/omx-artifacts/`
-
-The old narrative about undoing `reach_playable()`, server-side `/api/*`, and server-authored `human-instruction.jsonl` is no longer the active project goal. It is historical context only.
+None.
 
 ---
 
-## Next Decision Needed
+## Upstream Gaps
 
-Before new implementation, freeze the new intent:
+| # | Found-in | Missing-upstream-item | Target-location | routed? |
+|---|---|---|---|---|
+| — | — | — | — | routed |
 
-- Is this still a CDDA/Hermes scene-reader test bench?
-- Is MoonBit still desired as the domain-contract language?
-- Which parts of `_mynot/` remain authoritative versus archived evidence?
+---
 
-Do not rebuild from the archived implementation without answering those at the intent layer.
+## Lessons To Route
+
+None.
