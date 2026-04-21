@@ -1,0 +1,7 @@
+Bring the tmux-backed CDDA terminal build to a real playable in-game state through the MCP tools.
+If the game starts on a warning or menu screen, navigate forward until the player avatar is in-world and recent game log lines are visible.
+The validated shortest path in this environment is:
+- If needed, press `Enter` once to leave the splash or warning screen.
+- On the New Game screen, use `Down`, `Down`, `Enter` to choose `Play Now! (Default Scenario)`.
+- On the Create World screen, press `f`, then `Y`.
+- On the character creation screen, press `Tab`, then `Y`.

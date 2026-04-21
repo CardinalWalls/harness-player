@@ -1,0 +1,4 @@
+gitdir: /Users/yetian/Desktop/new-real-100-commits/.git/worktrees/new-real-100-commits-S000-bootstrap-scene-reader
+
+
+Archived during independent-project reset on 2026-04-21. The referenced parent gitdir no longer existed, so this checkout could not run git status/log until reinitialized.

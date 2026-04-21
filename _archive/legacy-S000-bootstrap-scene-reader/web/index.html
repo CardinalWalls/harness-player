@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Captured Channel Scene</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0d1117;
+        --panel: #161b22;
+        --panel-2: #1f2630;
+        --border: #313b47;
+        --ink: #e6edf3;
+        --muted: #92a1b2;
+        --accent: #6bd6b0;
+        --accent-2: #9ed9ff;
+        --danger: #f78166;
+        --mono: "SFMono-Regular", Menlo, Consolas, Monaco, monospace;
+        --sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: linear-gradient(180deg, #0b0f14 0%, #0d1117 100%);
+        color: var(--ink);
+        font-family: var(--sans);
+      }
+
+      .page {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 24px;
+        display: grid;
+        gap: 20px;
+      }
+
+      .hero, .panel {
+        border: 1px solid var(--border);
+        background: rgba(22, 27, 34, 0.92);
+      }
+
+      .hero {
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: flex-start;
+      }
+
+      .hero h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+      }
+
+      .subtitle {
+        color: var(--muted);
+        font-size: 15px;
+        max-width: 900px;
+      }
+
+      .hero-stats {
+        min-width: 260px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .stat {
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        padding: 10px 12px;
+      }
+
+      .stat-label {
+        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .stat-value {
+        margin-top: 6px;
+        font-size: 16px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .panel h2 {
+        margin: 0 0 14px;
+        font-size: 18px;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+        gap: 20px;
+      }
+
+      .sidebar {
+        display: grid;
+        gap: 20px;
+        align-content: start;
+      }
+
+      .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      button {
+        border: 1px solid var(--border);
+        background: #27313d;
+        color: var(--ink);
+        padding: 10px 14px;
+        font: 14px var(--sans);
+        cursor: pointer;
+      }
+
+      button.primary {
+        background: linear-gradient(135deg, var(--accent-2), var(--accent));
+        color: #071018;
+        border-color: transparent;
+      }
+
+      .log, .notes, .tmux-screen, textarea {
+        width: 100%;
+        border: 1px solid var(--border);
+        background: #0b0f14;
+        color: var(--ink);
+      }
+
+      textarea {
+        min-height: 140px;
+        resize: vertical;
+        padding: 12px;
+        font: 14px/1.5 var(--sans);
+      }
+
+      .log, .notes {
+        padding: 12px;
+        white-space: pre-wrap;
+      }
+
+      .log {
+        min-height: 72px;
+        font: 12px/1.45 var(--mono);
+        color: var(--muted);
+      }
+
+      .notes {
+        min-height: 140px;
+        max-height: 260px;
+        overflow: auto;
+        font: 12px/1.45 var(--mono);
+      }
+
+      .event-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .event-card {
+        border: 1px solid var(--border);
+        background: #0b0f14;
+        padding: 10px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .event-meta {
+        color: var(--muted);
+        font: 11px/1.45 var(--mono);
+      }
+
+      .event-content {
+        white-space: pre-wrap;
+        font: 12px/1.45 var(--mono);
+        color: var(--ink);
+      }
+
+      .channel-fields {
+        display: grid;
+        gap: 8px;
+      }
+
+      .channel-field {
+        border: 1px solid var(--border);
+        background: #11161d;
+        padding: 10px;
+      }
+
+      .channel-field-label {
+        color: var(--muted);
+        font: 11px/1.2 var(--mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .channel-field-value {
+        white-space: pre-wrap;
+        font: 13px/1.45 var(--sans);
+        color: var(--ink);
+      }
+
+      details.debug {
+        border: 1px solid var(--border);
+        background: rgba(22, 27, 34, 0.92);
+        padding: 18px;
+      }
+
+      details.debug summary {
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .tmux-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 14px;
+      }
+
+      .channel-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 14px;
+      }
+
+      .tmux-card {
+        border: 1px solid var(--border);
+        background: var(--panel-2);
+        padding: 14px;
+        display: grid;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      .tmux-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: baseline;
+      }
+
+      .tmux-title {
+        margin: 0;
+        font-size: 16px;
+      }
+
+      .tmux-role {
+        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .tmux-meta {
+        color: var(--muted);
+        font: 12px/1.45 var(--mono);
+        white-space: pre-wrap;
+      }
+
+      .tmux-screen {
+        min-height: 220px;
+        max-height: 340px;
+        overflow: auto;
+        white-space: pre-wrap;
+        padding: 12px;
+        font: 12px/1.35 var(--mono);
+        color: #d9f4cf;
+      }
+
+      .status-ok { color: var(--accent); }
+      .status-bad { color: var(--danger); }
+
+      @media (max-width: 1200px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero">
+        <div>
+          <h1>Captured Channel Scene</h1>
+          <div class="subtitle">
+            CDDA remains the only raw terminal panel. Human / Clone / Supervisor are shown here as captured+parsed structured channel views backed by the local relay store,
+            not as native agent contracts. tmux stays in the runtime and debug lane.
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-grid">
+            <div class="stat">
+              <div class="stat-label">Dashboard</div>
+              <div id="dashboardUrl" class="stat-value">127.0.0.1:8765</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Channels Ready</div>
+              <div id="channelCount" class="stat-value">0</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Relay Events</div>
+              <div id="relayCount" class="stat-value">0</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Human Hermes</div>
+              <div id="humanHermesStatus" class="stat-value">not started</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="layout">
+        <aside class="sidebar">
+          <section class="panel">
+            <h2>Human Hermes Control</h2>
+            <div class="buttons" style="margin-bottom: 12px;">
+              <button id="startHumanHermes" class="primary">Start Human Hermes</button>
+              <button id="refreshState">Refresh</button>
+            </div>
+            <textarea id="humanInput" placeholder="Type a message for Human Hermes here..."></textarea>
+            <div class="buttons" style="margin-top: 12px;">
+              <button id="sendHuman" class="primary">Send to Human Hermes</button>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h2>Human Hermes Adapter Notes</h2>
+            <div id="humanHermesNotes" class="notes">Human Hermes output will appear here.</div>
+          </section>
+
+          <section class="panel">
+            <h2>Interaction Loop</h2>
+            <div id="interactionLoop" class="notes">Interaction loop status will appear here.</div>
+          </section>
+
+          <section class="panel">
+            <h2>Action Log</h2>
+            <div id="log" class="log">Ready.</div>
+          </section>
+        </aside>
+
+        <section class="panel" style="display:grid; gap:20px;">
+          <section>
+            <h2>CDDA Raw Panel</h2>
+            <div id="gameScreen" class="tmux-screen" style="min-height:420px; max-height:560px;">Loading game…</div>
+          </section>
+
+          <section>
+            <h2>Flow Topology</h2>
+            <div id="flowTopology" class="event-list">
+              <section class="event-card">Loading flow topology...</section>
+            </div>
+          </section>
+
+          <section>
+            <h2>Relay Event Timeline</h2>
+            <div id="relayTimeline" class="event-list">
+              <section class="event-card">Loading relay events...</section>
+            </div>
+          </section>
+
+          <section>
+            <h2>Structured Agent Channels</h2>
+            <div class="channel-grid">
+              <section class="event-card">
+                <div class="event-meta">channel=human-hermes · captured/parsed</div>
+                <div id="humanHermesChannel" class="event-list">No structured events yet.</div>
+              </section>
+              <section class="event-card">
+                <div class="event-meta">channel=clone-hermes · captured/parsed</div>
+                <div id="cloneChannel" class="event-list">No structured events yet.</div>
+              </section>
+              <section class="event-card">
+                <div class="event-meta">channel=supervisor-hermes · captured/parsed</div>
+                <div id="supervisorChannel" class="event-list">No structured events yet.</div>
+              </section>
+            </div>
+          </section>
+
+          <details class="debug">
+            <summary>TMUX Debug Drawer</summary>
+            <div id="tmuxGrid" class="tmux-grid" style="margin-top: 14px;">Loading tmux sessions...</div>
+          </details>
+        </section>
+      </section>
+    </div>
+
+    <script>
+      function setLog(message) {
+        document.getElementById("log").textContent = message;
+      }
+
+      function escapeHtml(text) {
+        return String(text || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
+
+      function renderSnapshotFields(snapshot) {
+        const structured = snapshot || {};
+        return `
+          <div class="channel-fields">
+            <div class="channel-field">
+              <div class="channel-field-label">Observation</div>
+              <div class="channel-field-value">${escapeHtml(structured.observation || "—")}</div>
+            </div>
+            <div class="channel-field">
+              <div class="channel-field-label">Plan</div>
+              <div class="channel-field-value">${escapeHtml(structured.plan || "—")}</div>
+            </div>
+            <div class="channel-field">
+              <div class="channel-field-label">Result</div>
+              <div class="channel-field-value">${escapeHtml(structured.result || "—")}</div>
+            </div>
+            <div class="channel-field">
+              <div class="channel-field-label">Health</div>
+              <div class="channel-field-value">${escapeHtml(structured.health || "—")}${structured.health_detail ? "\\n\\n" + escapeHtml(structured.health_detail) : ""}</div>
+            </div>
+            <div class="channel-field">
+              <div class="channel-field-label">Tail</div>
+              <div class="channel-field-value">${escapeHtml(structured.tail || "—")}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderTimelineCards(events) {
+        return events.length > 0
+          ? events.map((event) => {
+              const tags = (event.tags || [])
+                .filter((tag) => Array.isArray(tag) && tag.length >= 2)
+                .map((tag) => `${tag[0]}=${tag[1]}`)
+                .join(", ");
+              return `
+                <section class="event-card">
+                  <div class="event-meta">created_at=${event.created_at || "-"} kind=${event.kind || "-"} channel=${escapeHtml(event.channel || "-")}</div>
+                  <div class="event-meta">${escapeHtml(tags)}</div>
+                  <div class="event-content">${escapeHtml(event.summary || event.content || "No content")}</div>
+                </section>
+              `;
+            }).join("")
+          : "No relay events yet.";
+      }
+
+      function renderChannelPanel(snapshot, events) {
+        const recentEvents = (events || []).slice(-4).reverse();
+        const recentHtml = recentEvents.length > 0
+          ? recentEvents.map((event) => {
+              const tags = (event.tags || [])
+                .filter((tag) => Array.isArray(tag) && tag.length >= 2)
+                .map((tag) => `${tag[0]}=${tag[1]}`)
+                .join(", ");
+              return `
+                <section class="event-card">
+                  <div class="event-meta">kind=${event.kind} created_at=${event.created_at || "-"}</div>
+                  <div class="event-meta">${escapeHtml(tags)}</div>
+                  <div class="event-content">${escapeHtml(event.content || "No content")}</div>
+                </section>
+              `;
+            }).join("")
+          : `<section class="event-card"><div class="event-content">No relay-backed events yet.</div></section>`;
+        return `
+          ${renderSnapshotFields(snapshot)}
+          <div class="event-meta" style="margin-top: 10px;">Recent relay events</div>
+          <div class="event-list">${recentHtml}</div>
+        `;
+      }
+
+      function updateView(payload) {
+        const state = payload || {};
+        const tmuxViews = state.tmux_views || [];
+        const debugTmuxViews = state.debug_tmux_views || tmuxViews;
+        const humanHermes = state.human_hermes || {};
+        const humanChannelEvents = state.human_channel_events || [];
+        const cloneChannelEvents = state.clone_channel_events || [];
+        const supervisorChannelEvents = state.supervisor_channel_events || [];
+        const channelSnapshots = state.channel_snapshots || {};
+        const humanSnapshot = channelSnapshots["human-hermes"] || {};
+        const cloneSnapshot = channelSnapshots["clone-hermes"] || {};
+        const supervisorSnapshot = channelSnapshots["supervisor-hermes"] || {};
+        const flowTopology = (state.flow_topology && state.flow_topology.rows) || [];
+        const relayTimeline = (state.relay_timeline && state.relay_timeline.events) || [];
+        const rawPanelView = state.raw_panel_view || tmuxViews.find((view) => view.session_name === "hermes-cdda") || {};
+
+        document.getElementById("dashboardUrl").textContent = window.location.origin;
+        document.getElementById("channelCount").textContent = String(
+          [humanSnapshot, cloneSnapshot, supervisorSnapshot].filter((snapshot) => snapshot && (snapshot.result || snapshot.tail || snapshot.tmux_exists)).length,
+        );
+        document.getElementById("relayCount").textContent = String(relayTimeline.length);
+        document.getElementById("humanHermesStatus").textContent = humanHermes.exists ? "running" : "not started";
+        document.getElementById("humanHermesStatus").className = `stat-value ${humanHermes.exists ? "status-ok" : "status-bad"}`;
+        document.getElementById("gameScreen").textContent = rawPanelView.raw_text || "No game output yet.";
+
+        document.getElementById("humanHermesNotes").textContent =
+          humanHermes.raw_text
+            ? humanHermes.raw_text.split("\\n").slice(-40).join("\\n")
+            : "Human Hermes output will appear here.";
+
+        const latestHumanMessage = [...humanChannelEvents].reverse().find((event) => event.kind === 24101);
+        const latestHumanSnapshot = [...humanChannelEvents].reverse().find((event) => event.kind === 24102);
+        const interactionLines = [];
+        if (latestHumanMessage) {
+          interactionLines.push(`latest human message @ ${latestHumanMessage.created_at}`);
+          interactionLines.push(latestHumanMessage.content || "—");
+        } else {
+          interactionLines.push("latest human message: —");
+        }
+        interactionLines.push("");
+        if (latestHumanSnapshot) {
+          let parsed = null;
+          try { parsed = JSON.parse(latestHumanSnapshot.content || "{}"); } catch (_) {}
+          interactionLines.push(`latest human snapshot @ ${latestHumanSnapshot.created_at}`);
+          if (parsed) {
+            interactionLines.push(`observation: ${parsed.observation || "—"}`);
+            interactionLines.push(`plan: ${parsed.plan || "—"}`);
+            interactionLines.push(`result: ${parsed.result || "—"}`);
+            interactionLines.push(`health: ${parsed.health || "—"}`);
+          } else {
+            interactionLines.push(latestHumanSnapshot.content || "—");
+          }
+        } else {
+          interactionLines.push("latest human snapshot: —");
+        }
+        document.getElementById("interactionLoop").textContent = interactionLines.join("\\n");
+
+        const topologyRows = flowTopology.length > 0 ? flowTopology : [
+          { from: "human input", to: "human-hermes", relation: "instruction", status: humanHermes.exists ? "active" : "waiting" },
+          { from: "CDDA Raw", to: "clone-hermes", relation: "capture / observe", status: cloneChannelEvents.length > 0 ? "active" : "waiting" },
+          { from: "clone-hermes", to: "supervisor-hermes", relation: "monitor / diagnose", status: supervisorChannelEvents.length > 0 ? "active" : "waiting" },
+        ];
+        document.getElementById("flowTopology").innerHTML = topologyRows
+          .map((row) => `
+            <section class="event-card">
+              <div class="event-meta">${escapeHtml(row.from)} → ${escapeHtml(row.to)}</div>
+              <div class="channel-field-value">${escapeHtml(row.relation)}</div>
+              <div class="event-meta">status=${escapeHtml(row.status)}</div>
+            </section>
+          `)
+          .join("");
+
+        document.getElementById("relayTimeline").innerHTML = renderTimelineCards(relayTimeline);
+        document.getElementById("humanHermesChannel").innerHTML = renderChannelPanel(humanSnapshot, humanChannelEvents);
+        document.getElementById("cloneChannel").innerHTML = renderChannelPanel(cloneSnapshot, cloneChannelEvents);
+        document.getElementById("supervisorChannel").innerHTML = renderChannelPanel(supervisorSnapshot, supervisorChannelEvents);
+
+        document.getElementById("tmuxGrid").innerHTML =
+          debugTmuxViews.length > 0
+            ? debugTmuxViews.map((view) => {
+                const meta = [
+                  `session: ${view.session_name || "-"}`,
+                  `role: ${view.role || "-"}`,
+                  `exists: ${view.exists ? "yes" : "no"}`,
+                  `command: ${view.pane_current_command || "-"}`,
+                  `cwd: ${view.cwd || "-"}`,
+                  `pane: ${view.pane_id || "-"}`,
+                ].join("\\n");
+                return `
+                  <section class="tmux-card">
+                    <div class="tmux-header">
+                      <h3 class="tmux-title">${escapeHtml(view.title || view.session_name)}</h3>
+                      <div class="tmux-role">${escapeHtml(view.role || "tmux")}</div>
+                    </div>
+                    <div class="tmux-meta">${escapeHtml(meta)}</div>
+                    <div class="tmux-screen">${escapeHtml(view.raw_text || "No pane output yet.")}</div>
+                  </section>
+                `;
+              }).join("")
+            : "No tmux sessions discovered.";
+      }
+
+      async function fetchState() {
+        const response = await fetch("/api/state", { cache: "no-store" });
+        const payload = await response.json();
+        if (!payload.ok) {
+          throw new Error(payload.error || "state fetch failed");
+        }
+        updateView(payload.state);
+      }
+
+      async function post(path, body) {
+        const response = await fetch(path, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body || {}),
+        });
+        const payload = await response.json();
+        if (!payload.ok) {
+          throw new Error(payload.error || `${path} failed`);
+        }
+        updateView(payload.state);
+        return payload.state;
+      }
+
+      document.getElementById("refreshState").addEventListener("click", async () => {
+        try {
+          setLog("Refreshing channel scene...");
+          await fetchState();
+          setLog("Refreshed.");
+        } catch (error) {
+          setLog(String(error));
+        }
+      });
+
+      document.getElementById("startHumanHermes").addEventListener("click", async () => {
+        try {
+          setLog("Starting Human Hermes...");
+          await post("/api/human-hermes/start", {});
+          setLog("Human Hermes ready.");
+        } catch (error) {
+          setLog(String(error));
+        }
+      });
+
+      document.getElementById("sendHuman").addEventListener("click", async () => {
+        const input = document.getElementById("humanInput");
+        const text = input.value.trim();
+        if (!text) {
+          setLog("Please enter a message for Human Hermes.");
+          return;
+        }
+        try {
+          setLog("Sending message to Human Hermes...");
+          await post("/api/human-hermes/send", {
+            text,
+            press_enter: true,
+            wait_ms: 1200,
+            await_snapshot_ms: 45000,
+          });
+          input.value = "";
+          setLog("Message delivered.");
+        } catch (error) {
+          setLog(String(error));
+        }
+      });
+
+      fetchState().catch((error) => setLog(String(error)));
+      setInterval(() => {
+        fetchState().catch((error) => setLog(String(error)));
+      }, 1500);
+    </script>
+  </body>
+</html>

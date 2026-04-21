@@ -1,0 +1,1 @@
+This smoke check proves that Codex can read a local terminal snapshot, reason briefly about it, and write back inside the isolated workspace.

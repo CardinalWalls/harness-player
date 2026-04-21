@@ -1,0 +1,21 @@
+# Context Snapshot: S000 Bootstrap scene-reader signed-message chain
+
+- Task statement: Advance `PROGRESS.md` Current Work story `S000-bootstrap-scene-reader` through Setup, Testing, Implementation, QC, Dev Testing, and CI/CD until `STORY-DONE` or `STORY-BLOCKED` is appended.
+- Desired outcome: A MoonBit-owned signed envelope contract proves the bootstrap causal chain `scene_observation -> action_decision -> action_effect -> next scene_observation`; all story acceptance criteria and failure modes are covered by tests; `moon info && moon fmt && moon test` passes.
+- Known evidence:
+  - Story: `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md` is frozen and committed.
+  - Layer 2 Architecture requires real publisher self-signing, browser render/input only, relay/server non-authoritative, and commit/restore as signed messages.
+  - Existing MoonBit package has older names (`scene-state`, `action-intent`, `action-result`) that can coexist while this story adds Layer-2 vocabulary (`scene_observation`, `action_decision`, `action_effect`).
+- Constraints:
+  - No new dependencies.
+  - Do not hand-edit `pkg.generated.mbti`; regenerate with `moon info`.
+  - Do not add server/browser success shortcuts or `/api/*` progress paths.
+  - Keep story scoped to the bootstrap scene-reader chain only; no save/restore implementation.
+- Unknowns/open questions:
+  - Exact MoonBit syntax for newly added types must be verified by `moon test` and adjusted iteratively.
+  - Python/browser files should remain untouched unless AC6 requires static checks beyond MoonBit tests.
+- Likely touchpoints:
+  - `moonbit/cdda_native_contract/cdda_native_contract.mbt`
+  - `moonbit/cdda_native_contract/cdda_native_contract_test.mbt`
+  - `moonbit/cdda_native_contract/pkg.generated.mbti`
+  - `PROGRESS.md`

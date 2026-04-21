@@ -1,0 +1,7 @@
+import {
+  "yetian/cdda_native_contract" @lib,
+}
+
+options(
+  "is-main": true,
+)

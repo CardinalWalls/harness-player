@@ -1,0 +1,121 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yetian/cdda_native_contract"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn action_decision_from_scene(SignedEnvelope, String, String) -> Result[SignedEnvelope, ContractError]
+
+pub fn action_decision_from_scene_as(SignedEnvelope, String, String, String, String) -> Result[SignedEnvelope, ContractError]
+
+pub fn action_effect_from_decision(SignedEnvelope, String, String) -> Result[SignedEnvelope, ContractError]
+
+pub fn action_intent_from_scene(ChannelSnapshot, Int, String, String) -> Result[ChannelSnapshot, ContractError]
+
+pub fn action_result_from_intent(ChannelSnapshot, Int, String, String) -> Result[ChannelSnapshot, ContractError]
+
+pub fn audit_chain(Array[SignedEnvelope]) -> Result[Array[AuditProjection], ContractError]
+
+pub fn default_sections(RawTruth, ChannelSnapshot, ChannelSnapshot, ChannelSnapshot, ChannelSnapshot, ChannelSnapshot?) -> Array[SectionView]
+
+pub fn human_instruction(Int, String, String) -> ChannelSnapshot
+
+pub fn next_scene_observation_from_effect(SignedEnvelope, String, String, String, String, Bool) -> Result[SignedEnvelope, ContractError]
+
+pub fn participant_id_of(ParticipantView) -> String
+
+pub fn participant_sequence_of(ParticipantView) -> Int
+
+pub fn raw_truth(String, String, Int, String) -> RawTruth
+
+pub fn relation_contract(String, String, String, String, String, String, String, String) -> RelationContract
+
+pub fn scene_observation_from_raw(String, String, String, String, Bool) -> Result[SignedEnvelope, ContractError]
+
+pub fn scene_state_from_raw(RawTruth, Int, String, String) -> ChannelSnapshot
+
+pub fn section_contains_channel(SectionView, String) -> Bool
+
+pub fn section_ids_for_channel(Array[SectionView], String) -> Array[String]
+
+pub fn section_view(String, String, ParticipantView, RelationContract, ParticipantView) -> SectionView
+
+pub fn signed_envelope(String, String, String, String, Array[String], String, String, String) -> SignedEnvelope
+
+pub fn supervisor_reflection_from_intent(ChannelSnapshot, Int, String, String) -> Result[ChannelSnapshot, ContractError]
+
+// Errors
+
+// Types and methods
+pub(all) struct AuditProjection {
+  envelope_id : String
+  channel : String
+  signer_actor_id : String
+  causation_ids : Array[String]
+  valid : Bool
+} derive(Eq, @debug.Debug)
+
+pub(all) struct ChannelSnapshot {
+  channel_id : String
+  title : String
+  owner : String
+  sequence : Int
+  status : String
+  body : String
+  evidence_note : String
+  upstream_channel_ids : Array[String]
+  upstream_sequences : Array[Int]
+} derive(Eq, @debug.Debug)
+
+pub(all) enum ContractError {
+  InvalidUpstream(String)
+} derive(Eq, @debug.Debug)
+
+pub(all) enum ParticipantView {
+  Raw(RawTruth)
+  Channel(ChannelSnapshot)
+} derive(Eq, @debug.Debug)
+
+pub(all) struct RawTruth {
+  truth_id : String
+  title : String
+  sequence : Int
+  body : String
+} derive(Eq, @debug.Debug)
+
+pub(all) struct RelationContract {
+  relation_id : String
+  title : String
+  kind : String
+  source : String
+  target : String
+  owner : String
+  status : String
+  explanation : String
+} derive(Eq, @debug.Debug)
+
+pub(all) struct SectionView {
+  section_id : String
+  title : String
+  left : ParticipantView
+  relation : RelationContract
+  right : ParticipantView
+} derive(Eq, @debug.Debug)
+
+pub(all) struct SignedEnvelope {
+  id : String
+  channel : String
+  signer_actor_id : String
+  signer_role : String
+  causation_ids : Array[String]
+  correlation_id : String
+  payload : String
+  signature : String
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits
+

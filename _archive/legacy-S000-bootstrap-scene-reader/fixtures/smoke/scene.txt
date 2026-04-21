@@ -1,0 +1,13 @@
+CDDA curses snapshot
+Turn: 1
+Location: evac shelter
+Visible prompts:
+- "Open the curtains?"
+- "[y/n]"
+Player:
+- pain: 0
+- hunger: none
+- thirst: none
+Recent log:
+- You wake up.
+- It is sunny outside.

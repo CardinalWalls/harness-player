@@ -1,0 +1,36 @@
+# OS/editor noise
+.DS_Store
+*.swp
+*.swo
+
+# Runtime/generated output
+tmp/**
+!tmp/
+!tmp/.gitkeep
+artifacts/**
+!artifacts/
+!artifacts/.gitkeep
+
+# Build caches
+_build/
+**/_build/
+
+# OMX runtime state; keep reusable plans/templates when intentionally created
+.omx/logs/
+.omx/state/
+.omx/context/
+.omx/metrics.json
+.omx/hud-config.json
+.omx/setup-scope.json
+.omx/plans/*
+!.omx/plans/.gitkeep
+!.omx/templates/
+!.omx/templates/**
+
+# Entire runtime logs
+.entire/logs/
+
+# Codex local plugin/system caches; keep project agents/prompts/config
+.codex/skills/.system/**
+.codex/.tmp/
+.omx/backups/
