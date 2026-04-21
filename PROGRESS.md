@@ -1,15 +1,39 @@
-# Project Progress: `bootstrap-scene-reader` — S000 active lane
+# Project Progress: `bootstrap-scene-reader` — S001 active lane
 
 **Last Updated**: 2026-04-21  
-**Current Phase**: S000 complete
+**Current Phase**: S001 Story frozen; Setup/Ralplan pending
 
-> Intent re-confirmed by user on 2026-04-21: continue as the CDDA/Hermes scene-reader signed-message test bench; MoonBit remains the domain-contract language; `_mynot/1-intent/PRD.md`, `_mynot/2-architecture/ARCHITECTURE.md`, and `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md` are current authoritative inputs. Archive material remains reference/evidence only.
+> Intent re-confirmed by user on 2026-04-21: continue as the CDDA/Hermes scene-reader signed-message test bench; MoonBit remains the domain-contract language; `_mynot/1-intent/PRD.md`, `_mynot/2-architecture/ARCHITECTURE.md`, completed `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md`, and active `_mynot/3-plan/stories/S001-human-input-signed-message.md` are current authoritative inputs. Archive material remains reference/evidence only.
 
 ---
 
 ## Current Work
 
-None.
+### S001-human-input-signed-message — signed human input path
+
+**Started**: 2026-04-21  
+**Status**: Story frozen; ready for Setup / Ralplan  
+**Story file**: `_mynot/3-plan/stories/S001-human-input-signed-message.md`  
+**Scope**: bring one input path online: `human text` → signed `human_input` → actor consumes accepted human input; prove browser/server `/api/*` command paths are not success.
+
+#### Phase Progress
+
+- [x] Design — reuse frozen `_mynot/1-intent/PRD.md` and `_mynot/1-intent/MOCK-EXPECTED-RESULT.md`.
+- [x] Architecture — reuse frozen `_mynot/2-architecture/ARCHITECTURE.md`.
+- [x] Story — `_mynot/3-plan/stories/S001-human-input-signed-message.md` freeze checklist passed (single input path, testable AC, Layer 2 refs, failure modes, exact files, explicit tester/coder/qc contracts).
+- [ ] Setup / Ralplan — create current S001 handoff plans `.omx/plans/prd-S001-human-input-signed-message.md` + `test-spec-S001-human-input-signed-message.md`.
+- [ ] Testing — executor may be OMX, but contract is `tester-agent`; must leave red log and tester report.
+- [ ] Tester QC — `auto_qc/qc` verifies tester claims before implementation.
+- [ ] Implementation — executor may be OMX, but contract is `coder-agent`; must leave green log and coder report.
+- [ ] Coder QC — `auto_qc/qc` verifies implementation against story/tests/anti-patterns.
+- [ ] Dev Testing — n/a unless active browser/input surface is restored and needs manual smoke.
+- [ ] CI/CD — use `follow` if remote CI is available, otherwise record exact n/a reason.
+
+#### Notes
+
+- 2026-04-21: User requested clearing the old 001 lane and starting fresh. Old live-runtime 001 branches remain backup/reference only and are not current state.
+- 2026-04-21: S001 was selected from PRD Use case 2 and Architecture channel `human_input`: it is the next independent MVP causal path after S000 bootstrap.
+
 
 ---
 
