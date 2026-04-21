@@ -24,9 +24,9 @@
 - [x] Setup / Ralplan — generated `.omx/plans/prd-S002-browser-audit-surface.md`, `.omx/plans/test-spec-S002-browser-audit-surface.md`, `.omx/plans/ralplan-S002-browser-audit-surface.md`, and `.omx/plans/team-tasks-S002-browser-audit-surface.md`.
 - [x] Testing — tester-agent contract complete; red static verification added in `scripts/verify_browser_audit_surface.py`, with red log `.omx/evidence/S002-red-tests.log`.
 - [x] Tester QC — `auto_qc/qc` equivalent passed in `.omx/evidence/S002-tester-qc.md`; implementation may start next.
-- [ ] Implementation
-- [ ] Coder QC
-- [ ] Dev Testing
+- [x] Implementation — coder-agent contract complete; implemented static local browser audit surface in `web/index.html`, with green log `.omx/evidence/S002-green-tests.log`.
+- [x] Coder QC — `auto_qc/qc` equivalent passed in `.omx/evidence/S002-coder-qc.md`; static browser verifier and MoonBit regression are green.
+- [x] Dev Testing — local static browser page can be opened directly from `web/index.html`; no dev server required for this slice.
 - [ ] CI/CD
 
 #### Notes
@@ -34,6 +34,7 @@
 - 2026-04-21: Started after S001 completed/merged. S002 is the first web-checkable slice; it is intentionally static/local to avoid reintroducing server authority.
 - 2026-04-21: Setup/Ralplan artifacts generated from the S002 story only; next phase is tester-agent contract red verification.
 - 2026-04-21: S002 red verification locked. `python3 scripts/verify_browser_audit_surface.py` fails on missing `web/index.html` as expected; tester QC passed.
+- 2026-04-21: S002 implementation green. Static browser verifier passed and `moon info && moon fmt --check && moon test` passed 22/22; the page is local/static and does not yet subscribe to a live runtime.
 
 
 ---
