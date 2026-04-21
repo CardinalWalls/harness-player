@@ -21,7 +21,7 @@
 - [x] Design — reuse frozen `_mynot/1-intent/PRD.md` and `_mynot/1-intent/MOCK-EXPECTED-RESULT.md`; user requested that inspection wait until a web/browser surface exists.
 - [x] Architecture — reuse frozen `_mynot/2-architecture/ARCHITECTURE.md` browser/display and `human_input` channel rules.
 - [x] Story — `_mynot/3-plan/stories/S002-browser-audit-surface.md` created with expected-result mock, AC, Layer 2 refs, failure modes, exact files, and explicit tester/coder/qc contracts.
-- [ ] Setup / Ralplan
+- [x] Setup / Ralplan — generated `.omx/plans/prd-S002-browser-audit-surface.md`, `.omx/plans/test-spec-S002-browser-audit-surface.md`, `.omx/plans/ralplan-S002-browser-audit-surface.md`, and `.omx/plans/team-tasks-S002-browser-audit-surface.md`.
 - [ ] Testing
 - [ ] Tester QC
 - [ ] Implementation
@@ -32,6 +32,7 @@
 #### Notes
 
 - 2026-04-21: Started after S001 completed/merged. S002 is the first web-checkable slice; it is intentionally static/local to avoid reintroducing server authority.
+- 2026-04-21: Setup/Ralplan artifacts generated from the S002 story only; next phase is tester-agent contract red verification.
 
 
 ---
