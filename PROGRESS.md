@@ -1,7 +1,7 @@
 # Project Progress: `bootstrap-scene-reader` — S001 complete
 
 **Last Updated**: 2026-04-21  
-**Current Phase**: S001 complete
+**Current Phase**: S002 Story frozen
 
 > Intent re-confirmed by user on 2026-04-21: continue as the CDDA/Hermes scene-reader signed-message test bench; MoonBit remains the domain-contract language; `_mynot/1-intent/PRD.md`, `_mynot/2-architecture/ARCHITECTURE.md`, completed `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md` and completed `_mynot/3-plan/stories/S001-human-input-signed-message.md` are current authoritative inputs. Archive material remains reference/evidence only.
 
@@ -9,7 +9,29 @@
 
 ## Current Work
 
-None.
+### S002-browser-audit-surface — browser-checkable signed-message audit page
+
+**Started**: 2026-04-21  
+**Status**: Current Work  
+**Story file**: `_mynot/3-plan/stories/S002-browser-audit-surface.md`  
+**Scope**: make a first local browser page that renders accepted signed-message provenance and lets a human compose a local `human_input` preview without `/api/*` progress paths.
+
+#### Phase Progress
+
+- [x] Design — reuse frozen `_mynot/1-intent/PRD.md` and `_mynot/1-intent/MOCK-EXPECTED-RESULT.md`; user requested that inspection wait until a web/browser surface exists.
+- [x] Architecture — reuse frozen `_mynot/2-architecture/ARCHITECTURE.md` browser/display and `human_input` channel rules.
+- [x] Story — `_mynot/3-plan/stories/S002-browser-audit-surface.md` created with expected-result mock, AC, Layer 2 refs, failure modes, exact files, and explicit tester/coder/qc contracts.
+- [ ] Setup / Ralplan
+- [ ] Testing
+- [ ] Tester QC
+- [ ] Implementation
+- [ ] Coder QC
+- [ ] Dev Testing
+- [ ] CI/CD
+
+#### Notes
+
+- 2026-04-21: Started after S001 completed/merged. S002 is the first web-checkable slice; it is intentionally static/local to avoid reintroducing server authority.
 
 
 ---
