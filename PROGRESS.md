@@ -22,8 +22,8 @@
 - [x] Architecture — reuse frozen `_mynot/2-architecture/ARCHITECTURE.md` browser/display and `human_input` channel rules.
 - [x] Story — `_mynot/3-plan/stories/S002-browser-audit-surface.md` created with expected-result mock, AC, Layer 2 refs, failure modes, exact files, and explicit tester/coder/qc contracts.
 - [x] Setup / Ralplan — generated `.omx/plans/prd-S002-browser-audit-surface.md`, `.omx/plans/test-spec-S002-browser-audit-surface.md`, `.omx/plans/ralplan-S002-browser-audit-surface.md`, and `.omx/plans/team-tasks-S002-browser-audit-surface.md`.
-- [ ] Testing
-- [ ] Tester QC
+- [x] Testing — tester-agent contract complete; red static verification added in `scripts/verify_browser_audit_surface.py`, with red log `.omx/evidence/S002-red-tests.log`.
+- [x] Tester QC — `auto_qc/qc` equivalent passed in `.omx/evidence/S002-tester-qc.md`; implementation may start next.
 - [ ] Implementation
 - [ ] Coder QC
 - [ ] Dev Testing
@@ -33,6 +33,7 @@
 
 - 2026-04-21: Started after S001 completed/merged. S002 is the first web-checkable slice; it is intentionally static/local to avoid reintroducing server authority.
 - 2026-04-21: Setup/Ralplan artifacts generated from the S002 story only; next phase is tester-agent contract red verification.
+- 2026-04-21: S002 red verification locked. `python3 scripts/verify_browser_audit_surface.py` fails on missing `web/index.html` as expected; tester QC passed.
 
 
 ---
