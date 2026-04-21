@@ -1,7 +1,7 @@
 # Project Progress: `bootstrap-scene-reader` — S000 active lane
 
 **Last Updated**: 2026-04-21  
-**Current Phase**: S000 ready for team execution
+**Current Phase**: S000 implemented; CI/CD pending
 
 > Intent re-confirmed by user on 2026-04-21: continue as the CDDA/Hermes scene-reader signed-message test bench; MoonBit remains the domain-contract language; `_mynot/1-intent/PRD.md`, `_mynot/2-architecture/ARCHITECTURE.md`, and `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md` are current authoritative inputs. Archive material remains reference/evidence only.
 
@@ -22,9 +22,9 @@
 - [x] Architecture — `_mynot/2-architecture/ARCHITECTURE.md` is authoritative for this lane.
 - [x] Story — `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md` is the single active story.
 - [x] Setup / Ralplan — produced `.omx/plans/prd-S000-bootstrap-scene-reader.md`, `.omx/plans/test-spec-S000-bootstrap-scene-reader.md`, `.omx/plans/team-tasks-S000-bootstrap-scene-reader.md`, and `.omx/plans/ralplan-S000-bootstrap-scene-reader.md`.
-- [ ] Team Execution — run `$team` from approved ralplan artifacts.
-- [ ] Quality Check — verify every AC/failure-mode and no forbidden shortcut path.
-- [ ] Dev Testing — n/a unless runtime demo surfaces are restored.
+- [x] Team Execution — `$team` completed; tasks 4/4 completed, 0 failed; leader HEAD `745bd1b` includes S000 implementation.
+- [x] Quality Check — `moon info && moon fmt --check && moon test` passes 14/14; shortcut production scan shows no active browser/server shortcut path.
+- [x] Dev Testing — n/a; runtime browser/server surfaces were not restored for S000.
 - [ ] CI/CD — open PR only after QC pass.
 
 #### Notes
@@ -32,6 +32,7 @@
 - 2026-04-21: User answered yes to all reset questions; S000 is now active. Next step is ralplan artifacts, then team execution.
 - 2026-04-21: Archive at `_archive/legacy-S000-bootstrap-scene-reader/` may be used as implementation reference/substrate, but not as authoritative intent.
 - 2026-04-21: `$ralplan` completed consensus after Architect/Critic iterations; next phase is `$team` execution from `.omx/plans/team-tasks-S000-bootstrap-scene-reader.md`.
+- 2026-04-21: `$team` completed S000. Evidence: red-test gate before implementation, final `moon info && moon fmt --check && moon test` = 14/14, shortcut scan has no active scripts/web success path. Team state was shut down and residual state cleaned.
 
 ---
 
