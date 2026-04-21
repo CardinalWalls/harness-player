@@ -6,11 +6,17 @@ import {
 }
 
 // Values
+pub fn action_decision_from_human_input(String, String, String, SignedEnvelope, String, String, String) -> Result[SignedEnvelope, ContractError]
+
 pub fn action_decision_from_scene(String, String, String, SignedEnvelope, String, String, String) -> Result[SignedEnvelope, ContractError]
 
 pub fn action_effect_from_decision(String, String, String, SignedEnvelope, String, String, String) -> Result[SignedEnvelope, ContractError]
 
 pub fn audit_chain(Array[SignedEnvelope]) -> Result[Array[AuditProjection], ContractError]
+
+pub fn audit_human_input(SignedEnvelope, SignedEnvelope) -> Result[Array[AuditProjection], ContractError]
+
+pub fn human_input_from_text(String, String, String, String, String) -> Result[SignedEnvelope, ContractError]
 
 pub fn next_scene_observation_from_effect(String, String, String, SignedEnvelope, String, String, Bool) -> Result[SignedEnvelope, ContractError]
 

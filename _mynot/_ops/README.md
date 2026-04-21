@@ -35,11 +35,28 @@ _mynot/_ops/
 bash _mynot/_ops/install-skillset.sh
 ```
 
+脚本会默认写两份 skill：
+
+- `~/.codex/skills/<name>/SKILL.md`：home-scope fallback；
+- `./.codex/skills/<name>/SKILL.md`：**本仓库 project-scope 触发面**。
+
+为什么要两份：本仓库的 `omx doctor` 解析出的 Codex home 是仓库内
+`.codex`；如果只装到 `~/.codex/skills`，当前 project-scoped Codex/OMX
+会话可能看不到 `conduct` / `prd` / `story` / `qc`，导致 `/conduct` 被误解
+成普通文本或只能靠 `$help` 间接说明。
+
 脚本会：
 
-1. 把 `agents-zone-skillset/skills/{prd,architect,story,qc,auto_qc,follow,hr,mentor,setup}.md` 一个一个转成 `~/.codex/skills/<name>/SKILL.md`，加上 Codex 要求的 frontmatter（`name:` + `description:`）；
-2. 把 `agents-zone-skillset/agents/{tester,coder}.md` 装成 `~/.codex/skills/tester-agent/` 和 `~/.codex/skills/coder-agent/`（名字加 `-agent` 后缀避免 OMX 的 `$ralph` 混淆）——这俩是 **fallback**，正常路径用 `$ralph` 顶替；
-3. 把本目录的 **`skills/conduct.md`** 装成 `~/.codex/skills/conduct/SKILL.md`——这份是**仓库定制版**，知道 5 层路径、用 `$ralph` / `$ralplan` / `$deep-interview` 做相位切换。
+1. 把 `agents-zone-skillset/skills/{prd,architect,story,qc,auto_qc,follow,hr,mentor,setup}.md` 一个一个转成 `<skills-root>/<name>/SKILL.md`，加上 Codex 要求的 frontmatter（`name:` + `description:`）；
+2. 把 `agents-zone-skillset/agents/{tester,coder}.md` 装成 `<skills-root>/tester-agent/` 和 `<skills-root>/coder-agent/`（名字加 `-agent` 后缀避免 OMX 的 `$ralph` 混淆）——这俩是 **fallback**，正常路径用 `$ralph` 顶替；
+3. 把本目录的 **`skills/conduct.md`** 装成 `<skills-root>/conduct/SKILL.md`——这份是**仓库定制版**，知道 5 层路径、用 `$ralph` / `$ralplan` / `$deep-interview` 做相位切换。
+
+如果你只想写单个 skills 目录，可显式传：
+
+```bash
+CODEX_SKILLS_DIR="$HOME/.codex/skills" bash _mynot/_ops/install-skillset.sh
+CODEX_SKILLS_DIR="$PWD/.codex/skills"  bash _mynot/_ops/install-skillset.sh
+```
 
 预览不写入：
 
@@ -58,9 +75,11 @@ bash _mynot/_ops/install-skillset.sh --uninstall
 ```bash
 # 看是否都在位
 ls ~/.codex/skills | grep -E 'prd|architect|story|conduct|qc|hr|tester-agent|coder-agent'
+ls .codex/skills  | grep -E 'prd|architect|story|conduct|qc|hr|tester-agent|coder-agent'
 
 # 看 frontmatter 对不对（至少 name/description 要齐）
 head -6 ~/.codex/skills/conduct/SKILL.md
+head -6 .codex/skills/conduct/SKILL.md
 
 # OMX 自查
 omx doctor

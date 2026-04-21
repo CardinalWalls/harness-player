@@ -101,6 +101,164 @@ fn fake_envelope(
 }
 
 ///|
+fn first_human_input() -> @cdda_native_contract.SignedEnvelope {
+  @cdda_native_contract.human_input_from_text(
+    "human-001", "2026-04-21T10:01:00Z", "human-input-001", "Check the door before moving.",
+    "visible-context:obs-001",
+  ).unwrap()
+}
+
+///|
+fn first_human_response() -> @cdda_native_contract.SignedEnvelope {
+  @cdda_native_contract.action_decision_from_human_input(
+    "decision-human-001",
+    "2026-04-21T10:01:01Z",
+    "human-input-001",
+    first_human_input(),
+    "Acknowledge the human instruction and inspect the door.",
+    "inspect=door",
+    "The human asked for a cautious door check.",
+  ).unwrap()
+}
+
+///|
+test "human input: text creates human-signed envelope" {
+  let input = first_human_input()
+  assert_eq(input.id, "human-001")
+  assert_eq(input.channel, "human_input")
+  assert_eq(input.created_at, "2026-04-21T10:01:00Z")
+  assert_eq(input.signer_actor_id, "human")
+  assert_eq(input.signer_role, "human")
+  assert_eq(input.causation_ids, ["visible-context:obs-001"])
+  assert_eq(input.correlation_id, "human-input-001")
+  assert_eq(input.payload.contains("text=Check the door before moving."), true)
+  assert_eq(
+    input.payload.contains("visible_context_ref=visible-context:obs-001"),
+    true,
+  )
+  assert_eq(input.signature.length() > 0, true)
+}
+
+///|
+test "human input: actor consumes accepted input" {
+  let decision = first_human_response()
+  assert_eq(decision.id, "decision-human-001")
+  assert_eq(decision.channel, "action_decision")
+  assert_eq(decision.signer_actor_id, "actor")
+  assert_eq(decision.signer_role, "actor")
+  assert_eq(decision.causation_ids, ["human-001"])
+  assert_eq(decision.correlation_id, "human-input-001")
+  assert_eq(
+    decision.payload.contains(
+      "decision_text=Acknowledge the human instruction and inspect the door.",
+    ),
+    true,
+  )
+  assert_eq(decision.signature.length() > 0, true)
+}
+
+///|
+test "human input: browser signer is rejected" {
+  let browser_input = fake_envelope(
+    "browser-human-001",
+    "human_input",
+    "2026-04-21T10:01:00Z",
+    "browser",
+    "browser",
+    ["visible-context:obs-001"],
+    "human-input-001",
+    "text=browser must not become the human signer",
+  )
+  expect_invalid(
+    @cdda_native_contract.action_decision_from_human_input(
+      "decision-browser-human", "2026-04-21T10:01:01Z", "human-input-001", browser_input,
+      "Reject browser-authored human input.", "reject=browser", "Browser transport cannot replace the human signer.",
+    ),
+  )
+}
+
+///|
+test "human input: api command is not success path" {
+  expect_invalid(
+    @cdda_native_contract.human_input_from_text(
+      "human-api-001", "2026-04-21T10:01:00Z", "human-input-001", "api_path=/api/human-instruction\nstatus=progress",
+      "browser:/api/human-instruction",
+    ),
+  )
+}
+
+///|
+test "human input: wrong signers are rejected" {
+  for signer in ["server", "relay", "scene-reader", "action-bridge", "actor"] {
+    let wrong_input = fake_envelope(
+      "wrong-human-" + signer,
+      "human_input",
+      "2026-04-21T10:01:00Z",
+      signer,
+      signer,
+      ["visible-context:obs-001"],
+      "human-input-001",
+      "text=wrong signer must be rejected",
+    )
+    expect_invalid(
+      @cdda_native_contract.action_decision_from_human_input(
+        "decision-wrong-human-" + signer,
+        "2026-04-21T10:01:01Z",
+        "human-input-001",
+        wrong_input,
+        "Reject wrong signer.",
+        "reject=wrong-signer",
+        "Only the human signer can author human_input.",
+      ),
+    )
+  }
+}
+
+///|
+test "human input: empty text rejected" {
+  expect_invalid(
+    @cdda_native_contract.human_input_from_text(
+      "human-empty-001", "2026-04-21T10:01:00Z", "human-input-001", "", "visible-context:obs-001",
+    ),
+  )
+}
+
+///|
+test "human input: actor response requires causation" {
+  let missing_cause_input = fake_envelope(
+    "human-no-cause",
+    "human_input",
+    "2026-04-21T10:01:00Z",
+    "human",
+    "human",
+    [],
+    "human-input-001",
+    "text=missing causation should not be consumed",
+  )
+  expect_invalid(
+    @cdda_native_contract.action_decision_from_human_input(
+      "decision-no-cause", "2026-04-21T10:01:01Z", "human-input-001", missing_cause_input,
+      "This must not be accepted.", "reject=missing-cause", "Actor response requires a valid human_input predecessor.",
+    ),
+  )
+}
+
+///|
+test "human input: audit projection shows provenance" {
+  let projection = @cdda_native_contract.audit_human_input(
+    first_human_input(),
+    first_human_response(),
+  ).unwrap()
+  assert_eq(projection.length(), 2)
+  assert_eq(projection[0].channel, "human_input")
+  assert_eq(projection[0].signer_actor_id, "human")
+  assert_eq(projection[0].signer_role, "human")
+  assert_eq(projection[0].valid, true)
+  assert_eq(projection[1].channel, "action_decision")
+  assert_eq(projection[1].causation_ids, ["human-001"])
+}
+
+///|
 test "first_scene_observation_is_scene_reader_signed" {
   let observation = first_observation()
   assert_eq(observation.id, "obs-001")
