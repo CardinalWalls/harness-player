@@ -1,7 +1,7 @@
-# Project Progress: `bootstrap-scene-reader` — S001 complete
+# Project Progress: `bootstrap-scene-reader` — S002 complete
 
 **Last Updated**: 2026-04-21  
-**Current Phase**: S002 Story frozen
+**Current Phase**: S002 complete
 
 > Intent re-confirmed by user on 2026-04-21: continue as the CDDA/Hermes scene-reader signed-message test bench; MoonBit remains the domain-contract language; `_mynot/1-intent/PRD.md`, `_mynot/2-architecture/ARCHITECTURE.md`, completed `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md` and completed `_mynot/3-plan/stories/S001-human-input-signed-message.md` are current authoritative inputs. Archive material remains reference/evidence only.
 
@@ -9,10 +9,17 @@
 
 ## Current Work
 
+None.
+
+
+---
+
+## Completed
+
 ### S002-browser-audit-surface — browser-checkable signed-message audit page
 
 **Started**: 2026-04-21  
-**Status**: Current Work  
+**Status**: Completed  
 **Story file**: `_mynot/3-plan/stories/S002-browser-audit-surface.md`  
 **Scope**: make a first local browser page that renders accepted signed-message provenance and lets a human compose a local `human_input` preview without `/api/*` progress paths.
 
@@ -27,7 +34,7 @@
 - [x] Implementation — coder-agent contract complete; implemented static local browser audit surface in `web/index.html`, with green log `.omx/evidence/S002-green-tests.log`.
 - [x] Coder QC — `auto_qc/qc` equivalent passed in `.omx/evidence/S002-coder-qc.md`; static browser verifier and MoonBit regression are green.
 - [x] Dev Testing — local static browser page can be opened directly from `web/index.html`; no dev server required for this slice.
-- [ ] CI/CD
+- [x] CI/CD — PR #5 merged to `main` at merge commit `52f6fd6`; remote checks were not reported, so local static verifier + MoonBit regression are release evidence.
 
 #### Notes
 
@@ -35,11 +42,8 @@
 - 2026-04-21: Setup/Ralplan artifacts generated from the S002 story only; next phase is tester-agent contract red verification.
 - 2026-04-21: S002 red verification locked. `python3 scripts/verify_browser_audit_surface.py` fails on missing `web/index.html` as expected; tester QC passed.
 - 2026-04-21: S002 implementation green. Static browser verifier passed and `moon info && moon fmt --check && moon test` passed 22/22; the page is local/static and does not yet subscribe to a live runtime.
+- 2026-04-21: S002 merged via PR #5 into `main` (`52f6fd6`). This is now the first browser-checkable surface; manual inspection can use `web/index.html`.
 
-
----
-
-## Completed
 
 ### S001-human-input-signed-message — signed human input path
 
@@ -136,3 +140,5 @@ None.
 STORY-DONE: S000-bootstrap-scene-reader
 
 STORY-DONE: S001-human-input-signed-message — 2026-04-21 — PR #4 merged to main (`347543b`); verification `moon info && moon fmt --check && moon test` passed (22/22); user-facing/browser check deferred until web surface exists.
+
+STORY-DONE: S002-browser-audit-surface — 2026-04-21 — PR #5 merged to main (`52f6fd6`); verification `python3 scripts/verify_browser_audit_surface.py` passed and `moon info && moon fmt --check && moon test` passed (22/22); first local browser-checkable surface at `web/index.html`.
