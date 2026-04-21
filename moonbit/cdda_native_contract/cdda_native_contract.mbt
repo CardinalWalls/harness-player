@@ -90,6 +90,11 @@ fn scene_payload(raw_screen_ref : String, screen_text : String) -> String {
 }
 
 ///|
+fn human_payload(text : String, visible_context_ref : String) -> String {
+  "text=" + text + "\nvisible_context_ref=" + visible_context_ref
+}
+
+///|
 fn decision_payload(
   decision_text : String,
   intended_action : String,
@@ -136,6 +141,23 @@ fn is_scene_reader_observation(envelope : SignedEnvelope) -> Bool {
 }
 
 ///|
+fn human_payload_is_safe(envelope : SignedEnvelope) -> Bool {
+  envelope.payload.contains("text=") &&
+  envelope.payload.contains("\nvisible_context_ref=") &&
+  !envelope.payload.contains("/api/")
+}
+
+///|
+fn is_human_input(envelope : SignedEnvelope) -> Bool {
+  common_fields_present(envelope) &&
+  envelope.channel == "human_input" &&
+  envelope.signer_actor_id == "human" &&
+  envelope.signer_role == "human" &&
+  envelope.causation_ids.length() > 0 &&
+  human_payload_is_safe(envelope)
+}
+
+///|
 fn is_actor_decision(envelope : SignedEnvelope) -> Bool {
   common_fields_present(envelope) &&
   envelope.channel == "action_decision" &&
@@ -156,11 +178,49 @@ fn is_bridge_effect(envelope : SignedEnvelope) -> Bool {
 ///|
 fn is_story_envelope(envelope : SignedEnvelope) -> Bool {
   match envelope.channel {
+    "human_input" => is_human_input(envelope)
     "scene_observation" => is_scene_reader_observation(envelope)
     "action_decision" => is_actor_decision(envelope)
     "action_effect" => is_bridge_effect(envelope)
     _ => false
   }
+}
+
+///|
+pub fn human_input_from_text(
+  id : String,
+  created_at : String,
+  correlation_id : String,
+  text : String,
+  visible_context_ref : String,
+) -> Result[SignedEnvelope, ContractError] {
+  if id.length() == 0 ||
+    created_at.length() == 0 ||
+    correlation_id.length() == 0 {
+    return invalid("human_input requires id, created_at, and correlation_id")
+  }
+  if text.length() == 0 {
+    return invalid("human_input requires non-empty human text")
+  }
+  if text.contains("/api/") || visible_context_ref.contains("/api/") {
+    return invalid("human_input cannot be a privileged browser API command")
+  }
+  if visible_context_ref.length() == 0 {
+    return invalid("human_input requires a visible context reference")
+  }
+  Ok(
+    signed_envelope(
+      id,
+      "human_input",
+      created_at,
+      "human",
+      "human",
+      [visible_context_ref],
+      correlation_id,
+      human_payload(text, visible_context_ref),
+      signature_for("human_input", "human", id),
+    ),
+  )
 }
 
 ///|
@@ -259,6 +319,51 @@ pub fn action_decision_from_scene(
 }
 
 ///|
+pub fn action_decision_from_human_input(
+  id : String,
+  created_at : String,
+  correlation_id : String,
+  human_input : SignedEnvelope,
+  decision_text : String,
+  intended_action : String,
+  reason : String,
+) -> Result[SignedEnvelope, ContractError] {
+  if id.length() == 0 ||
+    created_at.length() == 0 ||
+    correlation_id.length() == 0 {
+    return invalid(
+      "action_decision requires id, created_at, and correlation_id",
+    )
+  }
+  if correlation_id != human_input.correlation_id {
+    return invalid("action_decision correlation_id must match human_input")
+  }
+  if !is_human_input(human_input) {
+    return invalid("action_decision must consume human-signed human_input")
+  }
+  if decision_text.length() == 0 ||
+    intended_action.length() == 0 ||
+    reason.length() == 0 {
+    return invalid(
+      "action_decision requires decision text, intended action, and reason",
+    )
+  }
+  Ok(
+    signed_envelope(
+      id,
+      "action_decision",
+      created_at,
+      "actor",
+      "actor",
+      [human_input.id],
+      correlation_id,
+      decision_payload(decision_text, intended_action, reason),
+      signature_for("action_decision", "actor", id),
+    ),
+  )
+}
+
+///|
 pub fn action_effect_from_decision(
   id : String,
   created_at : String,
@@ -344,6 +449,26 @@ fn audit_projection(envelope : SignedEnvelope) -> AuditProjection {
     causation_ids: envelope.causation_ids,
     valid: is_story_envelope(envelope),
   }
+}
+
+///|
+pub fn audit_human_input(
+  human_input : SignedEnvelope,
+  decision : SignedEnvelope,
+) -> Result[Array[AuditProjection], ContractError] {
+  if !is_human_input(human_input) {
+    return invalid_audit("audit_human_input requires valid human_input")
+  }
+  if !is_actor_decision(decision) {
+    return invalid_audit("audit_human_input decision must be actor signed")
+  }
+  if human_input.correlation_id != decision.correlation_id {
+    return invalid_audit("audit_human_input correlation ids must match")
+  }
+  if decision.causation_ids != [human_input.id] {
+    return invalid_audit("actor decision must causally link to human_input")
+  }
+  Ok([audit_projection(human_input), audit_projection(decision)])
 }
 
 ///|
