@@ -5,6 +5,7 @@
 # Target layout (per Codex convention, confirmed against ~/.codex/skills/bootstrap-loop/):
 #
 #   ~/.codex/skills/<skill>/SKILL.md   — frontmatter + body, activation by description match
+#   ./.codex/skills/<skill>/SKILL.md   — project-scope copy, required when OMX resolves Codex home to this repo
 #
 # What this installs:
 #
@@ -25,8 +26,14 @@
 # _mynot/_ops/skills/ (for conduct) or patch this script's heredocs instead,
 # so changes are version-controlled.
 #
-# Nothing outside ~/.codex/skills/<installed names>/ is touched. No OMX state,
-# no Codex agents/*.toml, no MCP registration, no .omx/ files.
+# By default this writes both home and project-scope skills. Project-scope is
+# required for this repo because `omx doctor` resolves Codex home to
+# `$REPO_ROOT/.codex`; home-only installs do not reliably trigger skills inside
+# project-scoped OMX sessions. Set CODEX_SKILLS_DIR to target exactly one
+# skills directory.
+#
+# Nothing outside the selected skills directories is touched. No OMX state, no
+# Codex agents/*.toml, no MCP registration, no .omx/ files.
 #
 # Usage:
 #   bash _mynot/_ops/install-skillset.sh               # install all
@@ -39,7 +46,11 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 UPSTREAM="${SKILLSET_SRC:-/Users/yetian/Desktop/learn-harness-manux/_repo/agents-zone-skillset}"
-CODEX_SKILLS="${CODEX_SKILLS_DIR:-$HOME/.codex/skills}"
+if [[ -n "${CODEX_SKILLS_DIR:-}" ]]; then
+  CODEX_SKILL_TARGETS=("$CODEX_SKILLS_DIR")
+else
+  CODEX_SKILL_TARGETS=("$HOME/.codex/skills" "$REPO_ROOT/.codex/skills")
+fi
 PROJECT_CONDUCT="$REPO_ROOT/_mynot/_ops/skills/conduct.md"
 PROJECT_HR="$REPO_ROOT/_mynot/_ops/skills/hr.md"
 
@@ -99,12 +110,22 @@ upstream_path() {
   esac
 }
 
+yaml_single_quote() {
+  local value="$1"
+  # YAML single-quoted scalars allow colons, dollar signs, and most prose safely.
+  # A literal single quote is represented by two single quotes.
+  value="$(printf '%s' "$value" | sed "s/'/''/g")"
+  printf "'%s'" "$value"
+}
+
 write_skill() {
   local name="$1"
   local src="$2"
-  local dest_dir="$CODEX_SKILLS/$name"
+  local codex_skills="$3"
+  local dest_dir="$codex_skills/$name"
   local dest="$dest_dir/SKILL.md"
   local desc; desc="$(describe "$name")"
+  local desc_yaml; desc_yaml="$(yaml_single_quote "$desc")"
 
   if [[ $DRY_RUN -eq 1 ]]; then
     printf '  would write: %s (from %s)\n' "$dest" "$src"
@@ -115,8 +136,9 @@ write_skill() {
   {
     printf -- '---\n'
     printf -- 'name: %s\n' "$name"
-    # yaml-safe single-line description; body may embed $ refs which is fine
-    printf -- 'description: %s\n' "$desc"
+    # YAML-safe single-line description; body may embed $ refs which is fine.
+    # Keep quoted because descriptions often contain ':' which breaks plain scalars.
+    printf -- 'description: %s\n' "$desc_yaml"
     printf -- 'metadata:\n'
     printf -- '  source: agents-zone-skillset\n'
     printf -- '  installed-by: _mynot/_ops/install-skillset.sh\n'
@@ -127,7 +149,8 @@ write_skill() {
 
 remove_skill() {
   local name="$1"
-  local dest_dir="$CODEX_SKILLS/$name"
+  local codex_skills="$2"
+  local dest_dir="$codex_skills/$name"
   if [[ -d "$dest_dir" ]]; then
     if [[ $DRY_RUN -eq 1 ]]; then
       printf '  would remove: %s\n' "$dest_dir"
@@ -141,9 +164,12 @@ remove_skill() {
 # ---- pre-flight ----
 
 if [[ $UNINSTALL -eq 1 ]]; then
-  echo "Uninstalling agents-zone-skillset skills from $CODEX_SKILLS ..."
-  for name in "${SKILLS[@]}"; do
-    remove_skill "$name"
+  echo "Uninstalling agents-zone-skillset skills ..."
+  for codex_skills in "${CODEX_SKILL_TARGETS[@]}"; do
+    echo "  target: $codex_skills"
+    for name in "${SKILLS[@]}"; do
+      remove_skill "$name" "$codex_skills"
+    done
   done
   echo "done."
   exit 0
@@ -167,23 +193,31 @@ if [[ ! -f "$PROJECT_HR" ]]; then
   exit 1
 fi
 
-mkdir -p "$CODEX_SKILLS"
+for codex_skills in "${CODEX_SKILL_TARGETS[@]}"; do
+  mkdir -p "$codex_skills"
+done
 
 # ---- install ----
 
-echo "Installing agents-zone-skillset into $CODEX_SKILLS ..."
+echo "Installing agents-zone-skillset ..."
 echo "  upstream:         $UPSTREAM"
 echo "  project conduct:  $PROJECT_CONDUCT"
+printf '  targets:\n'
+for codex_skills in "${CODEX_SKILL_TARGETS[@]}"; do
+  printf '    - %s\n' "$codex_skills"
+done
 echo
 
-for name in "${SKILLS[@]}"; do
-  src="$(upstream_path "$name")"
-  if [[ ! -f "$src" ]]; then
-    echo "  WARN: source missing, skipped: $name ($src)" >&2
-    continue
-  fi
-  write_skill "$name" "$src"
-  [[ $DRY_RUN -eq 0 ]] && printf '  installed: %s\n' "$CODEX_SKILLS/$name/SKILL.md"
+for codex_skills in "${CODEX_SKILL_TARGETS[@]}"; do
+  for name in "${SKILLS[@]}"; do
+    src="$(upstream_path "$name")"
+    if [[ ! -f "$src" ]]; then
+      echo "  WARN: source missing, skipped: $name ($src)" >&2
+      continue
+    fi
+    write_skill "$name" "$src" "$codex_skills"
+    [[ $DRY_RUN -eq 0 ]] && printf '  installed: %s\n' "$codex_skills/$name/SKILL.md"
+  done
 done
 
 echo
@@ -192,5 +226,7 @@ if [[ $DRY_RUN -eq 1 ]]; then
 else
   echo "Done. Run 'omx doctor' to verify OMX health."
   echo "Verify skills loaded:"
-  echo "  ls $CODEX_SKILLS | grep -E 'prd|architect|story|conduct|qc|hr'"
+  for codex_skills in "${CODEX_SKILL_TARGETS[@]}"; do
+    echo "  ls $codex_skills | grep -E 'prd|architect|story|conduct|qc|hr'"
+  done
 fi
