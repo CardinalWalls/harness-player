@@ -1,7 +1,7 @@
 # Project Progress: `bootstrap-scene-reader` — S001 active lane
 
 **Last Updated**: 2026-04-21  
-**Current Phase**: S001 Setup/Ralplan complete; Testing pending
+**Current Phase**: S001 Tester QC complete; Implementation pending
 
 > Intent re-confirmed by user on 2026-04-21: continue as the CDDA/Hermes scene-reader signed-message test bench; MoonBit remains the domain-contract language; `_mynot/1-intent/PRD.md`, `_mynot/2-architecture/ARCHITECTURE.md`, completed `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md`, and active `_mynot/3-plan/stories/S001-human-input-signed-message.md` are current authoritative inputs. Archive material remains reference/evidence only.
 
@@ -12,7 +12,7 @@
 ### S001-human-input-signed-message — signed human input path
 
 **Started**: 2026-04-21  
-**Status**: Setup/Ralplan complete; ready for Testing  
+**Status**: Red tests and tester QC complete; ready for Implementation  
 **Story file**: `_mynot/3-plan/stories/S001-human-input-signed-message.md`  
 **Scope**: bring one input path online: `human text` → signed `human_input` → actor consumes accepted human input; prove browser/server `/api/*` command paths are not success.
 
@@ -22,8 +22,8 @@
 - [x] Architecture — reuse frozen `_mynot/2-architecture/ARCHITECTURE.md`.
 - [x] Story — `_mynot/3-plan/stories/S001-human-input-signed-message.md` freeze checklist passed (single input path, testable AC, Layer 2 refs, failure modes, exact files, explicit tester/coder/qc contracts).
 - [x] Setup / Ralplan — generated `.omx/plans/prd-S001-human-input-signed-message.md`, `.omx/plans/test-spec-S001-human-input-signed-message.md`, `.omx/plans/ralplan-S001-human-input-signed-message.md`, and `.omx/plans/team-tasks-S001-human-input-signed-message.md`.
-- [ ] Testing — executor may be OMX, but contract is `tester-agent`; must leave red log and tester report.
-- [ ] Tester QC — `auto_qc/qc` verifies tester claims before implementation.
+- [x] Testing — `tester-agent` contract complete; red tests added in `moonbit/cdda_native_contract/cdda_native_contract_test.mbt`, report `.omx/evidence/S001-tester-report.md`, red log `.omx/evidence/S001-red-tests.log`.
+- [x] Tester QC — `auto_qc/qc` equivalent passed in `.omx/evidence/S001-tester-qc.md`; implementation may start next.
 - [ ] Implementation — executor may be OMX, but contract is `coder-agent`; must leave green log and coder report.
 - [ ] Coder QC — `auto_qc/qc` verifies implementation against story/tests/anti-patterns.
 - [ ] Dev Testing — n/a unless active browser/input surface is restored and needs manual smoke.
@@ -34,6 +34,7 @@
 - 2026-04-21: User requested clearing the old 001 lane and starting fresh. Old live-runtime 001 branches remain backup/reference only and are not current state.
 - 2026-04-21: S001 was selected from PRD Use case 2 and Architecture channel `human_input`: it is the next independent MVP causal path after S000 bootstrap.
 - 2026-04-21: S001 Setup/Ralplan completed. `omx exec $ralplan` was attempted after project skill installation, but local Codex auth failed under project `CODEX_HOME`; handoff artifacts were generated from the frozen story using ralplan output structure, with implementation still blocked until tester-agent red evidence and tester QC.
+- 2026-04-21: S001 red tests locked under tester-agent contract; `moon test` fails on missing `human_input_from_text`, `action_decision_from_human_input`, and `audit_human_input` as expected. Tester QC passed; next phase is implementation.
 
 
 ---

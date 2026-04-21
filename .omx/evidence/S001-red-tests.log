@@ -1,0 +1,57 @@
+failed: /Users/yetian/.moon/bin/moonc build-package -error-format json /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/README.mbt.md /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/cdda_native_contract_test.mbt /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/_build/wasm-gc/debug/test/__generated_driver_for_blackbox_test.mbt -doctest-only /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/cdda_native_contract.mbt -o /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/_build/wasm-gc/debug/test/cdda_native_contract.blackbox_test.core -pkg yetian/cdda_native_contract_blackbox_test -is-main -std-path /Users/yetian/.moon/lib/core/_build/wasm-gc/release/bundle -i /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/_build/wasm-gc/debug/test/cdda_native_contract.mi:cdda_native_contract -i /Users/yetian/.moon/lib/core/_build/wasm-gc/release/bundle/prelude/prelude.mi:prelude -pkg-sources yetian/cdda_native_contract_blackbox_test:/Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract -target wasm-gc -g -O0 -source-map -blackbox-test -include-doctests -no-mi -test-mode -workspace-path /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract -all-pkgs /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/_build/wasm-gc/debug/test/all_pkgs.json
+Error: [4021]
+     ╭─[ /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/cdda_native_contract_test.mbt:105:3 ]
+     │
+ 105 │   @cdda_native_contract.human_input_from_text(
+     │   ─────────────────────┬─────────────────────  
+     │                        ╰─────────────────────── Value human_input_from_text not found in package `cdda_native_contract`.
+─────╯
+Error: [4021]
+     ╭─[ /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/cdda_native_contract_test.mbt:113:3 ]
+     │
+ 113 │   @cdda_native_contract.action_decision_from_human_input(
+     │   ───────────────────────────┬──────────────────────────  
+     │                              ╰──────────────────────────── Value action_decision_from_human_input not found in package `cdda_native_contract`.
+─────╯
+Error: [4021]
+     ╭─[ /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/cdda_native_contract_test.mbt:173:5 ]
+     │
+ 173 │     @cdda_native_contract.action_decision_from_human_input(
+     │     ───────────────────────────┬──────────────────────────  
+     │                                ╰──────────────────────────── Value action_decision_from_human_input not found in package `cdda_native_contract`.
+─────╯
+Error: [4021]
+     ╭─[ /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/cdda_native_contract_test.mbt:183:5 ]
+     │
+ 183 │     @cdda_native_contract.human_input_from_text(
+     │     ─────────────────────┬─────────────────────  
+     │                          ╰─────────────────────── Value human_input_from_text not found in package `cdda_native_contract`.
+─────╯
+Error: [4021]
+     ╭─[ /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/cdda_native_contract_test.mbt:204:7 ]
+     │
+ 204 │       @cdda_native_contract.action_decision_from_human_input(
+     │       ───────────────────────────┬──────────────────────────  
+     │                                  ╰──────────────────────────── Value action_decision_from_human_input not found in package `cdda_native_contract`.
+─────╯
+Error: [4021]
+     ╭─[ /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/cdda_native_contract_test.mbt:220:5 ]
+     │
+ 220 │     @cdda_native_contract.human_input_from_text(
+     │     ─────────────────────┬─────────────────────  
+     │                          ╰─────────────────────── Value human_input_from_text not found in package `cdda_native_contract`.
+─────╯
+Error: [4021]
+     ╭─[ /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/cdda_native_contract_test.mbt:239:5 ]
+     │
+ 239 │     @cdda_native_contract.action_decision_from_human_input(
+     │     ───────────────────────────┬──────────────────────────  
+     │                                ╰──────────────────────────── Value action_decision_from_human_input not found in package `cdda_native_contract`.
+─────╯
+Error: [4021]
+     ╭─[ /Users/yetian/Desktop/new-real-100-commits-S000-bootstrap-scene-reader/moonbit/cdda_native_contract/cdda_native_contract_test.mbt:248:20 ]
+     │
+ 248 │   let projection = @cdda_native_contract.audit_human_input(
+     │                    ───────────────────┬───────────────────  
+     │                                       ╰───────────────────── Value audit_human_input not found in package `cdda_native_contract`.
+─────╯
