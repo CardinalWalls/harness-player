@@ -1,7 +1,7 @@
 # Project Progress: `bootstrap-scene-reader` — S001 active lane
 
 **Last Updated**: 2026-04-21  
-**Current Phase**: S001 local complete; CI/CD pending
+**Current Phase**: S001 PR opened; merge pending
 
 > Intent re-confirmed by user on 2026-04-21: continue as the CDDA/Hermes scene-reader signed-message test bench; MoonBit remains the domain-contract language; `_mynot/1-intent/PRD.md`, `_mynot/2-architecture/ARCHITECTURE.md`, completed `_mynot/3-plan/stories/S000-bootstrap-scene-reader.md`, and active `_mynot/3-plan/stories/S001-human-input-signed-message.md` are current authoritative inputs. Archive material remains reference/evidence only.
 
@@ -12,7 +12,7 @@
 ### S001-human-input-signed-message — signed human input path
 
 **Started**: 2026-04-21  
-**Status**: Local implementation and coder QC complete; CI/CD pending  
+**Status**: PR opened; no remote checks reported; merge pending  
 **Story file**: `_mynot/3-plan/stories/S001-human-input-signed-message.md`  
 **Scope**: bring one input path online: `human text` → signed `human_input` → actor consumes accepted human input; prove browser/server `/api/*` command paths are not success.
 
@@ -27,7 +27,7 @@
 - [x] Implementation — `coder-agent` contract complete; implemented MoonBit human input helpers and saved `.omx/evidence/S001-coder-report.md` + `.omx/evidence/S001-green-tests.log` (22/22).
 - [x] Coder QC — `auto_qc/qc` equivalent passed in `.omx/evidence/S001-coder-qc.md`.
 - [x] Dev Testing — n/a; S001 is contract-only and did not restore active browser/input runtime surface.
-- [ ] CI/CD — use `follow` if remote CI is available, otherwise record exact n/a reason.
+- [ ] CI/CD — PR opened: https://github.com/CardinalWalls/harness-player/pull/4; `gh pr checks` reports no checks for this branch and `gh run list --branch S001-human-input-signed-message` is empty. Merge remains pending.
 
 #### Notes
 
